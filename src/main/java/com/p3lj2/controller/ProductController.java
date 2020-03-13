@@ -29,18 +29,22 @@ public class ProductController implements Initializable {
         productDao = new ProductDao();
         ObservableList<ProductModel> productObservableList = FXCollections.observableList(productDao.getAllProduct());
 
-//        productListView.setCellFactory(new Callback<ListView<ProductModel>, ListCell<ProductModel>>() {
-//            @Override
-//            public ListCell<ProductModel> call(ListView<ProductModel> param) {
-//                return new ListCell<ProductModel>() {
-//                    @Override
-//                    protected void updateItem(ProductModel item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        setText(item.getProductName());
-//                    }
-//                };
-//            }
-//        });
         productListView.setItems(productObservableList);
+        productListView.setCellFactory(new Callback<ListView<ProductModel>, ListCell<ProductModel>>() {
+            @Override
+            public ListCell<ProductModel> call(ListView<ProductModel> param) {
+                return new ListCell<ProductModel>() {
+                    @Override
+                    protected void updateItem(ProductModel item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                        } else {
+                            setText(item.getProductName());
+                        }
+                    }
+                };
+            }
+        });
     }
 }
