@@ -1,7 +1,8 @@
-package main.model;
+package main.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.model.Employee;
 import main.util.DBUtil;
 
 import java.sql.ResultSet;

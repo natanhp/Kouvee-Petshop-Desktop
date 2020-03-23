@@ -70,7 +70,7 @@ public class LoginController implements Initializable {
                 stage.close();
 
                 try {
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/EmployeeView.fxml")));
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenu.fxml")));
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException e) {
@@ -103,10 +103,10 @@ public class LoginController implements Initializable {
         String status = "Success";
         String password = txtPawd.getText();
         String username = txtUname.getText();
-        String role = "Admin";
+        String data = null;
 
         //Query
-        String query = "SELECT * FROM employees WHERE role = ? and username = ? and password = ?;";
+        String query = "SELECT role FROM employees WHERE username = ? and password = ?;";
 
         if(username.isEmpty() || password.isEmpty()) {
             setLblError(Color.TOMATO, "Empty credentials");
@@ -114,30 +114,22 @@ public class LoginController implements Initializable {
         } else {
             try {
                 preparedStatement = conn.prepareStatement(query);
-                preparedStatement.setString(1, role);
-                preparedStatement.setString(2, username);
-                preparedStatement.setString(3, password);
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
                 resultSet = preparedStatement.executeQuery();
 
                 if(resultSet.next() == false)
                 {
-//                    do {
-//                        String data = resultSet.getString("role");
-//                        if(data != "Admin")
-//                        {
-//                            setLblError(Color.TOMATO, "Access Denied");
-//                            status = "Error";
-//                        }
-//                        else {
-//                            setLblError(Color.TOMATO, "Username or password not match ! Try Again");
-//                            status = "Error";
-//                        }
-//                    } while(resultSet.next());
-                    setLblError(Color.TOMATO, "Access Denied");
+                    setLblError(Color.TOMATO, "Username or password not match. Try again.");
                     status = "Error";
                 }
                 else
                 {
+                    do {
+                        data = resultSet.getString("role");
+                        System.out.println(data);
+                    } while (resultSet.next());
+
                     setLblError(Color.GREEN, "Login Successful");
                     status = "Success";
                 }

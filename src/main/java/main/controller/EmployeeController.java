@@ -10,7 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import main.model.Employee;
-import main.model.EmployeeDAO;
+import main.dao.EmployeeDAO;
 import javax.swing.text.html.ImageView;
 import java.sql.Date;
 import java.sql.SQLException;
