@@ -4,14 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import main.model.Employee;
 import main.dao.EmployeeDAO;
 import javax.swing.text.html.ImageView;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -77,7 +82,9 @@ public class EmployeeController {
     @FXML
     private Button btnTransaksi;
     @FXML
-    private Button btnKeluar;
+    private Button btnEmployeeKeluar;
+    @FXML
+    private Button btnMenuUtama;
     @FXML
     private TextField txtAlamat;
     @FXML
@@ -101,9 +108,24 @@ public class EmployeeController {
 
     }
 
-    public void buttonExit(MouseEvent me) {
-        if(me.getSource() == btnKeluar)
+    public void handleButtonEmployee(MouseEvent me) {
+        if(me.getSource() == btnEmployeeKeluar)
             System.exit(0);
+
+        if(me.getSource() == btnMenuUtama)
+        {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenu.fxml")));
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+        }
     }
 
     //Search an Employee
