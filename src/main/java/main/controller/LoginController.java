@@ -27,6 +27,8 @@ import java.util.logging.Logger;
 
 public class LoginController implements Initializable {
 
+    private String loginID;
+    private String loginRole;
     @FXML
     private Button btnExit;
 
@@ -103,10 +105,10 @@ public class LoginController implements Initializable {
         String status = "Success";
         String password = txtPawd.getText();
         String username = txtUname.getText();
-        String data = null;
+        String temp = null;
 
         //Query
-        String query = "SELECT role FROM employees WHERE username = ? and password = ?;";
+        String query = "SELECT id, role FROM employees WHERE username = ? and password = ?;";
 
         if(username.isEmpty() || password.isEmpty()) {
             setLblError(Color.TOMATO, "Empty credentials");
@@ -126,10 +128,16 @@ public class LoginController implements Initializable {
                 else
                 {
                     do {
-                        data = resultSet.getString("role");
-                        System.out.println(data);
+                        temp = resultSet.getString("role");
+                        System.out.println(temp);
+                        loginRole = temp;
+                        temp = resultSet.getString("id");
+                        System.out.println(temp);
+                        loginID = temp;
                     } while (resultSet.next());
 
+                    CustomerController.getUserLogin(getUserLogin());
+                    CustomerController.getRoleLogin(getUserRole());
                     setLblError(Color.GREEN, "Login Successful");
                     status = "Success";
                 }
@@ -145,5 +153,13 @@ public class LoginController implements Initializable {
         lblErrors.setTextFill(color);
         lblErrors.setText(text);
         System.out.println(text);
+    }
+
+    public String getUserLogin() {
+        return loginID;
+    }
+
+    public String getUserRole() {
+        return loginRole;
     }
 }

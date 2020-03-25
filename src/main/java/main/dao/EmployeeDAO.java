@@ -56,7 +56,7 @@ public class EmployeeDAO {
         //Declare a SELECT statement
         String selectStmt = "SELECT * FROM employees";
 
-        //Execute SELECT Stamtement
+        //Execute SELECT Statement
         try {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsEmps = DBUtil.dbExecuteQuery(selectStmt);
@@ -101,21 +101,23 @@ public class EmployeeDAO {
     }
 
     //Update an employee's entries
-    public static void updateEntries (String Id, String name, String dateBirth, String address,
+    public static void updateEntries (String Logged, String Id, String name, String dateBirth, String address,
                                       String phoneNumber, String role, String username, String password)
             throws SQLException, ClassNotFoundException
     {
         //Declare an UPDATE Statement
         String updateStmt =
-                    "UPDATE employees " +
-                    "SET name = '" + name + "' " +
-                    ", address = '" + address + "' " +
-                    ", dateBirth = '" + dateBirth + "' " +
-                    ", phoneNumber = '" + phoneNumber + "' " +
-                    ", role = '" + role + "' " +
-                    ", username = '" + username + "' " +
-                    ", password = '" + password + "' " +
-                    "WHERE id = '" + Id + "';";
+                "UPDATE employees " +
+                        "SET name = '" + name + "' " +
+                        ", address = '" + address + "' " +
+                        ", dateBirth = '" + dateBirth + "' " +
+                        ", phoneNumber = '" + phoneNumber + "' " +
+                        ", role = '" + role + "' " +
+                        ", updatedAt = NOW()" +
+                        ", updatedBy = '" + Logged + "' " +
+                        ", username = '" + username + "' " +
+                        ", password = '" + password + "' " +
+                        "WHERE id = '" + Id + "';";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -131,7 +133,7 @@ public class EmployeeDAO {
 
         //Declare a DELETE Statement
         String updateStmt =
-                        "DELETE FROM employees " +
+                "DELETE FROM employees " +
                         "WHERE id = " + Id + ";";
 
         try {
@@ -143,19 +145,43 @@ public class EmployeeDAO {
         }
     }
 
+    //SOFT DELETE an employee
+    public static void softDeleteEmpWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+
+        //Declare an UPDATE Statement
+        String deleteStmt =
+                "UPDATE employees " +
+                        "SET name = NULL" +
+                        ", address = NULL" +
+                        ", dateBirth = NULL" +
+                        ", phoneNumber = NULL" +
+                        ", deletedAt = NOW()" +
+                        ", deletedBy " + Logged +
+                        "WHERE id = '" + Id + "';";
+
+        try {
+            DBUtil.dbExecuteUpdate(deleteStmt);
+        } catch (SQLException ex) {
+
+            System.out.println("Error occurred while SOFT_DELETE Operation: " +ex);
+            throw ex;
+        }
+    }
+
     //INSERT an Employee
-    public static void insertEmp(String name, String dateBirth, String address,
+    public static void insertEmp(String Logged, String name, String dateBirth, String address,
                                  String phoneNumber, String role, String username, String password)
             throws SQLException, ClassNotFoundException
     {
 
         //Declare an INSERT Statement
         String updateStmt =
-                        "INSERT INTO employees " +
-                        "(name, address, dateBirth, phoneNumber, createdAt ,role, username, password)" +
+                "INSERT INTO employees " +
+                        "(name, address, dateBirth, phoneNumber, createdAt, role, createdBy, username, password)" +
                         "VALUES " +
-                        "('" + name + "','" + address + "','" + dateBirth + "','" + phoneNumber + "',NOW()," +
-                                "'" + role + "','" + username + "','" + password + "')";
+                        "('" + name + "','" + address + "','" + dateBirth + "','" + phoneNumber +
+                        "', NOW()," +
+                        "'" + role + "','" + "'" + Logged + "','" + username + "','" + password + "')";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -165,5 +191,4 @@ public class EmployeeDAO {
             throw ex;
         }
     }
-
 }

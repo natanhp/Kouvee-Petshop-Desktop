@@ -13,12 +13,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import main.model.Employee;
 import main.dao.EmployeeDAO;
+import main.model.Employee;
+import main.controller.LoginController;
 import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.stream.IntStream;
+
+import static java.lang.Thread.sleep;
 
 public class EmployeeController {
 
@@ -55,6 +59,8 @@ public class EmployeeController {
     private TableColumn<Employee, String> empName;
     @FXML
     private Button btnLihat;
+    @FXML
+    private Button hiddenActionButton;
     @FXML
     private TableColumn<Employee, Date> empDateBirth;
     @FXML
@@ -203,9 +209,9 @@ public class EmployeeController {
 
     @FXML
     private void updateEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
-
+        LoginController lc = new LoginController();
         try {
-            EmployeeDAO.updateEntries(txtID.getText(), txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
+            EmployeeDAO.updateEntries(lc.getUserLogin(), txtID.getText(), txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
                     txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
 
         } catch (SQLException e) {
@@ -215,8 +221,10 @@ public class EmployeeController {
 
     @FXML
     private void insertEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
+
+        LoginController lc = new LoginController();
         try {
-            EmployeeDAO.insertEmp(txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
+            EmployeeDAO.insertEmp(lc.getUserLogin(),txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
                     txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
 
         } catch (SQLException e) {

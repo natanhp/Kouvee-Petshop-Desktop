@@ -16,7 +16,8 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="402.0" minWidth="10.0" prefWidth="253.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="1.0" prefWidth="340.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.0" minWidth="10.0" prefWidth="177.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="232.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.0" minWidth="10.0" prefWidth="177.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="232.0" />
                   <ColumnConstraints maxWidth="350.0" minWidth="0.0" prefWidth="171.0" />
                   <ColumnConstraints maxWidth="350.0" minWidth="0.0" prefWidth="274.0" />
               </columnConstraints>
@@ -51,7 +52,7 @@
                   </TextField>
                   <TextField fx:id="txtAlamat" maxWidth="-Infinity" prefHeight="36.0" prefWidth="198.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="64.0" />
+                        <Insets left="171.0" />
                      </GridPane.margin>
                   </TextField>
                   <TextField fx:id="txtUname" maxWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.valignment="TOP">
@@ -61,7 +62,7 @@
                   </TextField>
                   <TextField fx:id="txtPawd" maxWidth="-Infinity" prefHeight="36.0" prefWidth="198.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets left="65.0" />
+                        <Insets left="171.0" />
                      </GridPane.margin>
                   </TextField>
                   <Button fx:id="btnCari" mnemonicParsing="false" onAction="#searchEmployee" prefHeight="39.0" prefWidth="93.0" style="-fx-background-color: #000000; -fx-background-radius: 10; -fx-border-radius: 10;" text="Cari" textFill="WHITE" GridPane.columnIndex="2">
@@ -88,7 +89,7 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnHapus" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="40.0" prefWidth="158.0" style="-fx-background-color: #000000; -fx-background-radius: 10; -fx-border-radius: 10;" text="Hapus Data" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                  <Button fx:id="btnHapus" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="40.0" prefWidth="158.0" style="-fx-background-color: #000000; -fx-background-radius: 10; -fx-border-radius: 10;" text="Hapus Data" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="180.0" />
                      </GridPane.margin>
@@ -160,20 +161,20 @@
                         <Insets left="266.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Username" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                  <Label text="Username" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.valignment="TOP">
                      <font>
                         <Font size="18.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets left="171.0" />
+                        <Insets left="65.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Password" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                  <Label text="Password" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets left="171.0" />
+                        <Insets left="65.0" />
                      </GridPane.margin>
                   </Label>
                </children>

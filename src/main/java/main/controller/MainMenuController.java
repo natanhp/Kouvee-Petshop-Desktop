@@ -9,9 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import main.dao.EmployeeDAO;
 import main.model.Employee;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class MainMenuController {
@@ -65,9 +67,6 @@ public class MainMenuController {
 
         if(me.getSource() == btnMainLogout)
         {
-            //logout
-//            if (logoutAction().equals("Success")) {
-
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -79,15 +78,10 @@ public class MainMenuController {
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
-//            }
-
         }
 
         if(me.getSource() == btnKelPegawai)
         {
-            //logout
-//            if (logoutAction().equals("Success")) {
-
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -96,12 +90,30 @@ public class MainMenuController {
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/EmployeeView.fxml")));
                 stage.setScene(scene);
                 stage.show();
+
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
-//            }
+
+        }
+
+        if(me.getSource() == btnKelCustomer)
+        {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/CustomerView.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
 
         }
     }
+
 
 }

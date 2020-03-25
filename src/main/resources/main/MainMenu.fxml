@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.MainMenuController">
+<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.MainMenuController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8979" height="255.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1d42b" height="515.0" layoutY="255.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
@@ -89,7 +90,7 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnKelCustomer" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Customer" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                  <Button fx:id="btnKelCustomer" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Customer" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
