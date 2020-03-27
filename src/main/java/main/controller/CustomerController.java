@@ -24,6 +24,7 @@ public class CustomerController {
 
     private static String returnID;
     private static String returnRole;
+
     @FXML
     private TableColumn<Customer, Integer> cusId;
 
@@ -117,7 +118,6 @@ public class CustomerController {
     @FXML
     private void searchCustomers (ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        System.out.printf("Login ID : %s", returnID);
         try {
             //Get all Customer information
             ObservableList<Customer> cusData = CustomerDAO.searchCustomers();

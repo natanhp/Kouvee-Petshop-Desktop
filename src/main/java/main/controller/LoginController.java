@@ -13,8 +13,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import main.model.Employee;
+import main.model.PetSize;
 import main.util.DBUtil;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -136,8 +139,7 @@ public class LoginController implements Initializable {
                         loginID = temp;
                     } while (resultSet.next());
 
-                    CustomerController.getUserLogin(getUserLogin());
-                    CustomerController.getRoleLogin(getUserRole());
+                    setAllUserLogin();
                     setLblError(Color.GREEN, "Login Successful");
                     status = "Success";
                 }
@@ -155,11 +157,33 @@ public class LoginController implements Initializable {
         System.out.println(text);
     }
 
+//    private void onHoverButton(Color color) {
+//        btnLogin.set(color);
+//    }
+
     public String getUserLogin() {
         return loginID;
     }
 
     public String getUserRole() {
         return loginRole;
+    }
+
+    public void setAllUserLogin() {
+
+        EmployeeController.getUserLogin(getUserLogin());
+        EmployeeController.getRoleLogin(getUserRole());
+
+        CustomerController.getUserLogin(getUserLogin());
+        CustomerController.getRoleLogin(getUserRole());
+
+        SupplierController.getUserLogin(getUserLogin());
+        SupplierController.getRoleLogin(getUserRole());
+
+        PetSizeController.getUserLogin(getUserLogin());
+        PetSizeController.getRoleLogin(getUserRole());
+
+        PetTypeController.getUserLogin(getUserLogin());
+        PetTypeController.getRoleLogin(getUserRole());
     }
 }

@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="baf6ca64-8172-47ab-83d2-70f280c4e256" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/controller/CustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/controller/PetController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/controller/PetSizeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/controller/PetTypeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/controller/SupplierController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/dao/CustomerDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/dao/PersonDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/model/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/CustomerView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/PetSizeView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/PetTypeView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/PetView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/SupplierView.fxml" afterDir="false" />
+    <list default="true" id="baf6ca64-8172-47ab-83d2-70f280c4e256" name="Default Changelist" comment="Added more controllers and views. Pet, services and products are in-progress.&#10;Note : auto populate table upon clicking not yet implemented">
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/dao/PetDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/dao/PetSizeDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/dao/PetTypeDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/dao/SupplierDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/model/Pet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/model/PetSize.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/model/PetType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/model/Supplier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -25,13 +20,23 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/EmployeeDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/CustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/EmployeeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/dao/EmployeeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/dao/EmployeeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/PetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/PetController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/PetSizeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/PetSizeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/PetTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/PetTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/SupplierController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/SupplierController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/dao/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/dao/CustomerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/main/CustomerView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/CustomerView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/main/EmployeeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/EmployeeView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/main/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/Main.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/main/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/MainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/main/PetSizeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/PetSizeView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/main/PetTypeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/PetTypeView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/main/PetView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/PetView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/main/SupplierView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/SupplierView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1584935039115</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added more controllers and views. Customer operations can be tested&#10;Note : auto populate table upon clicking not yet implemented">
+      <created>1585100228718</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1585100228718</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -185,7 +197,9 @@
     <MESSAGE value="Employee now can be tested. Login still need a few tweaks." />
     <MESSAGE value="Adding a new view. Main menu is available. Login still need a few tweaks." />
     <MESSAGE value="Adding a new view. EmployeeView is renewed. Login still need a few tweaks." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding a new view. EmployeeView is renewed. Login still need a few tweaks." />
+    <MESSAGE value="Added more controllers and views. Customer operations can be tested&#10;Note : auto populate table upon clicking not yet implemented" />
+    <MESSAGE value="Added more controllers and views. Pet, services and products are in-progress.&#10;Note : auto populate table upon clicking not yet implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added more controllers and views. Pet, services and products are in-progress.&#10;Note : auto populate table upon clicking not yet implemented" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Project_Structure" timestamp="1584355206894">
@@ -196,10 +210,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1584507309160" />
-    <state x="190" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1584974060407">
+    <state x="517" y="248" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1585223963473">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="190" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1584974060407" />
+    <state x="517" y="248" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1536.824@0.0.1536.824" timestamp="1585223963473" />
+    <state x="190" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1585224719523">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="190" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1585224719523" />
     <state x="183" y="273" width="403" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1584355837717">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -208,54 +226,62 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="303" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1584973101478" />
-    <state x="424" y="6" key="CommitChangelistDialog2" timestamp="1584935038181">
+    <state x="424" y="1" key="CommitChangelistDialog2" timestamp="1585273105610">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="424" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1584935038181" />
+    <state x="424" y="1" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1585273105610" />
     <state x="434" y="112" key="FileChooserDialogImpl" timestamp="1584616901112">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="434" y="112" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1584616901112" />
-    <state width="1493" height="139" key="GridCell.Tab.0.bottom" timestamp="1585099779234">
+    <state width="1493" height="139" key="GridCell.Tab.0.bottom" timestamp="1585231178649">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="139" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585099779234" />
-    <state width="1493" height="139" key="GridCell.Tab.0.center" timestamp="1585099779234">
+    <state width="1493" height="139" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585231178649" />
+    <state width="1493" height="139" key="GridCell.Tab.0.center" timestamp="1585231178649">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="139" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585099779234" />
-    <state width="1493" height="139" key="GridCell.Tab.0.left" timestamp="1585099779233">
+    <state width="1493" height="139" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585231178649" />
+    <state width="1493" height="139" key="GridCell.Tab.0.left" timestamp="1585231178649">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="139" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585099779233" />
-    <state width="1493" height="139" key="GridCell.Tab.0.right" timestamp="1585099779234">
+    <state width="1493" height="139" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585231178649" />
+    <state width="1493" height="139" key="GridCell.Tab.0.right" timestamp="1585231178649">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="139" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585099779234" />
+    <state width="1493" height="139" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585231178649" />
     <state x="349" y="155" key="IDE.errors.dialog" timestamp="1584617906919">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="349" y="155" key="IDE.errors.dialog/0.0.1536.824@0.0.1536.824" timestamp="1584617906919" />
-    <state x="249" y="0" key="SettingsEditor" timestamp="1584958990203">
+    <state x="249" y="0" key="SettingsEditor" timestamp="1585224565600">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1584958990203" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1584935044277">
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1585224565600" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1585100237204">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1584935044277" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1585100237204" />
     <state x="199" y="196" key="chooseDestDirectoryDialog" timestamp="1584355837582">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="199" y="196" key="chooseDestDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1584355837582" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1585092366185">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1585270740533">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1585092366185" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1585270740533" />
     <state x="419" y="41" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1584972373146">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="419" y="41" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824@0.0.1536.824" timestamp="1584972373146" />
+    <state x="475" y="31" key="refactoring.ChangeSignatureDialog" timestamp="1585210602840">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="475" y="31" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1585210602840" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1585229305718">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1585229305718" />
     <state x="1018" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1585092915363">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

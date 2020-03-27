@@ -26,7 +26,7 @@ public class CustomerDAO {
 
             return customer;
         } catch (SQLException ex) {
-            System.out.println("While searching a customer with Id : " + cusId + ", an error occured: " + ex);
+            System.out.println("While searching a customer with Id : " + cusId + ", an error occurred: " + ex);
             //Return Exception
             throw ex;
         }

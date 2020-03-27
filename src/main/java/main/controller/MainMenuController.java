@@ -113,6 +113,57 @@ public class MainMenuController {
             }
 
         }
+
+        if(me.getSource() == btnKelUkrHewan)
+        {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetSizeView.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+
+        }
+
+        if(me.getSource() == btnKelJnsHewan)
+        {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetTypeView.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+
+        }
+
+        if(me.getSource() == btnKelSupplier)
+        {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/SupplierView.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+
+        }
     }
 
 

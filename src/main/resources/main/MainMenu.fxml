@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.MainMenuController">
+<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.MainMenuController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8979" height="255.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1d42b" height="515.0" layoutY="255.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
@@ -41,7 +40,7 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnKelSupplier" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Supplier" textFill="#ffed00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Button fx:id="btnKelSupplier" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Supplier" textFill="#ffed00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -49,12 +48,12 @@
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnKelLaporan" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Laporan" textAlignment="CENTER" textFill="#ffed00" GridPane.rowIndex="2">
+                  <Button fx:id="btnKelLaporan" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Laporan" textAlignment="CENTER" textFill="#ffed00" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnMainTentang" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Tentang" textFill="#ffed00" GridPane.columnSpan="2">
+                  <Button fx:id="btnMainTentang" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Tentang" textFill="#ffed00" GridPane.columnSpan="2">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -70,7 +69,7 @@
                         <Insets left="95.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnMainBantuan" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Bantuan" textFill="#ffed00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Button fx:id="btnMainBantuan" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Bantuan" textFill="#ffed00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -80,12 +79,12 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnKelTransaksi" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Transaksi" textFill="#ffed00" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Button fx:id="btnKelTransaksi" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Transaksi" textFill="#ffed00" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnKelHewan" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Hewan" textFill="#ffed00" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                  <Button fx:id="btnKelHewan" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Hewan" textFill="#ffed00" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -95,17 +94,17 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnKelJnsHewan" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Jenis Hewan" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <Button fx:id="btnKelJnsHewan" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Tipe Hewan" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnKelLayanan" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Layanan" textFill="#ffed00" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <Button fx:id="btnKelLayanan" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Layanan" textFill="#ffed00" GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnKelUkrHewan" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Ukuran Hewan" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT">
+                  <Button fx:id="btnKelUkrHewan" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Ukuran Hewan" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -113,7 +112,7 @@
                         <Insets right="95.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnKelProduk" mnemonicParsing="false" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Produk" textFill="#ffed00" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                  <Button fx:id="btnKelProduk" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #000000; -fx-background-radius: 25; -fx-border-radius: 25;" text="Kelola Produk" textFill="#ffed00" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />
                      </font>

@@ -26,6 +26,8 @@ import static java.lang.Thread.sleep;
 
 public class EmployeeController {
 
+    private static String returnID;
+    private static String returnRole;
 
     @FXML
     private TableColumn<Employee, Integer> empId;
@@ -112,6 +114,16 @@ public class EmployeeController {
     @FXML
     void c4c4c4cb(ActionEvent event) {
 
+    }
+
+    public static void getUserLogin(String loginID) {
+
+        returnID = loginID;
+    }
+
+    public static void getRoleLogin(String loginRole) {
+
+        returnRole = loginRole;
     }
 
     public void handleButtonEmployee(MouseEvent me) {
@@ -209,9 +221,9 @@ public class EmployeeController {
 
     @FXML
     private void updateEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
-        LoginController lc = new LoginController();
+
         try {
-            EmployeeDAO.updateEntries(lc.getUserLogin(), txtID.getText(), txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
+            EmployeeDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
                     txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
 
         } catch (SQLException e) {
@@ -222,9 +234,8 @@ public class EmployeeController {
     @FXML
     private void insertEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
 
-        LoginController lc = new LoginController();
         try {
-            EmployeeDAO.insertEmp(lc.getUserLogin(),txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
+            EmployeeDAO.insertEmp(returnID ,txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
                     txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
 
         } catch (SQLException e) {
