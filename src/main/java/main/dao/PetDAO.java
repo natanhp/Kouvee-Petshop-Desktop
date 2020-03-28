@@ -2,10 +2,14 @@ package main.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.model.Customer;
 import main.model.Pet;
+import main.model.PetSize;
+import main.model.PetType;
 import main.util.DBUtil;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class PetDAO {
@@ -14,7 +18,12 @@ public class PetDAO {
     public static Pet searchPet(String petId) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM pets WHERE Id =" + petId;
+        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.customers_name AS 'owner', pt.type 'type', ps.size 'size' " +
+                "FROM pets p " +
+                "JOIN customers cs ON cs.id = p.id " +
+                "JOIN pettypes pt ON pt.id = p.PetTypes_id " +
+                "JOIN petsizes ps ON ps.id = p.PetSizes_id " +
+                "WHERE p.id = " + petId +";";
 
         //Execute SELECT Statement
         try {
@@ -40,9 +49,9 @@ public class PetDAO {
             pet.setId(rs.getInt("id"));
             pet.setName(rs.getString("name"));
             pet.setDateBirth(rs.getDate("dateBirth"));
-            pet.setCustomer_Id(rs.getInt("Customers_id"));
-            pet.setPetSize_Id(rs.getInt("PetSizes_id"));
-            pet.setPetType_Id(rs.getInt("PetTypes_id"));
+            pet.setCustomer_name(rs.getString("customers_name"));
+            pet.setPetSize_name(rs.getString("size"));
+            pet.setPetType_name(rs.getString("type"));
         }
         return pet;
     }
@@ -51,7 +60,11 @@ public class PetDAO {
     public static ObservableList<Pet> searchPets() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM pets";
+        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.customers_name AS 'owner' , pt.type AS 'type', ps.size AS 'size' " +
+                "FROM pets AS p " +
+                "JOIN customers AS cs ON cs.id = p.id " +
+                "JOIN pettypes AS pt ON pt.id = p.PetTypes_id " +
+                "JOIN petsizes AS ps ON ps.id = p.PetSizes_id;";
 
         //Execute SELECT Statement
         try {
@@ -78,20 +91,22 @@ public class PetDAO {
         ObservableList<Pet> petList = FXCollections.observableArrayList();
 
         while(rs.next()) {
+
             Pet pet = new Pet();
             pet = new Pet();
             pet.setId(rs.getInt("id"));
             pet.setName(rs.getString("name"));
             pet.setDateBirth(rs.getDate("dateBirth"));
-            pet.setCustomer_Id(rs.getInt("Customers_id"));
-            pet.setPetType_Id(rs.getInt("PetTypes_id"));
-            pet.setPetSize_Id(rs.getInt("PetSizes_id"));
+            pet.setCustomer_name(rs.getString("customers_name"));
+            pet.setPetType_name(rs.getString("type"));
+            pet.setPetSize_name(rs.getString("size"));
 
-            //Add employee to the ObservableList
+            //Add pet to the ObservableList
             petList.add(pet);
+
         }
 
-        //Return empList (ObservableList of Employees
+        //Return petList (ObservableList of Pets
         return petList;
     }
 
@@ -139,7 +154,7 @@ public class PetDAO {
     }
 
     //SOFT DELETE an pet
-    public static void softDeleteEmpWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+    public static void softDeletePetWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
 
         //Declare an UPDATE Statement
         String deleteStmt =
@@ -170,7 +185,7 @@ public class PetDAO {
 
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO employees " +
+                "INSERT INTO pets " +
                         "(name, dateBirth, createdAt, Customers_id, PetTypes_id, PetSizes_id, createdBy)" +
                         "VALUES " +
                         "('" + name + "','" + dateBirth +

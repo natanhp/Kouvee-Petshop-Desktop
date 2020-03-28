@@ -15,7 +15,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.dao.PetTypeDAO;
 import main.model.PetType;
-import main.model.PetType;
 
 import java.io.IOException;
 import java.sql.SQLException;

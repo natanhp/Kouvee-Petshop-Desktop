@@ -1,8 +1,17 @@
 package main.util;
 
-import com.sun.rowset.CachedRowSetImpl;
+/* BUG IN THE PACKAGE
+Usage of the below package is is not recommended as the result statement
+returned for the table's column name are not the column labels, instead using the column names
+therefore will cause java.sql.SQLException : invalid column name
 
-import javax.swing.plaf.nimbus.State;
+Column labels can be used with queries that have aliases whereas
+column names referred to the table's original column name
+import com.sun.rowset.CachedRowSetImpl;
+ */
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
+
 import java.sql.*;
 
 public class DBUtil {
@@ -55,7 +64,9 @@ public class DBUtil {
     public static ResultSet dbExecuteQuery(String queryStmt) throws SQLException, ClassNotFoundException {
         Statement stmt = null;
         ResultSet resultSet = null;
-        CachedRowSetImpl crs = null;
+
+//        CachedRowSetImpl crs = null;
+        CachedRowSet crs = null;
 
         try {
             //Establish MySQL Connection(Connect to DB)
@@ -71,7 +82,8 @@ public class DBUtil {
             //CachedRowSet Implementation
             //Using CachedRowSet preventing "java.sq;.SQLRecoverableException: Closed Connection: next" err
 
-            crs = new CachedRowSetImpl();
+//            crs = new CachedRowSetImpl();
+            crs = RowSetProvider.newFactory().createCachedRowSet();
             crs.populate(resultSet);
         }
         catch (SQLException ex) {

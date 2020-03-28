@@ -1,25 +1,32 @@
 package main.controller;
 
+import com.mysql.cj.jdbc.exceptions.MySQLQueryInterruptedException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import main.dao.EmployeeDAO;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import main.dao.PetDAO;
 import main.dao.PetSizeDAO;
 import main.dao.PetTypeDAO;
 import main.model.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 
 public class PetController {
 
-    private final ObservableList selectBox = FXCollections.observableArrayList();
+    private static String returnID;
+    private static String returnRole;
 
     @FXML
     private TableColumn<Pet, Integer> petId;
@@ -28,19 +35,19 @@ public class PetController {
     private Button btnHapus;
 
     @FXML
-    private TextField txtTelp;
+    private TextField txtTglLahir;
 
     @FXML
     private ComboBox<PetType> comboTipe;
 
     @FXML
-    private TableColumn<Pet, Integer> petType;
+    private TableColumn<Pet, String> petType;
 
     @FXML
     private TextField txtNama;
 
     @FXML
-    private TableColumn<Pet, Integer> petOwner;
+    private TableColumn<Pet, String> petOwner;
 
     @FXML
     private TableColumn<Pet, Date> petDateBirth;
@@ -70,10 +77,10 @@ public class PetController {
     private Button btnBersih;
 
     @FXML
-    private TableView<Pet> tableAll;
+    private TextField txtOwner;
 
     @FXML
-    private TextField txtAlamat;
+    private TableView<Pet> tableAll;
 
     @FXML
     private ComboBox<PetSize> comboUkuran;
@@ -82,19 +89,101 @@ public class PetController {
     private Button btnLihat;
 
     @FXML
-    private TableColumn<Pet, Integer> petSize;
+    private TableColumn<Pet, String> petSize;
 
     @FXML
     private TextField txtCari;
 
-    @FXML
-    void searchPet(ActionEvent event) {
+    public static void getUserLogin(String loginID) {
 
+        returnID = loginID;
+    }
+
+    public static void getRoleLogin(String loginRole) {
+
+        returnRole = loginRole;
+    }
+
+    public void handleButtonPet (MouseEvent me){
+        if (me.getSource() == btnHewanKeluar)
+            System.exit(0);
+
+        if (me.getSource() == btnMenuUtama) {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenu.fxml")));
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
+
+    //Search a Pet
+    @FXML
+    void searchPet(ActionEvent event) throws SQLException, ClassNotFoundException {
+        try {
+            //Get PetType Information
+            Pet p = PetDAO.searchPet(txtCari.getText());
+
+            //Populate PetType on TableView and Display on TextField
+            populateAndShowPet(p);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error occurred while getting Pet information from DB" + e);
+            throw e;
+        }
+    }
+
+    //Search all Pets
+    @FXML
+    void searchPets(ActionEvent event) throws SQLException, ClassNotFoundException {
+
+        try {
+            //Get all PetType information
+            ObservableList<Pet> pData = PetDAO.searchPets();
+
+            //Populate PetTypes on TableView
+            populatePets(pData);
+        } catch (SQLException e) {
+            System.out.println("Error occurred while getting pet information from DB " + e);
+            throw e;
+        }
     }
 
     @FXML
-    void searchPets(ActionEvent event) {
+    private void populateAndShowPet (Pet p) throws ClassNotFoundException {
+        if (p != null) {
+            populatePet(p);
+        } else {
+            System.out.println("This pet doesn't exist");
+        }
+    }
 
+    //Populate Pets
+    @FXML
+    private void populatePet (Pet p) throws ClassNotFoundException {
+
+        //Declare an ObservableList for TableView
+        ObservableList<Pet> pData = FXCollections.observableArrayList();
+        //Add pet to the ObservableList
+        pData.add(p);
+        //Set items to the tableAll
+        tableAll.setItems(pData);
+    }
+
+
+    @FXML
+    private void populatePets (ObservableList <Pet> pData) throws ClassNotFoundException {
+
+        //Set items to the tableAll
+        tableAll.setItems(pData);
     }
 
     @FXML
@@ -103,12 +192,31 @@ public class PetController {
         petId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         petName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         petDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
-        petOwner.setCellValueFactory(cellData -> cellData.getValue().customer_IdProperty().asObject());
-        petType.setCellValueFactory(cellData -> cellData.getValue().petType_IdProperty().asObject());
-        petSize.setCellValueFactory(cellData -> cellData.getValue().petSize_IdProperty().asObject());
+        petOwner.setCellValueFactory(cellData -> cellData.getValue().customer_nameProperty());
+        petType.setCellValueFactory(cellData -> cellData.getValue().petType_nameProperty());
+        petSize.setCellValueFactory(cellData -> cellData.getValue().petSize_nameProperty());
 
-//        comboTipe.setItems();
+//        Callback<ListView<PetType>, ListCell<PetType>> factory = lv -> new ListCell<PetType>() {
+//
+//            @Override
+//            protected void updateItem(PetType item, boolean empty) {
+//                super.updateItem(item, empty);
+//                setText(empty ? "" : item.getType());
+//            }
+//
+//        };
+
+
+        ObservableList typeList = FXCollections.observableArrayList();
+        comboUkuran.getItems().clear();
+        comboTipe.getItems().clear();
+        comboTipe.setItems(typeList);
+        comboUkuran.setItems(typeList);
+//        comboUkuran.converterProperty();
+//        comboTipe.setCellFactory(factory);
+//        comboTipe.setButtonCell(factory.call(null));
     }
+
 
     @FXML
     void deletePet(ActionEvent event) {
@@ -121,27 +229,102 @@ public class PetController {
     }
 
     @FXML
-    void insertPet(ActionEvent event) {
+    void insertPet(ActionEvent event) throws SQLException, ClassNotFoundException{
+        try {
 
+            String tipe = Integer.toString(comboTipe.getValue().getId());
+            String ukr = Integer.toString(comboUkuran.getValue().getId());
+            PetDAO.insertPet(returnID, txtNama.getText(), txtTglLahir.getText(), txtOwner.getText()
+                    ,tipe, ukr);
+
+
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while inserting pettype");
+        }
     }
 
     @FXML
-    private void selectType(ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void pickerType(MouseEvent me) throws SQLException, ClassNotFoundException {
 
         comboTipe.setMaxHeight(20);
 
         try {
-            //Try getting all the PetTypes information
+            //Try getting all the PetTypes and PetSizes information
             ObservableList<PetType> typeData = PetTypeDAO.searchPetTypes();
+            ObservableList<PetSize> sizeData = PetSizeDAO.searchPetSizes();
 
+            //Populate PetTypes and PetSizes on ComboBox
+            populatePetTypeComboBox(typeData);
+            populatePetSizeComboBox(sizeData);
         } catch (SQLException e) {
             System.out.println("Error occurred while getting all pettypes information from DB " + e);
             throw e;
         }
-
-//        String query = "SELECT id FROM pettypes";
-//        pst
     }
+
+    @FXML
+    private void selectType(ActionEvent ae) throws SQLException, ClassNotFoundException {
+
+    }
+
+    @FXML
+    private void populatePetTypeComboBox(ObservableList<PetType> typeData) throws SQLException, ClassNotFoundException {
+
+        //Set items to the comboBox
+        comboTipe.setItems(typeData);
+        comboTipe.setConverter(new StringConverter<PetType>() {
+
+            @Override
+            public String toString(PetType object) {
+                return object.getType();
+            }
+
+            public int getObjectID(PetType object) {
+                return object.getId();
+            }
+
+            @Override
+            public PetType fromString(String string) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+        });
+
+        comboTipe.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PetType>() {
+            @Override
+            public void changed(ObservableValue<? extends PetType> observable, PetType oldValue, PetType newValue) {
+
+            }
+        });
+
+    }
+
+    @FXML
+    private void populatePetSizeComboBox(ObservableList<PetSize> typeData) throws SQLException, ClassNotFoundException {
+
+        //Set items to the comboBox
+        comboUkuran.setItems(typeData);
+        comboUkuran.setConverter(new StringConverter<PetSize>() {
+
+            @Override
+            public String toString(PetSize object) {
+                return object.getSize();
+            }
+
+            public int getObjectID(PetSize object) {
+                return object.getId();
+            }
+
+            @Override
+            public PetSize fromString(String string) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+        });
+
+    }
+
+
 
     @FXML
     void selectSize(ActionEvent event) {

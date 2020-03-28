@@ -7,17 +7,17 @@ import java.util.Date;
 public class Pet {
 
     private IntegerProperty Id;
-    private IntegerProperty Customer_Id;
-    private IntegerProperty PetSize_Id;
-    private IntegerProperty PetType_Id;
+    private StringProperty Customer_name;
+    private StringProperty PetSize_name;
+    private StringProperty PetType_name;
     private StringProperty name;
     private SimpleObjectProperty<Date> dateBirth;
 
     public Pet() {
         this.Id = new SimpleIntegerProperty();
-        this.Customer_Id = new SimpleIntegerProperty();
-        this.PetSize_Id = new SimpleIntegerProperty();
-        this.PetType_Id = new SimpleIntegerProperty();
+        this.Customer_name = new SimpleStringProperty();
+        this.PetSize_name = new SimpleStringProperty();
+        this.PetType_name = new SimpleStringProperty();
         this.name = new SimpleStringProperty();
         this.dateBirth = new SimpleObjectProperty<>();
     }
@@ -34,40 +34,40 @@ public class Pet {
         this.Id.set(id);
     }
 
-    public int getCustomer_Id() {
-        return Customer_Id.get();
+    public String getCustomer_name() {
+        return Customer_name.get();
     }
 
-    public IntegerProperty customer_IdProperty() {
-        return Customer_Id;
+    public StringProperty customer_nameProperty() {
+        return Customer_name;
     }
 
-    public void setCustomer_Id(int customer_Id) {
-        this.Customer_Id.set(customer_Id);
+    public void setCustomer_name(String customer_name) {
+        this.Customer_name.set(customer_name);
     }
 
-    public int getPetSize_Id() {
-        return PetSize_Id.get();
+    public String getPetSize_name() {
+        return PetSize_name.get();
     }
 
-    public IntegerProperty petSize_IdProperty() {
-        return PetSize_Id;
+    public StringProperty petSize_nameProperty() {
+        return PetSize_name;
     }
 
-    public void setPetSize_Id(int petSize_Id) {
-        this.PetSize_Id.set(petSize_Id);
+    public void setPetSize_name(String petSize_name) {
+        this.PetSize_name.set(petSize_name);
     }
 
-    public int getPetType_Id() {
-        return PetType_Id.get();
+    public String getPetType_name() {
+        return PetType_name.get();
     }
 
-    public IntegerProperty petType_IdProperty() {
-        return PetType_Id;
+    public StringProperty petType_nameProperty() {
+        return PetType_name;
     }
 
-    public void setPetType_Id(int petType_Id) {
-        this.PetType_Id.set(petType_Id);
+    public void setPetType_name(String petType_name) {
+        this.PetType_name.set(petType_name);
     }
 
     public String getName() {

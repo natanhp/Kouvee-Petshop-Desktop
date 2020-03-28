@@ -164,6 +164,23 @@ public class MainMenuController {
             }
 
         }
+
+        if(me.getSource() == btnKelHewan)
+        {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetView.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+
+        }
     }
 
 
