@@ -196,36 +196,38 @@ public class PetController {
         petType.setCellValueFactory(cellData -> cellData.getValue().petType_nameProperty());
         petSize.setCellValueFactory(cellData -> cellData.getValue().petSize_nameProperty());
 
-//        Callback<ListView<PetType>, ListCell<PetType>> factory = lv -> new ListCell<PetType>() {
-//
-//            @Override
-//            protected void updateItem(PetType item, boolean empty) {
-//                super.updateItem(item, empty);
-//                setText(empty ? "" : item.getType());
-//            }
-//
-//        };
-
-
         ObservableList typeList = FXCollections.observableArrayList();
         comboUkuran.getItems().clear();
         comboTipe.getItems().clear();
         comboTipe.setItems(typeList);
         comboUkuran.setItems(typeList);
-//        comboUkuran.converterProperty();
-//        comboTipe.setCellFactory(factory);
-//        comboTipe.setButtonCell(factory.call(null));
     }
 
 
     @FXML
-    void deletePet(ActionEvent event) {
+    void deletePet(ActionEvent event) throws SQLException, ClassNotFoundException {
+        try {
+            PetDAO.deletePetWithId(txtID.getText());
 
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while deleting pete");
+        }
     }
 
     @FXML
-    void updatePet(ActionEvent event) {
+    void updatePet(ActionEvent event) throws SQLException, ClassNotFoundException{
+        try {
+            String tipe = Integer.toString(comboTipe.getValue().getId());
+            String ukr = Integer.toString(comboUkuran.getValue().getId());
 
+            Customer owner = PetDAO.searchOwner(txtOwner.getText());
+            String Customers_id = Integer.toString(owner.getId());
+
+            PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtTglLahir.getText(), Customers_id, tipe, ukr);
+
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while deleting pet");
+        }
     }
 
     @FXML
@@ -234,7 +236,13 @@ public class PetController {
 
             String tipe = Integer.toString(comboTipe.getValue().getId());
             String ukr = Integer.toString(comboUkuran.getValue().getId());
-            PetDAO.insertPet(returnID, txtNama.getText(), txtTglLahir.getText(), txtOwner.getText()
+
+            Customer owner = PetDAO.searchOwner(txtOwner.getText());
+            String Customers_id = Integer.toString(owner.getId());
+
+            System.out.println("Customers ID : "+Customers_id);
+
+            PetDAO.insertPet(returnID, txtNama.getText(), txtTglLahir.getText(), Customers_id
                     ,tipe, ukr);
 
 
@@ -328,11 +336,6 @@ public class PetController {
 
     @FXML
     void selectSize(ActionEvent event) {
-
-    }
-
-    @FXML
-    void handleButtonSupplier(ActionEvent event) {
 
     }
 

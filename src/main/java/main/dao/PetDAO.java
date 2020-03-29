@@ -20,7 +20,7 @@ public class PetDAO {
         //Declare a SELECT Statement
         String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.customers_name AS 'owner', pt.type 'type', ps.size 'size' " +
                 "FROM pets p " +
-                "JOIN customers cs ON cs.id = p.id " +
+                "JOIN customers cs ON cs.id = p.Customers_id " +
                 "JOIN pettypes pt ON pt.id = p.PetTypes_id " +
                 "JOIN petsizes ps ON ps.id = p.PetSizes_id " +
                 "WHERE p.id = " + petId +";";
@@ -62,7 +62,7 @@ public class PetDAO {
         //Declare a SELECT statement
         String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.customers_name AS 'owner' , pt.type AS 'type', ps.size AS 'size' " +
                 "FROM pets AS p " +
-                "JOIN customers AS cs ON cs.id = p.id " +
+                "JOIN customers AS cs ON cs.id = p.Customers_id " +
                 "JOIN pettypes AS pt ON pt.id = p.PetTypes_id " +
                 "JOIN petsizes AS ps ON ps.id = p.PetSizes_id;";
 
@@ -177,12 +177,45 @@ public class PetDAO {
         }
     }
 
+    //Search the Owner of the pet
+    public static Customer searchOwner(String Customers_name) throws SQLException, ClassNotFoundException {
+
+        //Declare INSERT statement
+        String searchStmt = "SELECT id FROM customers WHERE customers_name = '" + Customers_name + "'";
+
+        //Execute query
+        try {
+
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsSearch = DBUtil.dbExecuteQuery(searchStmt);
+
+            Customer customer = getOwnerFromResultSet(rsSearch);
+
+            return customer;
+
+        } catch(SQLException ex) {
+            System.out.println("Error occurred while SELECT operation: "+ex);
+
+            //throws exceptions
+            throw ex;
+        }
+    }
+
+    private static Customer getOwnerFromResultSet(ResultSet rs) throws SQLException {
+        Customer cs = null;
+
+        if(rs.next()) {
+            cs = new Customer();
+            cs.setId(rs.getInt("id"));
+        }
+        return cs;
+    }
+
     //INSERT a Pet
     public static void insertPet(String Logged, String name, String dateBirth, String Customers_id,
                                  String PetTypes_id, String PetSizes_id)
             throws SQLException, ClassNotFoundException
     {
-
         //Declare an INSERT Statement
         String updateStmt =
                 "INSERT INTO pets " +
