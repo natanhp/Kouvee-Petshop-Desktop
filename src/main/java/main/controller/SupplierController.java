@@ -91,6 +91,7 @@ public class SupplierController {
         returnRole = loginRole;
     }
 
+    @FXML
     public void handleButtonSupplier(MouseEvent me) {
 
         if(me.getSource() == btnSupplierKeluar)

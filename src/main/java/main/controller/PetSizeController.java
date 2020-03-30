@@ -77,6 +77,7 @@ public class PetSizeController {
         returnRole = loginRole;
     }
 
+    @FXML
     public void handleButtonUkuran (MouseEvent me){
         if (me.getSource() == btnUkuranKeluar)
             System.exit(0);

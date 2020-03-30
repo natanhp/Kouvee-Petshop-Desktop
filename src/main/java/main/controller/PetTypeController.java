@@ -75,6 +75,7 @@ public class PetTypeController {
         returnRole = loginRole;
     }
 
+    @FXML
     public void handleButtonTipe (MouseEvent me){
         if (me.getSource() == btnTipeKeluar)
             System.exit(0);

@@ -14,7 +14,7 @@ public class CustomerDAO {
     public static Customer searchCustomer(String cusName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM customers WHERE customers_name ='" + cusName + "';";
+        String selectStmt = "SELECT * FROM customers WHERE name ='" + cusName + "';";
 
         //Execute SELECT Statement
         try {
@@ -38,7 +38,7 @@ public class CustomerDAO {
         if(rs.next()) {
             cus = new Customer();
             cus.setId(rs.getInt("id"));
-            cus.setName(rs.getString("customers_name"));
+            cus.setName(rs.getString("name"));
             cus.setDateBirth(rs.getDate("dateBirth"));
             cus.setPhoneNumber(rs.getString("phoneNumber"));
             cus.setAddress(rs.getString("address"));
@@ -81,7 +81,7 @@ public class CustomerDAO {
             Customer cus = new Customer();
             cus = new Customer();
             cus.setId(rs.getInt("id"));
-            cus.setName(rs.getString("customers_name"));
+            cus.setName(rs.getString("name"));
             cus.setDateBirth(rs.getDate("dateBirth"));
             cus.setAddress(rs.getString("address"));
             cus.setPhoneNumber(rs.getString("phoneNumber"));
@@ -102,7 +102,7 @@ public class CustomerDAO {
         //Declare an UPDATE Statement
         String updateStmt =
                 "UPDATE customers " +
-                        "SET customers_name = '" + name + "' " +
+                        "SET name = '" + name + "' " +
                         ", address = '" + address + "' " +
                         ", dateBirth = '" + dateBirth + "' " +
                         ", phoneNumber = '" + phoneNumber + "' " +
@@ -142,7 +142,7 @@ public class CustomerDAO {
         //Declare an UPDATE Statement
         String deleteStmt =
                 "UPDATE customers " +
-                        "SET customers_name = NULL" +
+                        "SET name = NULL" +
                         ", address = NULL" +
                         ", dateBirth = NULL" +
                         ", phoneNumber = NULL" +
@@ -168,7 +168,7 @@ public class CustomerDAO {
         //Declare an INSERT Statement
         String updateStmt =
                 "INSERT INTO customers " +
-                        "(customers_name, address, dateBirth, phoneNumber, createdAt, createdBy)" +
+                        "(name, address, dateBirth, phoneNumber, createdAt, createdBy)" +
                         "VALUES " +
                         "('" + name + "','" + address + "','" + dateBirth + "','" + phoneNumber + "', NOW()," +
                         "'" + Logged + "');";

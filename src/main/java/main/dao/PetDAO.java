@@ -18,7 +18,7 @@ public class PetDAO {
     public static Pet searchPet(String petId) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.customers_name AS 'owner', pt.type 'type', ps.size 'size' " +
+        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner', pt.type 'type', ps.size 'size' " +
                 "FROM pets p " +
                 "JOIN customers cs ON cs.id = p.Customers_id " +
                 "JOIN pettypes pt ON pt.id = p.PetTypes_id " +
@@ -49,7 +49,7 @@ public class PetDAO {
             pet.setId(rs.getInt("id"));
             pet.setName(rs.getString("name"));
             pet.setDateBirth(rs.getDate("dateBirth"));
-            pet.setCustomer_name(rs.getString("customers_name"));
+            pet.setCustomer_name(rs.getString("owner"));
             pet.setPetSize_name(rs.getString("size"));
             pet.setPetType_name(rs.getString("type"));
         }
@@ -60,7 +60,7 @@ public class PetDAO {
     public static ObservableList<Pet> searchPets() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.customers_name AS 'owner' , pt.type AS 'type', ps.size AS 'size' " +
+        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner' , pt.type AS 'type', ps.size AS 'size' " +
                 "FROM pets AS p " +
                 "JOIN customers AS cs ON cs.id = p.Customers_id " +
                 "JOIN pettypes AS pt ON pt.id = p.PetTypes_id " +
@@ -97,7 +97,7 @@ public class PetDAO {
             pet.setId(rs.getInt("id"));
             pet.setName(rs.getString("name"));
             pet.setDateBirth(rs.getDate("dateBirth"));
-            pet.setCustomer_name(rs.getString("customers_name"));
+            pet.setCustomer_name(rs.getString("owner"));
             pet.setPetType_name(rs.getString("type"));
             pet.setPetSize_name(rs.getString("size"));
 
@@ -181,7 +181,7 @@ public class PetDAO {
     public static Customer searchOwner(String Customers_name) throws SQLException, ClassNotFoundException {
 
         //Declare INSERT statement
-        String searchStmt = "SELECT id FROM customers WHERE customers_name = '" + Customers_name + "'";
+        String searchStmt = "SELECT id FROM customers WHERE name = '" + Customers_name + "'";
 
         //Execute query
         try {

@@ -104,7 +104,8 @@ public class PetController {
         returnRole = loginRole;
     }
 
-    public void handleButtonPet (MouseEvent me){
+    @FXML
+    void handleButtonPet (MouseEvent me){
         if (me.getSource() == btnHewanKeluar)
             System.exit(0);
 
@@ -210,7 +211,7 @@ public class PetController {
             PetDAO.deletePetWithId(txtID.getText());
 
         } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting pete");
+            System.out.println("Problem occurred while deleting pet");
         }
     }
 
@@ -226,7 +227,7 @@ public class PetController {
             PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtTglLahir.getText(), Customers_id, tipe, ukr);
 
         } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting pet");
+            System.out.println("Problem occurred while updating pet");
         }
     }
 

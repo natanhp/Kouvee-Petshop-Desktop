@@ -81,7 +81,7 @@ public class EmployeeDAO {
         ObservableList<Employee> empList = FXCollections.observableArrayList();
 
         while(rs.next()) {
-            Employee emp = new Employee();
+            Employee emp;
             emp = new Employee();
             emp.setId(rs.getInt("id"));
             emp.setName(rs.getString("name"));

@@ -181,6 +181,40 @@ public class MainMenuController {
             }
 
         }
+
+        if(me.getSource() == btnKelLayanan)
+        {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceView.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+
+        }
+
+        if(me.getSource() == btnKelProduk)
+        {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ProductView.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+
+        }
     }
 
 

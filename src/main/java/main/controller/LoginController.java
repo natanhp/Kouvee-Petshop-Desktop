@@ -189,5 +189,8 @@ public class LoginController implements Initializable {
         PetController.getUserLogin(getUserLogin());
         PetController.getRoleLogin(getUserRole());
 
+        ServiceController.getUserLogin(getUserLogin());
+        ServiceController.getRoleLogin(getUserRole());
+
     }
 }
