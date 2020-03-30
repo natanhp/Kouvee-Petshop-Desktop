@@ -12,6 +12,10 @@ import com.sun.rowset.CachedRowSetImpl;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 
 public class DBUtil {
@@ -111,6 +115,7 @@ public class DBUtil {
 
     //DB Execute Update (INSERT/UPDATE/DELETE Operation
     public static void dbExecuteUpdate(String sqlStmt) throws SQLException, ClassNotFoundException {
+//        PreparedStatement statement = null;
         Statement stmt = null;
 
         try {
@@ -123,6 +128,60 @@ public class DBUtil {
 
             //Run executeUpdate operation with given sql statement
             stmt.executeUpdate(sqlStmt);
+
+//            File myFile = new File("image.png");
+//            try (FileInputStream fin = new FileInputStream(myFile)) {
+//
+//                pst.setBinaryStream(1, fin, (int) myFile.length());
+//                pst.executeUpdate();
+//
+//            } catch (IOException ex) {
+//
+//                Logger lgr = Logger.getLogger(JdbcWriteImage.class.getName());
+//                lgr.log(Level.SEVERE, ex.getMessage(), ex);
+//            }
+        }
+        catch (SQLException ex){
+            System.out.println("Problem occured at executeUpdate operation: " + ex);
+            throw ex;
+        } finally {
+            if(stmt != null) {
+                //Close Statement
+                stmt.close();
+            }
+
+            //Close connection
+            dbDisconnect();
+        }
+    }
+
+    //DB Execute Update (INSERT/UPDATE/DELETE Operation
+    public static void dbSpecialExecuteUpdate(String sqlStmt, String filePath) throws SQLException, ClassNotFoundException {
+        PreparedStatement stmt = null;
+//        Statement stmt = null;
+
+        try {
+
+            //Establish MySQL Connection(Connect to DB)
+            dbConnect();
+
+            //Prepare Statement
+            stmt = conn.prepareStatement(sqlStmt);
+
+            File file = new File(filePath);
+            try (FileInputStream fis = new FileInputStream(file)) {
+
+                System.out.println(filePath);
+
+                int i = 1;
+                stmt.setBinaryStream(i++, fis, (int) file.length());
+
+                //Run executeUpdate operation with given sql statement
+                stmt.executeUpdate();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         catch (SQLException ex){
             System.out.println("Problem occured at executeUpdate operation: " + ex);

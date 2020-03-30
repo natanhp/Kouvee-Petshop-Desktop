@@ -7,11 +7,13 @@ import main.model.Customer;
 import main.model.Pet;
 import main.model.Product;
 import main.util.DBUtil;
+import sun.rmi.runtime.Log;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class ProductDAO {
     //SELECT a Product
@@ -40,8 +42,8 @@ public class ProductDAO {
 
         Product pr = null;
         if(rs.next()) {
-            byte[] newByte = {0};
-            pr = new Product(newByte);
+            String newString = null;
+            pr = new Product(newString);
             pr.setId(rs.getInt("id"));
             pr.setProductName(rs.getString("productName"));
             pr.setProductQuantity(rs.getInt("productQuantity"));
@@ -86,8 +88,8 @@ public class ProductDAO {
 
         while(rs.next()) {
             Product pr;
-            byte[] newByte = {0};
-            pr = new Product(newByte);
+            String newString = null;
+            pr = new Product(newString);
             pr.setId(rs.getInt("id"));
             pr.setProductName(rs.getString("productName"));
             pr.setProductQuantity(rs.getInt("productQuantity"));
@@ -106,7 +108,7 @@ public class ProductDAO {
 
     //Update an products's entries
     public static void updateEntries (String Logged, String Id, String name, String meas, String prQty,
-                                      String price, String minQty, byte[] image)
+                                      String price, String minQty, String image)
             throws SQLException, ClassNotFoundException
     {
         //Declare an UPDATE Statement
@@ -117,13 +119,13 @@ public class ProductDAO {
                         ", meassurement = '" + meas + "' " +
                         ", productPrice = '" + price + "' " +
                         ", minimumQty = '" + minQty + "' " +
-                        ", image = '" + image + "' " +
+                        ", image = ?" +
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
                         "WHERE id = '" + Id + "';";
 
         try {
-            DBUtil.dbExecuteUpdate(updateStmt);
+            DBUtil.dbSpecialExecuteUpdate(updateStmt, image);
         } catch (SQLException ex) {
 
             System.out.println("Error occurred while UPDATE Operation:" + ex);
@@ -175,20 +177,22 @@ public class ProductDAO {
 
     //INSERT a Customer
     public static void insertPr(String Logged, String name, String prQty, String meas,
-                                String price, String minQty, byte[] image)
+                                String price, String minQty, String image)
             throws SQLException, ClassNotFoundException
     {
 
         //Declare an INSERT Statement
         String updateStmt =
                 "INSERT INTO products " +
-                        "(productName, productQuantity, meassurement, productPrice, minimumQty, image, createdAt, createdBy)" +
+                        "(image, productName, productQuantity, meassurement, productPrice, minimumQty, createdAt, createdBy)" +
                         "VALUES " +
-                        "('" + name + "','" + prQty + "','" + meas + "','" + price + ", '" + minQty + "', '" + image +"', NOW()," +
-                        "'" + Logged + "');";
+                    "(?,'" +
+                        name + "','" + prQty + "','" + meas +
+                        "','" + price + "','" + minQty + "'," + "NOW()" + ",'" + Logged + "');";
 
         try {
-            DBUtil.dbExecuteUpdate(updateStmt);
+            System.out.println(image);
+            DBUtil.dbSpecialExecuteUpdate(updateStmt, image);
         } catch (SQLException ex) {
 
             System.out.println("Error occurred while INSERT operation: " + ex);

@@ -11,9 +11,9 @@ public class Product {
     private IntegerProperty productPrice;
     private StringProperty meassurement;
     private IntegerProperty minimumQuantity;
-    private byte[] image;
+    private String image;
 
-    public Product(byte[] image) {
+    public Product(String image) {
 
         this.Id = new SimpleIntegerProperty();
         this.productQuantity = new SimpleIntegerProperty();
@@ -96,11 +96,11 @@ public class Product {
         this.minimumQuantity.set(minimumQuantity);
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

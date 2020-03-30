@@ -192,5 +192,8 @@ public class LoginController implements Initializable {
         ServiceController.getUserLogin(getUserLogin());
         ServiceController.getRoleLogin(getUserRole());
 
+        ProductController.getUserLogin(getUserLogin());
+        ProductController.getRoleLogin(getUserRole());
+
     }
 }

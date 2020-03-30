@@ -17,14 +17,13 @@ import main.dao.ProductDAO;
 import main.model.Product;
 
 import java.io.*;
-import java.sql.Blob;
 import java.sql.SQLException;
 
 public class ProductController {
 
     private static String returnID;
     private static String returnRole;
-    private static byte[] newFile;
+    private static String filePath;
 
     @FXML
     private Button btnHapus;
@@ -190,7 +189,7 @@ public class ProductController {
             String min = Integer.toString(spinMin.getValue().intValue());
             String price = Integer.toString(spinHarga.getValue().intValue());
 
-            ProductDAO.updateEntries(returnID, txtID.getText(), txtNamaProduk.getText(), txtSatuan.getText(), qty, price, min, newFile);
+            ProductDAO.updateEntries(returnID, txtID.getText(), txtNamaProduk.getText(), txtSatuan.getText(), qty, price, min, filePath);
 
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating product");
@@ -206,7 +205,7 @@ public class ProductController {
             String min = Integer.toString(spinMin.getValue().intValue());
             String price = Integer.toString(spinHarga.getValue().intValue());
 
-            ProductDAO.insertPr(returnID, txtNamaProduk.getText(), qty, txtSatuan.getText(), price, min, newFile);
+            ProductDAO.insertPr(returnID, txtNamaProduk.getText(), qty, txtSatuan.getText(), price, min, filePath);
 
 
         } catch (SQLException e) {
@@ -250,7 +249,7 @@ public class ProductController {
         File file = fileChooser.showOpenDialog(btnOpen.getScene().getWindow());
 
         if(file != null) {
-            newFile = convertFileContentIntoBlob(file.getPath());
+            filePath = file.getPath();
         }
         else
         {
@@ -260,29 +259,36 @@ public class ProductController {
         imagePreview.setImage(image);
     }
 
-    private byte[] convertFileContentIntoBlob(String filePath) throws  IOException{
-
-        // create file object
-        File file = new File(filePath);
-        // initialize a byte array of size of the file
-        byte[] fileContent = new byte[(int) file.length()];
-        FileInputStream inputStream = null;
-        try {
-            // create an input stream pointing to the file
-            inputStream = new FileInputStream(file);
-            // read the contents of file into byte array
-            inputStream.read(fileContent);
-        } catch (IOException e) {
-            throw new IOException("Unable to convert file to byte array. " +
-                    e.getMessage());
-        } finally {
-            // close input stream
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        }
-        return fileContent;
-    }
+//    private byte[] convertFileContentIntoBlob(String filePath) throws IOException{
+//
+//        // create file object
+//        File file = new File(filePath);
+//        // initialize a byte array of size of the file
+//        byte[] fileContent = new byte[(int) file.length()];
+//        FileInputStream inputStream = new FileInputStream(file);
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        try {
+//            for (int readNum; (readNum = inputStream.read(fileContent)) != -1;) {
+//                //Writes to this byte array output stream
+//                bos.write(fileContent, 0, readNum);
+//                System.out.println("read " + readNum + " bytes,");
+//            }
+//            // create an input stream pointing to the file
+//            // read the contents of file into byte array
+////            inputStream.read(fileContent);
+//        } catch (IOException e) {
+//            throw new IOException("Unable to convert file to byte array. " +
+//                    e.getMessage());
+//        } finally {
+//            // close input stream
+//            if (inputStream != null) {
+//                inputStream.close();
+//            }
+//        }
+//
+//        byte[] bytes = bos.toByteArray();
+//        return bytes;
+//    }
 
     @FXML
     private void initialize() {

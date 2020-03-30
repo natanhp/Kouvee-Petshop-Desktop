@@ -181,7 +181,7 @@ public class EmployeeDAO {
                         "VALUES " +
                         "('" + name + "','" + address + "','" + dateBirth + "','" + phoneNumber +
                         "', NOW()," +
-                        "'" + role + "','" + "'" + Logged + "','" + username + "','" + password + "')";
+                        "'" + role + "','" + Logged + "','" + username + "','" + password + "')";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
