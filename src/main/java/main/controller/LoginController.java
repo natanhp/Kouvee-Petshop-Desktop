@@ -15,16 +15,19 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import main.model.Employee;
 import main.model.PetSize;
+import main.util.BCryptHash;
 import main.util.DBUtil;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -105,45 +108,69 @@ public class LoginController implements Initializable {
     @FXML
     private String loginAction() {
 
+        Scanner scanner = new Scanner((System.in));
         String status = "Success";
-        String password = txtPawd.getText();
+
         String username = txtUname.getText();
+        String password = txtPawd.getText();
+        String generatedSecuredPasswordHash = BCryptHash.hashpw(password, BCryptHash.gensalt(10));
         String temp = null;
+        String tempPassword = null;
+        boolean matched = false;
 
         //Query
-        String query = "SELECT id, role FROM employees WHERE username = ? and password = ?;";
+//        String query = "SELECT id, role FROM employees WHERE username = ? and password = ?;";
+        String queryCheck = "SELECT id, role, password FROM employees WHERE username = ?;";
 
         if(username.isEmpty() || password.isEmpty()) {
             setLblError(Color.TOMATO, "Empty credentials");
             status = "Error";
         } else {
             try {
-                preparedStatement = conn.prepareStatement(query);
+                preparedStatement = conn.prepareStatement(queryCheck);
                 preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
+//                preparedStatement.setString(2, password);
                 resultSet = preparedStatement.executeQuery();
 
                 if(resultSet.next() == false)
                 {
-                    setLblError(Color.TOMATO, "Username or password not match. Try again.");
+                    setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
                     status = "Error";
                 }
-                else
+                else if(resultSet.first() == true)
                 {
                     do {
-                        temp = resultSet.getString("role");
+                        temp = resultSet.getString("password");
                         System.out.println(temp);
-                        loginRole = temp;
-                        temp = resultSet.getString("id");
-                        System.out.println(temp);
-                        loginID = temp;
+                        tempPassword = temp;
                     } while (resultSet.next());
 
-                    setAllUserLogin();
-                    setLblError(Color.GREEN, "Login Successful");
-                    status = "Success";
-                }
+                    matched = BCryptHash.checkpw(password, tempPassword);
 
+                    if(matched == true) {
+                        resultSet.first();
+                        do {
+                            temp = resultSet.getString("id");
+                            System.out.println(temp);
+                            loginID = temp;
+                            temp = resultSet.getString("role");
+                            System.out.println(temp);
+                            loginRole = temp;
+                        } while (resultSet.next());
+
+                        setAllUserLogin();
+                        setLblError(Color.GREEN, "Login Successful");
+                        status = "Success";
+                    }
+                    else {
+                        setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
+                        status = "Error";
+                    }
+                }
+                else {
+                    setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
+                    status = "Error";
+                }
             } catch (SQLException e) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, e);
             }

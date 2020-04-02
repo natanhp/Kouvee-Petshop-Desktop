@@ -7,20 +7,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import main.dao.EmployeeDAO;
 import main.model.Employee;
-import main.controller.LoginController;
+import main.util.BCryptHash;
+import main.util.FxDatePickerConverter;
+
 import javax.swing.text.html.ImageView;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.stream.IntStream;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 
 import static java.lang.Thread.sleep;
 
@@ -43,6 +47,8 @@ public class EmployeeController {
     private ImageView imgProfil;
     @FXML
     private TextField txtTglLahir;
+    @FXML
+    private DatePicker pickerDateBirth;
     @FXML
     private Button btnProduk;
     @FXML
@@ -189,7 +195,45 @@ public class EmployeeController {
         empPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
         empRole.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
         empUname.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
+        pickerDateBirth.setEditable(true);
+        initializeDatePicker();
+//        convertDatePicker();
     }
+
+    private void initializeDatePicker() {
+        //Create a day cell factory
+        Callback<DatePicker, DateCell> dayCellFactory =
+                (final DatePicker datePicker) -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        //Must call super
+                        super.updateItem(item, empty);
+
+                        // Show Weekends in red color
+                        DayOfWeek day = DayOfWeek.from(item);
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)
+                        {
+                            this.setTextFill(Color.RED);
+                        }
+                        //Can only select until current date
+                        if (item.isAfter(LocalDate.now()))
+                        {
+                            this.setDisable(true);
+                        }
+                    }
+                };
+
+        //Disable invalid date of births
+        pickerDateBirth.setDayCellFactory(dayCellFactory);
+    }
+
+//    private void convertDatePicker() {
+//        String pattern = "dd/mm/yyyy";
+//
+//        FxDatePickerConverter converter = new FxDatePickerConverter(pattern);
+//
+//        pickerDateBirth.setConverter(converter);
+//    }
 
     //Populate Employee
     @FXML
@@ -220,11 +264,13 @@ public class EmployeeController {
     }
 
     @FXML
-    private void updateEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
+    private void updateEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+
+        String generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
 
         try {
-            EmployeeDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
-                    txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
+            EmployeeDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
+                    txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
 
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating employee");
@@ -235,7 +281,7 @@ public class EmployeeController {
     private void insertEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
 
         try {
-            EmployeeDAO.insertEmp(returnID ,txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
+            EmployeeDAO.insertEmp(returnID ,txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
                     txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
 
         } catch (SQLException e) {
