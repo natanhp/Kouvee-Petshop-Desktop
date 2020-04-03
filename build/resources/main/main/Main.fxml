@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -18,9 +19,9 @@
    <center>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="330.0" minWidth="390.0" prefHeight="330.0" prefWidth="390.0" style="-fx-background-color: #E2D629;" BorderPane.alignment="CENTER">
          <children>
-            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="330.0" minWidth="390.0" prefHeight="330.0" prefWidth="390.0">
+            <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="330.0" minWidth="390.0" prefHeight="330.0" prefWidth="390.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="125.6" minHeight="10.0" prefHeight="101.0" vgrow="SOMETIMES" />
@@ -33,6 +34,9 @@
                      <image>
                         <Image url="@/image/kouveeLogo.png" />
                      </image>
+                     <effect>
+                        <DropShadow color="#00000033" offsetY="2.0" />
+                     </effect>
                   </ImageView>
                   <Label focusTraversable="false" text="Username" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
@@ -41,11 +45,32 @@
                      <font>
                         <Font size="16.0" />
                      </font>
+                     <effect>
+                        <DropShadow color="#00000033" height="17.0" offsetY="2.0" radius="9.0" />
+                     </effect>
                   </Label>
                   <TextField fx:id="txtUname" maxHeight="35.0" maxWidth="241.0" style="-fx-border-radius: 5; -fx-background-radius: 5;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets top="10.0" />
-                     </GridPane.margin></TextField>
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                     </effect></TextField>
+                  <PasswordField fx:id="txtPawd" maxHeight="35.0" maxWidth="241.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets top="10.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                     </effect>
+                  </PasswordField>
+                  <Button fx:id="btnLogin" minHeight="35.0" minWidth="140.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="35.0" prefWidth="140.0" style="-fx-background-radius: 5;" styleClass="loginButton" stylesheets="@../styleButton.css" text="Login" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                     </effect></Button>
                   <Label focusTraversable="false" text="Password" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="50.0" right="155.0" />
@@ -53,21 +78,15 @@
                      <font>
                         <Font size="16.0" />
                      </font>
+                     <effect>
+                        <DropShadow color="#00000033" height="17.0" offsetY="2.0" radius="9.0" />
+                     </effect>
                   </Label>
-                  <Button fx:id="btnLogin" minHeight="35.0" minWidth="140.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #515050; -fx-background-radius: 5; -fx-border-radius: 5;" text="Login" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </GridPane.margin></Button>
-                  <Label fx:id="lblErrors" focusTraversable="false" maxHeight="18.0" maxWidth="233.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+                  <Label fx:id="lblErrors" alignment="BOTTOM_RIGHT" focusTraversable="false" maxHeight="18.0" maxWidth="233.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </Label>
-                  <PasswordField fx:id="txtPawd" maxHeight="35.0" maxWidth="241.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
-                     <GridPane.margin>
-                        <Insets top="10.0" />
-                     </GridPane.margin>
-                  </PasswordField>
                </children>
                <opaqueInsets>
                   <Insets />
