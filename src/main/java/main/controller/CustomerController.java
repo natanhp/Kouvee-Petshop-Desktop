@@ -1,5 +1,7 @@
 package main.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,17 +9,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 import main.dao.CustomerDAO;
 import main.model.Customer;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class CustomerController {
@@ -47,7 +54,7 @@ public class CustomerController {
     private Button btnMenuUtama;
 
     @FXML
-    private TextField txtTglLahir;
+    private DatePicker pickerDateBirth;
 
     @FXML
     private TextField txtID;
@@ -68,7 +75,7 @@ public class CustomerController {
     private TableColumn<Customer, String> cusName;
 
     @FXML
-    private Button btnCustomerKeluar;
+    private Button btnPelangganKeluar;
 
     @FXML
     private Button btnLihat;
@@ -81,6 +88,24 @@ public class CustomerController {
 
     @FXML
     private TableColumn<Customer, String> cusPhoneNumber;
+
+    @FXML
+    private Label addLabel;
+
+    @FXML
+    private Label editLabel;
+
+    @FXML
+    private ImageView deleteLogo;
+
+    @FXML
+    private ImageView addLogo;
+
+    @FXML
+    private Label deleteLabel;
+
+    @FXML
+    private ImageView editLogo;
 
     @FXML
     private TextField txtCari;
@@ -96,7 +121,7 @@ public class CustomerController {
     }
 
     public void handleButtonCustomer (MouseEvent me){
-        if (me.getSource() == btnCustomerKeluar)
+        if (me.getSource() == btnPelangganKeluar)
             System.exit(0);
 
         if (me.getSource() == btnMenuUtama) {
@@ -112,6 +137,78 @@ public class CustomerController {
                 System.err.println(e.getMessage());
             }
         }
+    }
+
+    @FXML
+    private void switchOperations(MouseEvent me) {
+        addLabel.setTextFill(Color.WHITE);
+        if(me.getSource() == addLabel) {
+            btnPerbarui.setDisable(true);
+            btnTambah.setDisable(false);
+            btnHapus.setDisable(true);
+            txtID.setDisable(true);
+            txtNama.setDisable(false);
+            pickerDateBirth.setDisable(false);
+            txtTelp.setDisable(false);
+            txtAlamat.setDisable(false);
+
+            addLabel.setTextFill(Color.WHITE);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_white_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == editLabel) {
+            btnPerbarui.setDisable(false);
+            btnTambah.setDisable(true);
+            btnHapus.setDisable(true);
+            txtID.setDisable(false);
+            txtNama.setDisable(false);
+            pickerDateBirth.setDisable(false);
+            txtTelp.setDisable(false);
+            txtAlamat.setDisable(false);
+
+            addLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.WHITE);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_white_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == deleteLabel) {
+            btnPerbarui.setDisable(true);
+            btnTambah.setDisable(true);
+            btnHapus.setDisable(false);
+            txtID.setDisable(false);
+            txtNama.setDisable(true);
+            pickerDateBirth.setDisable(true);
+            txtTelp.setDisable(true);
+            txtAlamat.setDisable(true);
+
+
+            addLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.WHITE);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_white_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
     }
 
     //Show All Customers
@@ -155,6 +252,70 @@ public class CustomerController {
         cusDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
         cusAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         cusPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+
+        pickerDateBirth.setEditable(true);
+        initializeDatePicker();
+//        convertDatePicker();
+        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue){
+                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
+                }
+            }
+        });
+    }
+
+    private void initializeDatePicker() {
+        //Create a day cell factory
+        Callback<DatePicker, DateCell> dayCellFactory =
+                (final DatePicker datePicker) -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        //Must call super
+                        super.updateItem(item, empty);
+
+                        // Show Weekends in red color
+                        DayOfWeek day = DayOfWeek.from(item);
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)
+                        {
+                            this.setTextFill(Color.RED);
+                        }
+                        //Can only select until current date
+                        if (item.isAfter(LocalDate.now()))
+                        {
+                            this.setDisable(true);
+                        }
+                    }
+                };
+
+        //Disable invalid date of births
+        pickerDateBirth.setDayCellFactory(dayCellFactory);
+    }
+
+    private void convertDatePicker() {
+        pickerDateBirth.setConverter(new StringConverter<LocalDate>()
+        {
+            private DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("Dd/Mm/yyyy");
+
+            @Override
+            public String toString(LocalDate localDate)
+            {
+                if(localDate==null)
+                    return "";
+                return dateTimeFormatter.format(localDate);
+            }
+
+            @Override
+            public LocalDate fromString(String dateString)
+            {
+                if(dateString==null || dateString.trim().isEmpty())
+                {
+                    return null;
+                }
+                return LocalDate.parse(dateString,dateTimeFormatter);
+            }
+        });
     }
 
     //Populate Customers
@@ -198,7 +359,7 @@ public class CustomerController {
     @FXML
     private void updateCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
-            CustomerDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
+            CustomerDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
                     txtTelp.getText());
 
         } catch (SQLException e) {
@@ -210,7 +371,7 @@ public class CustomerController {
     private void insertCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
 
         try {
-            CustomerDAO.insertCus(returnID, txtNama.getText(), txtTglLahir.getText(), txtAlamat.getText(),
+            CustomerDAO.insertCus(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
                     txtTelp.getText());
 
         } catch (SQLException e) {

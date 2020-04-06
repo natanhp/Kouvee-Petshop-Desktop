@@ -11,10 +11,10 @@ import java.sql.SQLException;
 public class PetTypeDAO {
 
     //SELECT a PetType
-    public static PetType searchPetType(String ptId) throws SQLException, ClassNotFoundException {
+    public static PetType searchPetType(String ptName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  pettypes WHERE Id =" + ptId;
+        String selectStmt = "SELECT * FROM  pettypes WHERE type = '" + ptName + "';";
 
         //Execute SELECT Statement
         try {
@@ -26,7 +26,7 @@ public class PetTypeDAO {
 
             return petType;
         } catch (SQLException ex) {
-            System.out.println("While searching a pet type with Id : " + ptId + ", an error occurred: " + ex);
+            System.out.println("While searching a pet type with Type : " + ptName + ", an error occurred: " + ex);
             //Return Exception
             throw ex;
         }

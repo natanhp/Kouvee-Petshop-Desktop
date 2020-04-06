@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class PetDAO {
 
     //SELECT a Pet
-    public static Pet searchPet(String petId) throws SQLException, ClassNotFoundException {
+    public static Pet searchPet(String petName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner', pt.type 'type', ps.size 'size' " +
@@ -23,7 +23,7 @@ public class PetDAO {
                 "JOIN customers cs ON cs.id = p.Customers_id " +
                 "JOIN pettypes pt ON pt.id = p.PetTypes_id " +
                 "JOIN petsizes ps ON ps.id = p.PetSizes_id " +
-                "WHERE p.id = " + petId +";";
+                "WHERE p.name = '" + petName +"';";
 
         //Execute SELECT Statement
         try {
@@ -35,7 +35,7 @@ public class PetDAO {
 
             return pet;
         } catch (SQLException ex) {
-            System.out.println("While searching an pet with Id : " + petId + ", an error occurred: " + ex);
+            System.out.println("While searching an pet with Id : " + petName + ", an error occurred: " + ex);
             //Return Exception
             throw ex;
         }

@@ -1,26 +1,24 @@
 package main.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import main.dao.EmployeeDAO;
-import main.model.Employee;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
-public class MainMenuController implements Initializable {
+public class MainMenuSecondaryController implements Initializable {
 
     private static String returnName;
     @FXML
@@ -83,6 +81,10 @@ public class MainMenuController implements Initializable {
         nameLogged.getText();
     }
 
+    private void setImageButton() {
+
+    }
+
     public void handleMainButtonAction(MouseEvent me) {
         if(me.getSource() == btnMainKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -111,23 +113,6 @@ public class MainMenuController implements Initializable {
             }
         }
 
-        if(me.getSource() == btnKelPegawai)
-        {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/EmployeeView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
         if(me.getSource() == btnKelCustomer)
         {
             Node node = (Node) me.getSource();
@@ -135,58 +120,7 @@ public class MainMenuController implements Initializable {
             stage.close();
 
             try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/CustomerView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if(me.getSource() == btnKelUkrHewan)
-        {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetSizeView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if(me.getSource() == btnKelJnsHewan)
-        {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetTypeView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if(me.getSource() == btnKelSupplier)
-        {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/SupplierView.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/CustomerSecondaryView.fxml")));
                 stage.setScene(scene);
                 stage.show();
 
@@ -203,24 +137,7 @@ public class MainMenuController implements Initializable {
             stage.close();
 
             try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if(me.getSource() == btnKelLayanan)
-        {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceView.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetSecondaryView.fxml")));
                 stage.setScene(scene);
                 stage.show();
 

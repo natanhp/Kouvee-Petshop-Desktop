@@ -12,10 +12,10 @@ import java.sql.SQLException;
 public class PetSizeDAO {
 
     //SELECT a PetSize
-    public static PetSize searchPetSize(String psId) throws SQLException, ClassNotFoundException {
+    public static PetSize searchPetSize(String psName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  petsizes WHERE Id =" + psId;
+        String selectStmt = "SELECT * FROM  petsizes WHERE size = '" + psName + "';";
 
         //Execute SELECT Statement
         try {
@@ -27,7 +27,7 @@ public class PetSizeDAO {
 
             return petSize;
         } catch (SQLException ex) {
-            System.out.println("While searching a pet size with Id : " + psId + ", an error occurred: " + ex);
+            System.out.println("While searching a pet size with Size : " + psName + ", an error occurred: " + ex);
             //Return Exception
             throw ex;
         }

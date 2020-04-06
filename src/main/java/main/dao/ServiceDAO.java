@@ -12,10 +12,10 @@ import java.sql.SQLException;
 public class ServiceDAO {
 
     //SELECT a Service
-    public static Service searchService(String sId) throws SQLException, ClassNotFoundException {
+    public static Service searchService(String sName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  services WHERE Id =" + sId;
+        String selectStmt = "SELECT * FROM  services WHERE serviceName = '" + sName + "';";
 
         //Execute SELECT Statement
         try {
@@ -27,7 +27,7 @@ public class ServiceDAO {
 
             return service;
         } catch (SQLException ex) {
-            System.out.println("While searching a service with Id : " + sId + ", an error occurred: " + ex);
+            System.out.println("While searching a service with Service Name : " + sName + ", an error occurred: " + ex);
             //Return Exception
             throw ex;
         }

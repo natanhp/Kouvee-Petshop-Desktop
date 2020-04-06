@@ -11,10 +11,10 @@ import java.sql.SQLException;
 public class SupplierDAO {
 
     //SELECT an Supplier
-    public static Supplier searchSupplier(String sprId) throws SQLException, ClassNotFoundException {
+    public static Supplier searchSupplier(String sprName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM suppliers WHERE idSupplier =" + sprId;
+        String selectStmt = "SELECT * FROM suppliers WHERE name = '" + sprName + "';";
 
         //Execute SELECT Statement
         try {
@@ -26,7 +26,7 @@ public class SupplierDAO {
 
             return supplier;
         } catch (SQLException ex) {
-            System.out.println("While searching an supplier with Id : " + sprId + ", an error occured: " + ex);
+            System.out.println("While searching an supplier with Name : " + sprName + ", an error occured: " + ex);
             //Return Exception
             throw ex;
         }

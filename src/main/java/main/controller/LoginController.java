@@ -1,18 +1,22 @@
 package main.controller;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import main.model.Employee;
 import main.model.PetSize;
 import main.util.BCryptHash;
@@ -21,11 +25,11 @@ import main.util.DBUtil;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -35,6 +39,7 @@ public class LoginController implements Initializable {
 
     private String loginID;
     private String loginRole;
+    private String loginUname;
     @FXML
     private Button btnExit;
 
@@ -65,14 +70,22 @@ public class LoginController implements Initializable {
 
     public void handleButtonAction(MouseEvent me) {
         if(me.getSource() == btnExit) {
-            System.exit(0);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Exit Kouvee PetShop");
+            alert.setHeaderText("");
+            alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
+            alert.showAndWait().ifPresent((btnType) -> {
+                if (btnType == ButtonType.OK) {
+                    System.exit(0);
+                }
+            });
         }
 
         if(me.getSource() == btnLogin)
         {
             //login here
-            if (loginAction().equals("Success")) {
-
+            if(loginAction().equals("Admin"))
+            {
                 Node node = (Node) me.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
@@ -85,6 +98,24 @@ public class LoginController implements Initializable {
                     System.err.println(e.getMessage());
                 }
             }
+            else if(loginAction().equals("Kasir") || loginAction().equals("Cashier"))
+            {
+                Node node = (Node) me.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+
+                try {
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenuSecondary.fxml")));
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+//            else if(loginAction().equals("CS")){
+//                lblErrors.setTextFill(Color.TOMATO);
+//                lblErrors.setText("Access Denied !");
+//            }
 
         }
     }
@@ -120,7 +151,7 @@ public class LoginController implements Initializable {
 
         //Query
 //        String query = "SELECT id, role FROM employees WHERE username = ? and password = ?;";
-        String queryCheck = "SELECT id, role, password FROM employees WHERE username = ?;";
+        String queryCheck = "SELECT id, name, role, password FROM employees WHERE username = ?;";
 
         if(username.isEmpty() || password.isEmpty()) {
             setLblError(Color.TOMATO, "Empty credentials");
@@ -156,11 +187,14 @@ public class LoginController implements Initializable {
                             temp = resultSet.getString("role");
                             System.out.println(temp);
                             loginRole = temp;
+                            temp = resultSet.getString("name");
+                            loginUname = temp;
+                            System.out.println(temp);
                         } while (resultSet.next());
 
                         setAllUserLogin();
                         setLblError(Color.GREEN, "Login Successful");
-                        status = "Success";
+                        status = loginRole;
                     }
                     else {
                         setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
@@ -184,10 +218,6 @@ public class LoginController implements Initializable {
         System.out.println(text);
     }
 
-//    private void onHoverButton(Color color) {
-//        btnLogin.set(color);
-//    }
-
     public String getUserLogin() {
         return loginID;
     }
@@ -196,7 +226,14 @@ public class LoginController implements Initializable {
         return loginRole;
     }
 
+    public String getUsername() {
+        return loginUname;
+    }
+
     public void setAllUserLogin() {
+
+        MainMenuController.getUnameLogin(getUsername());
+        MainMenuSecondaryController.getUnameLogin(getUsername());
 
         EmployeeController.getUserLogin(getUserLogin());
         EmployeeController.getRoleLogin(getUserRole());
@@ -221,6 +258,5 @@ public class LoginController implements Initializable {
 
         ProductController.getUserLogin(getUserLogin());
         ProductController.getRoleLogin(getUserRole());
-
     }
 }

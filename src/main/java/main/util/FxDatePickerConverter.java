@@ -7,12 +7,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class FxDatePickerConverter extends StringConverter {
+public class FxDatePickerConverter extends StringConverter<LocalDate> {
 
     // Default Date Pattern
-    private String pattern = "DD/mm/yyyy";
+    private String pattern = "Dd/mm/yyyy";
     // The Date Time Converter
-    private DateTimeFormatter dtFormatter;
+    DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(pattern);
 
     public FxDatePickerConverter()
     {
@@ -26,35 +26,47 @@ public class FxDatePickerConverter extends StringConverter {
     }
 
     // Change String to LocalDate
-    public LocalDate fromString(String text)
-    {
-        LocalDate date = null;
+//    public LocalDate fromString(String text)
+//    {
+//        LocalDate date = null;
+//
+//        if (text != null && !text.trim().isEmpty())
+//        {
+//            date = LocalDate.parse(text, dtFormatter);
+//        }
+//
+//        return date;
+//    }
 
-        if (text != null && !text.trim().isEmpty())
-        {
-            date = LocalDate.parse(text, dtFormatter);
+    @Override public String toString(LocalDate date) {
+        if (date != null) {
+            return dtFormatter.format(date);
+        } else {
+            return "";
         }
-
-        return date;
     }
 
+    @Override public LocalDate fromString(String string) {
+        if (string != null && !string.isEmpty()) {
+            return LocalDate.parse(string, dtFormatter);
+        } else {
+            return null;
+        }
+    }
 
     // Change LocalDate to String
-    public String toString(LocalDate date)
-    {
-        String text = null;
+//    public String toString(LocalDate date)
+//    {
+//        String text = null;
+//
+//        if (date != null)
+//        {
+//            text = dtFormatter.format(date);
+//        }
+//
+//        return text;
+//    }
 
-        if (date != null)
-        {
-            text = dtFormatter.format(date);
-        }
 
-        return text;
-    }
-
-    @Override
-    public String toString(Object object) {
-        return null;
-    }
 
 }

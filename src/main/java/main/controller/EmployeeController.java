@@ -1,5 +1,7 @@
 package main.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,25 +10,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 import main.dao.EmployeeDAO;
 import main.model.Employee;
 import main.util.BCryptHash;
-import main.util.FxDatePickerConverter;
 
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 
-import static java.lang.Thread.sleep;
+import java.time.format.DateTimeFormatter;
+
 
 public class EmployeeController {
 
@@ -38,23 +41,11 @@ public class EmployeeController {
     @FXML
     private TableColumn<Employee, String> empUname;
     @FXML
-    private Button btnBantuan;
-    @FXML
     private TextField txtNama;
-    @FXML
-    private Button btnTentang;
-    @FXML
-    private ImageView imgProfil;
-    @FXML
-    private TextField txtTglLahir;
     @FXML
     private DatePicker pickerDateBirth;
     @FXML
-    private Button btnProduk;
-    @FXML
     private TextField txtID;
-    @FXML
-    private Button btnUkuran;
     @FXML
     private Button btnCari;
     @FXML
@@ -62,17 +53,11 @@ public class EmployeeController {
     @FXML
     private TableView<Employee> tableAll;
     @FXML
-    private Button btnLayanan;
-    @FXML
     private TableColumn<Employee, String> empName;
     @FXML
     private Button btnLihat;
     @FXML
-    private Button hiddenActionButton;
-    @FXML
     private TableColumn<Employee, Date> empDateBirth;
-    @FXML
-    private Button btnLogout;
     @FXML
     private Button btnHapus;
     @FXML
@@ -84,19 +69,11 @@ public class EmployeeController {
     @FXML
     private Button btnTambah;
     @FXML
-    private Button btnCustomer;
-    @FXML
     private TextField txtPawd;
-    @FXML
-    private Button btnLaporan;
     @FXML
     private ImageView imgLogo;
     @FXML
-    private Button btnPegawai;
-    @FXML
-    private Button btnTransaksi;
-    @FXML
-    private Button btnEmployeeKeluar;
+    private Button btnPegawaiKeluar;
     @FXML
     private Button btnMenuUtama;
     @FXML
@@ -106,15 +83,28 @@ public class EmployeeController {
     @FXML
     private TableColumn<Employee, String> empRole;
     @FXML
-    private Button btnSupplier;
-    @FXML
     private TableColumn<Employee, String> empAddress;
-    @FXML
-    private Button btnJenis;
     @FXML
     private TableColumn<Employee, String> empPhoneNumber;
     @FXML
     private TextField txtCari;
+    @FXML
+    private Label addLabel;
+
+    @FXML
+    private Label editLabel;
+
+    @FXML
+    private ImageView deleteLogo;
+
+    @FXML
+    private ImageView addLogo;
+
+    @FXML
+    private Label deleteLabel;
+
+    @FXML
+    private ImageView editLogo;
 
 
     @FXML
@@ -133,8 +123,17 @@ public class EmployeeController {
     }
 
     public void handleButtonEmployee(MouseEvent me) {
-        if(me.getSource() == btnEmployeeKeluar)
-            System.exit(0);
+        if(me.getSource() == btnPegawaiKeluar) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Exit Kouvee PetShop");
+            alert.setHeaderText("");
+            alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
+            alert.showAndWait().ifPresent((btnType) -> {
+                if (btnType == ButtonType.OK) {
+                    System.exit(0);
+                }
+            });
+        }
 
         if(me.getSource() == btnMenuUtama)
         {
@@ -149,6 +148,86 @@ public class EmployeeController {
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    private void switchOperations(MouseEvent me) {
+        addLabel.setTextFill(Color.WHITE);
+        if(me.getSource() == addLabel) {
+            btnPerbarui.setDisable(true);
+            btnTambah.setDisable(false);
+            btnHapus.setDisable(true);
+            txtID.setDisable(true);
+            txtNama.setDisable(false);
+            pickerDateBirth.setDisable(false);
+            txtTelp.setDisable(false);
+            txtAlamat.setDisable(false);
+            txtRole.setDisable(false);
+            txtUname.setDisable(false);
+            txtPawd.setDisable(false);
+
+            addLabel.setTextFill(Color.WHITE);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_white_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == editLabel) {
+            btnPerbarui.setDisable(false);
+            btnTambah.setDisable(true);
+            btnHapus.setDisable(true);
+            txtID.setDisable(false);
+            txtNama.setDisable(false);
+            pickerDateBirth.setDisable(false);
+            txtTelp.setDisable(false);
+            txtAlamat.setDisable(false);
+            txtRole.setDisable(false);
+            txtUname.setDisable(false);
+            txtPawd.setDisable(false);
+
+            addLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.WHITE);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_white_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == deleteLabel) {
+            btnPerbarui.setDisable(true);
+            btnTambah.setDisable(true);
+            btnHapus.setDisable(false);
+            txtID.setDisable(false);
+            txtNama.setDisable(true);
+            pickerDateBirth.setDisable(true);
+            txtTelp.setDisable(true);
+            txtAlamat.setDisable(true);
+            txtRole.setDisable(true);
+            txtUname.setDisable(true);
+            txtPawd.setDisable(true);
+
+
+            addLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.WHITE);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_white_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
         }
     }
 
@@ -198,6 +277,14 @@ public class EmployeeController {
         pickerDateBirth.setEditable(true);
         initializeDatePicker();
 //        convertDatePicker();
+        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue){
+                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
+                }
+            }
+        });
     }
 
     private void initializeDatePicker() {
@@ -227,13 +314,30 @@ public class EmployeeController {
         pickerDateBirth.setDayCellFactory(dayCellFactory);
     }
 
-//    private void convertDatePicker() {
-//        String pattern = "dd/mm/yyyy";
-//
-//        FxDatePickerConverter converter = new FxDatePickerConverter(pattern);
-//
-//        pickerDateBirth.setConverter(converter);
-//    }
+    private void convertDatePicker() {
+        pickerDateBirth.setConverter(new StringConverter<LocalDate>()
+        {
+            private DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("Dd/Mm/yyyy");
+
+            @Override
+            public String toString(LocalDate localDate)
+            {
+                if(localDate==null)
+                    return "";
+                return dateTimeFormatter.format(localDate);
+            }
+
+            @Override
+            public LocalDate fromString(String dateString)
+            {
+                if(dateString==null || dateString.trim().isEmpty())
+                {
+                    return null;
+                }
+                return LocalDate.parse(dateString,dateTimeFormatter);
+            }
+        });
+    }
 
     //Populate Employee
     @FXML

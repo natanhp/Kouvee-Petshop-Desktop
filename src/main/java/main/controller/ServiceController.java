@@ -7,11 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.PetSizeDAO;
 import main.dao.ServiceDAO;
@@ -69,6 +69,24 @@ public class ServiceController {
     @FXML
     private TextField txtCari;
 
+    @FXML
+    private Label addLabel;
+
+    @FXML
+    private Label editLabel;
+
+    @FXML
+    private ImageView deleteLogo;
+
+    @FXML
+    private ImageView addLogo;
+
+    @FXML
+    private Label deleteLabel;
+
+    @FXML
+    private ImageView editLogo;
+
     public static void getUserLogin(String loginID) {
 
         returnID = loginID;
@@ -80,10 +98,19 @@ public class ServiceController {
     }
 
     @FXML
-    void handleButtonLayanan(MouseEvent me) {
+    void handleButtonService(MouseEvent me) {
 
-        if (me.getSource() == btnLayananKeluar)
-            System.exit(0);
+        if (me.getSource() == btnLayananKeluar) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Exit Kouvee PetShop");
+            alert.setHeaderText("");
+            alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
+            alert.showAndWait().ifPresent((btnType) -> {
+                if (btnType == ButtonType.OK) {
+                    System.exit(0);
+                }
+            });
+        }
 
         if (me.getSource() == btnMenuUtama) {
             Node node = (Node) me.getSource();
@@ -97,6 +124,67 @@ public class ServiceController {
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    private void switchOperations(MouseEvent me) {
+        addLabel.setTextFill(Color.WHITE);
+        if(me.getSource() == addLabel) {
+            btnPerbarui.setDisable(true);
+            btnTambah.setDisable(false);
+            btnHapus.setDisable(true);
+            txtID.setDisable(true);
+            txtLayanan.setDisable(false);
+
+            addLabel.setTextFill(Color.WHITE);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_white_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == editLabel) {
+            btnPerbarui.setDisable(false);
+            btnTambah.setDisable(true);
+            btnHapus.setDisable(true);
+            txtID.setDisable(false);
+            txtLayanan.setDisable(false);
+
+            addLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.WHITE);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_white_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == deleteLabel) {
+            btnPerbarui.setDisable(true);
+            btnTambah.setDisable(true);
+            btnHapus.setDisable(false);
+            txtID.setDisable(false);
+            txtLayanan.setDisable(true);
+
+            addLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.WHITE);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_white_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
         }
     }
 
