@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import main.dao.EmployeeDAO;
 import main.model.Employee;
 import main.model.PetSize;
 import main.util.BCryptHash;

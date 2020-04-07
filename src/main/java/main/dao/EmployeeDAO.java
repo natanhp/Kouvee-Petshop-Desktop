@@ -26,7 +26,28 @@ public class EmployeeDAO {
 
             return employee;
         } catch (SQLException ex) {
-            System.out.println("While searching an employee with Name : " + empName + ", an error occured: " + ex);
+            System.out.println("While searching an employee with Name : " + empName + ", an error occurred: " + ex);
+            //Return Exception
+            throw ex;
+        }
+    }
+
+    //Search an existing Employee with Username
+    public static Employee searchUsername(String empUname) throws SQLException, ClassNotFoundException {
+
+        //Declare a specific SELECT statement
+        String queryCheck = "SELECT id, name, role, password FROM employees WHERE username = '" + empUname + "';";
+
+        //Execute SELECT the Statement
+        try {
+            //Get ResultSet from DbExecuteQuery method
+            ResultSet rsEmp = DBUtil.dbExecuteQuery(queryCheck);
+
+            Employee employee = getEmployeeFromResultSet(rsEmp);
+
+            return employee;
+        } catch (SQLException ex) {
+            System.out.println("While checking for existing employee with a username : " + empUname +", an error occurred " + ex);
             //Return Exception
             throw ex;
         }
