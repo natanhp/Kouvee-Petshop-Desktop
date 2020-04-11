@@ -18,6 +18,7 @@ import main.dao.ProductDAO;
 import main.model.Product;
 
 import java.io.*;
+import java.sql.Blob;
 import java.sql.SQLException;
 
 public class ProductController {
@@ -85,6 +86,9 @@ public class ProductController {
 
     @FXML
     private TableColumn<Product, String> prSatuan;
+
+    @FXML
+    private TableColumn<Product, byte[]> prGambar;
 
     @FXML
     private Button btnLihat;
@@ -435,6 +439,7 @@ public class ProductController {
         prSatuan.setCellValueFactory(cellData -> cellData.getValue().meassurementProperty());
         prPrice.setCellValueFactory(cellData -> cellData.getValue().productPriceProperty().asObject());
         prMinQty.setCellValueFactory(cellData -> cellData.getValue().minimumQuantityProperty().asObject());
+//        prGambar.setCellValueFactory(cellData -> cellData.toString().);
 
     }
 

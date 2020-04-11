@@ -85,7 +85,7 @@ public class LoginController implements Initializable {
         if(me.getSource() == btnLogin)
         {
             //login here
-            if(loginAction().equals("Admin"))
+            if(loginAction().equals("Admin") || loginAction().equals("Owner"))
             {
                 Node node = (Node) me.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
@@ -99,7 +99,7 @@ public class LoginController implements Initializable {
                     System.err.println(e.getMessage());
                 }
             }
-            else if(loginAction().equals("Kasir") || loginAction().equals("Cashier"))
+            else if(loginAction().equals("CS") || loginAction().equals("Customer Service"))
             {
                 Node node = (Node) me.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
@@ -239,8 +239,8 @@ public class LoginController implements Initializable {
         EmployeeController.getUserLogin(getUserLogin());
         EmployeeController.getRoleLogin(getUserRole());
 
-        CustomerController.getUserLogin(getUserLogin());
-        CustomerController.getRoleLogin(getUserRole());
+        CustomerSecondaryController.getUserLogin(getUserLogin());
+        CustomerSecondaryController.getRoleLogin(getUserRole());
 
         SupplierController.getUserLogin(getUserLogin());
         SupplierController.getRoleLogin(getUserRole());

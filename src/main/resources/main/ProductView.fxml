@@ -32,7 +32,7 @@
                         <TableColumn fx:id="prPrice" maxWidth="1.7976931348623157E308" prefWidth="172.00003051757812" text="HARGA" />
                         <TableColumn fx:id="prSatuan" maxWidth="1.7976931348623157E308" prefWidth="60.7999267578125" text="SATUAN" />
                         <TableColumn fx:id="prMinQty" maxWidth="1.7976931348623157E308" prefWidth="107.19989013671875" text="JUMLAH MIN" />
-                        <TableColumn fx:id="prImage" maxWidth="1.7976931348623157E308" prefWidth="166.4000244140625" text="GAMBAR" />
+                        <TableColumn fx:id="prGambar" maxWidth="1.7976931348623157E308" prefWidth="166.4000244140625" text="GAMBAR" />
                      </columns>
                      <VBox.margin>
                         <Insets />

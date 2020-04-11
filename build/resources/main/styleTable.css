@@ -55,6 +55,7 @@
 
 .table-row-cell:selected {
     -fx-background-color: #d6d6d6;
+    -fx-table-cell-border-color: transparent;
     -fx-text-fill: WHITE;
     -fx-background-insets: 0;
     -fx-background-radius: 1;

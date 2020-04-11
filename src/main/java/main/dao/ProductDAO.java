@@ -6,6 +6,7 @@ import main.controller.ProductController;
 import main.model.Customer;
 import main.model.Pet;
 import main.model.Product;
+import main.model.ProductImage;
 import main.util.DBUtil;
 import sun.rmi.runtime.Log;
 
@@ -41,16 +42,17 @@ public class ProductDAO {
     private static Product getProductsFromResultSet(ResultSet rs) throws SQLException {
 
         Product pr = null;
+        ProductImage pi = null;
         if(rs.next()) {
-            String newString = null;
-            pr = new Product(newString);
+            pr = new Product(null, null);
             pr.setId(rs.getInt("id"));
             pr.setProductName(rs.getString("productName"));
             pr.setProductQuantity(rs.getInt("productQuantity"));
             pr.setMeassurement(rs.getString("meassurement"));
             pr.setProductPrice(rs.getInt("productPrice"));
             pr.setMinimumQuantity(rs.getInt("minimumQty"));
-//            pr.setImage(rs.getBytes("image"));
+//            pi = rs.getBytes("image");
+            pr.setImage(rs.getBytes("image"));
         }
 
         return pr;
@@ -88,15 +90,14 @@ public class ProductDAO {
 
         while(rs.next()) {
             Product pr;
-            String newString = null;
-            pr = new Product(newString);
+            pr = new Product(null, null);
             pr.setId(rs.getInt("id"));
             pr.setProductName(rs.getString("productName"));
             pr.setProductQuantity(rs.getInt("productQuantity"));
             pr.setMeassurement(rs.getString("meassurement"));
             pr.setProductPrice(rs.getInt("productPrice"));
             pr.setMinimumQuantity(rs.getInt("minimumQty"));
-//            pr.setImage(rs.getBytes("image"));
+            pr.setImage(rs.getBytes("image"));
 
             //Add product to the ObservableList
             prList.add(pr);

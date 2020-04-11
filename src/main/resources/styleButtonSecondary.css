@@ -1,0 +1,38 @@
+.exitButton {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}
+
+.exitButton:hover {
+    -fx-background-color: #ff1100;
+    -fx-text-fill: WHITE;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-border-color: WHITE;
+}
+.toMenuButton {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}
+
+.toMenuButton:hover {
+    -fx-background-color: #8B8979;
+    -fx-text-fill: BLACK;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-border-color: WHITE;
+}
+
+.opsButton {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}
+
+.opsButton:hover {
+    -fx-background-color : #8B8979;
+       -fx-border-color: WHITE;
+       -fx-border-radius: 10;
+       -fx-border-width: 2;
+       -fx-text-fill: BLACK;
+}
+

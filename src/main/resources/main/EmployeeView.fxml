@@ -25,15 +25,15 @@
          <children>
             <VBox prefHeight="384.0" prefWidth="1042.0" style="-fx-background-color: BLACK;" HBox.hgrow="ALWAYS">
                <children>
-                  <TableView fx:id="tableAll" accessibleRole="BUTTON" editable="true" stylesheets="@../styleTable.css">
+                  <TableView fx:id="tableAll" accessibleRole="BUTTON" editable="true" onMouseClicked="#selectedRow" stylesheets="@../styleTable.css" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="empId" maxWidth="1.7976931348623157E308" prefWidth="52.79995805025101" text="ID" />
-                        <TableColumn fx:id="empName" maxWidth="1.7976931348623157E308" prefWidth="210.0" text="NAMA" />
-                        <TableColumn fx:id="empDateBirth" maxWidth="1.7976931348623157E308" minWidth="5.5999755859375" prefWidth="150.0" text="TGL LAHIR" />
-                        <TableColumn fx:id="empPhoneNumber" maxWidth="1.7976931348623157E308" prefWidth="210.0" text="NO. TELP" />
-                        <TableColumn fx:id="empAddress" maxWidth="1.7976931348623157E308" prefWidth="210.0" text="ALAMAT" />
-                        <TableColumn fx:id="empRole" maxWidth="1.7976931348623157E308" prefWidth="110.0" text="ROLE" />
-                        <TableColumn fx:id="empUname" maxWidth="1.7976931348623157E308" minWidth="140.0" prefWidth="145.0" text="USERNAME" />
+                        <TableColumn fx:id="empId" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" resizable="false" text="ID" />
+                        <TableColumn fx:id="empName" editable="false" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="200.0" resizable="false" text="NAMA" />
+                        <TableColumn fx:id="empDateBirth" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="100.0" resizable="false" text="TGL LAHIR" />
+                        <TableColumn fx:id="empPhoneNumber" editable="false" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="150.0" resizable="false" text="NO. TELP" />
+                        <TableColumn fx:id="empAddress" editable="false" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="200.0" resizable="false" text="ALAMAT" />
+                        <TableColumn fx:id="empRole" editable="false" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="100.0" resizable="false" text="ROLE" />
+                        <TableColumn fx:id="empUname" editable="false" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="200.0" resizable="false" text="USERNAME" />
                      </columns>
                      <VBox.margin>
                         <Insets />
@@ -41,6 +41,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                </children>
                <HBox.margin>
@@ -49,7 +52,7 @@
             </VBox>
             <VBox alignment="TOP_RIGHT" prefHeight="384.0" prefWidth="331.0" style="-fx-background-color: #8B8979;" HBox.hgrow="ALWAYS">
                <children>
-                  <GridPane alignment="CENTER_RIGHT" prefHeight="385.0" prefWidth="262.0" VBox.vgrow="ALWAYS">
+                  <GridPane alignment="CENTER_RIGHT" hgap="10.0" prefHeight="385.0" prefWidth="262.0" VBox.vgrow="ALWAYS">
                      <columnConstraints>
                         <ColumnConstraints hgrow="ALWAYS" maxWidth="185.399951171875" minWidth="10.0" prefWidth="163.7999755859375" />
                         <ColumnConstraints hgrow="ALWAYS" maxWidth="163.80002441406253" minWidth="10.0" prefWidth="163.80002441406253" />
@@ -111,6 +114,9 @@
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </VBox.margin>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
                   </GridPane>
                </children>
             </VBox>
@@ -173,7 +179,7 @@
                         <Font name="Franklin Gothic Medium Cond" size="14.0" />
                      </font>
                   </TextField>
-                  <DatePicker fx:id="pickerDateBirth" maxHeight="1.7976931348623157E308" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                  <DatePicker fx:id="pickerDateBirth" maxHeight="1.7976931348623157E308" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
                      <effect>
                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                      </effect>
@@ -261,7 +267,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnBersih" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Bersihkan Entri" textFill="#ffea00" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnBersih" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onAction="#clearFields" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Bersihkan Entri" textFill="#ffea00" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -417,25 +423,6 @@
                         <Insets left="30.0" />
                      </padding>
                   </Label>
-                  <ImageView fx:id="deleteLogo" GridPane.columnIndex="1" GridPane.valignment="TOP">
-                     <image>
-                        <Image url="@../../../../../../Downloads/delete-black-18dp/1x/baseline_delete_black_18dp.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="editLogo" GridPane.valignment="TOP">
-                     <image>
-                        <Image url="@../../../../../../Downloads/edit-black-18dp/1x/baseline_edit_black_18dp.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets left="150.0" />
-                     </GridPane.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
                   <ImageView fx:id="addLogo" GridPane.valignment="TOP">
                      <image>
                         <Image url="@../icons/baseline_add_circle_white_18dp.png" />
@@ -447,22 +434,41 @@
                         <Insets top="1.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <Label fx:id="editLabel" alignment="CENTER_RIGHT" layoutX="35.0" layoutY="11.0" onMouseClicked="#switchOperations" prefHeight="18.0" prefWidth="92.0" text="Edit Pegawai" GridPane.valignment="TOP">
-                     <GridPane.margin>
-                        <Insets left="150.0" />
-                     </GridPane.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
                   <Label fx:id="addLabel" alignment="CENTER_RIGHT" onMouseClicked="#switchOperations" prefHeight="10.0" prefWidth="115.0" text="Tambah Pegawai" textFill="WHITE" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets top="1.0" />
+                        <Insets right="90.0" top="1.0" />
                      </GridPane.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
+                  <ImageView fx:id="editLogo" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <image>
+                        <Image url="@../../../../../../Downloads/edit-black-18dp/1x/baseline_edit_black_18dp.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="editLabel" alignment="CENTER_RIGHT" layoutX="35.0" layoutY="11.0" onMouseClicked="#switchOperations" prefHeight="18.0" prefWidth="92.0" text="Edit Pegawai" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <GridPane.margin>
+                        <Insets left="120.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <ImageView fx:id="deleteLogo" GridPane.columnIndex="1" GridPane.valignment="TOP">
+                     <image>
+                        <Image url="@../../../../../../Downloads/delete-black-18dp/1x/baseline_delete_black_18dp.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
                   <Label fx:id="deleteLabel" alignment="CENTER_RIGHT" layoutX="185.0" layoutY="10.0" onMouseClicked="#switchOperations" prefHeight="18.0" prefWidth="107.0" text="Hapus Pegawai" GridPane.columnIndex="1" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets />

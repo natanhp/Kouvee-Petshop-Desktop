@@ -127,6 +127,51 @@ public class EmployeeDAO {
             throws SQLException, ClassNotFoundException
     {
         //Declare an UPDATE Statement
+        String updateStmt = null;
+        //Update statement will be checked if new password is entered
+        System.out.println(password);
+        if(password != "No change" ) {
+            updateStmt =
+                    "UPDATE employees " +
+                            "SET name = '" + name + "' " +
+                            ", address = '" + address + "' " +
+                            ", dateBirth = '" + dateBirth + "' " +
+                            ", phoneNumber = '" + phoneNumber + "' " +
+                            ", role = '" + role + "' " +
+                            ", updatedAt = NOW()" +
+                            ", updatedBy = '" + Logged + "' " +
+                            ", username = '" + username + "' " +
+                            ", password = '" + password + "' " +
+                            "WHERE id = '" + Id + "';";
+        } else {
+            updateStmt =
+                    "UPDATE employees " +
+                            "SET name = '" + name + "' " +
+                            ", address = '" + address + "' " +
+                            ", dateBirth = '" + dateBirth + "' " +
+                            ", phoneNumber = '" + phoneNumber + "' " +
+                            ", role = '" + role + "' " +
+                            ", updatedAt = NOW()" +
+                            ", updatedBy = '" + Logged + "' " +
+                            ", username = '" + username + "' " +
+                            "WHERE id = '" + Id + "';";
+        }
+
+        try {
+            DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException ex) {
+
+            System.out.println("Error occurred while UPDATE Operation:" + ex);
+            throw ex;
+        }
+    }
+
+    //Update an employee's entries
+    public static void updateSpecificEntries (String Logged, String Id, String name, String dateBirth, String address,
+                                      String phoneNumber, String role, String username)
+            throws SQLException, ClassNotFoundException
+    {
+        //Declare an UPDATE Statement
         String updateStmt =
                 "UPDATE employees " +
                         "SET name = '" + name + "' " +
@@ -137,7 +182,6 @@ public class EmployeeDAO {
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
                         ", username = '" + username + "' " +
-                        ", password = '" + password + "' " +
                         "WHERE id = '" + Id + "';";
 
         try {

@@ -28,10 +28,11 @@
                      <columns>
                         <TableColumn fx:id="prId" maxWidth="1.7976931348623157E308" prefWidth="52.79995805025101" text="ID" />
                         <TableColumn fx:id="prName" maxWidth="1.7976931348623157E308" prefWidth="210.0" text="NAMA PRODUK" />
-                        <TableColumn fx:id="prQty" maxWidth="1.7976931348623157E308" minWidth="5.5999755859375" prefWidth="150.0" text="JUMLAH " />
-                        <TableColumn fx:id="prPrice" maxWidth="1.7976931348623157E308" prefWidth="210.0" text="HARGA" />
-                        <TableColumn fx:id="prSatuan" maxWidth="1.7976931348623157E308" prefWidth="210.0" text="SATUAN" />
-                        <TableColumn fx:id="prMinQty" maxWidth="1.7976931348623157E308" prefWidth="110.0" text="JUMLAH MINIMUM" />
+                        <TableColumn fx:id="prQty" maxWidth="1.7976931348623157E308" minWidth="5.5999755859375" prefWidth="94.4000244140625" text="JUMLAH " />
+                        <TableColumn fx:id="prPrice" maxWidth="1.7976931348623157E308" prefWidth="172.00003051757812" text="HARGA" />
+                        <TableColumn fx:id="prSatuan" maxWidth="1.7976931348623157E308" prefWidth="60.7999267578125" text="SATUAN" />
+                        <TableColumn fx:id="prMinQty" maxWidth="1.7976931348623157E308" prefWidth="107.19989013671875" text="JUMLAH MIN" />
+                        <TableColumn fx:id="prGambar" maxWidth="1.7976931348623157E308" prefWidth="166.4000244140625" text="GAMBAR" />
                      </columns>
                      <VBox.margin>
                         <Insets />

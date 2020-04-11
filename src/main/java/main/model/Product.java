@@ -1,6 +1,12 @@
 package main.model;
 
 import javafx.beans.property.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import sun.awt.image.ByteArrayImageSource;
+
+import javax.swing.*;
+import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
 
 public class Product {
@@ -11,9 +17,14 @@ public class Product {
     private IntegerProperty productPrice;
     private StringProperty meassurement;
     private IntegerProperty minimumQuantity;
-    private String image;
+    private String imagePath;
+    private byte[] image;
 
-    public Product(String image) {
+    public Image getImagePreview() {
+        return new Image(String.valueOf(image));
+    }
+
+    public Product(String imagePath, byte[] image) {
 
         this.Id = new SimpleIntegerProperty();
         this.productQuantity = new SimpleIntegerProperty();
@@ -21,6 +32,7 @@ public class Product {
         this.productPrice = new SimpleIntegerProperty();
         this.productName = new SimpleStringProperty();
         this.meassurement = new SimpleStringProperty();
+        this.imagePath = imagePath;
         this.image = image;
     }
 
@@ -96,11 +108,19 @@ public class Product {
         this.minimumQuantity.set(minimumQuantity);
     }
 
-    public String getImage() {
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

@@ -20,14 +20,17 @@ import javafx.util.StringConverter;
 import main.dao.EmployeeDAO;
 import main.model.Employee;
 import main.util.BCryptHash;
+import main.util.FxDatePickerConverter;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
@@ -274,9 +277,14 @@ public class EmployeeController {
         empPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
         empRole.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
         empUname.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
+
         pickerDateBirth.setEditable(true);
         initializeDatePicker();
-//        convertDatePicker();
+
+        FxDatePickerConverter converter = new FxDatePickerConverter("dd-MM-yyyy");
+
+        pickerDateBirth.setConverter(converter);
+
         pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -314,31 +322,6 @@ public class EmployeeController {
         pickerDateBirth.setDayCellFactory(dayCellFactory);
     }
 
-    private void convertDatePicker() {
-        pickerDateBirth.setConverter(new StringConverter<LocalDate>()
-        {
-            private DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("Dd/Mm/yyyy");
-
-            @Override
-            public String toString(LocalDate localDate)
-            {
-                if(localDate==null)
-                    return "";
-                return dateTimeFormatter.format(localDate);
-            }
-
-            @Override
-            public LocalDate fromString(String dateString)
-            {
-                if(dateString==null || dateString.trim().isEmpty())
-                {
-                    return null;
-                }
-                return LocalDate.parse(dateString,dateTimeFormatter);
-            }
-        });
-    }
-
     //Populate Employee
     @FXML
     private void populateEmployee(Employee emp) throws ClassNotFoundException {
@@ -370,23 +353,39 @@ public class EmployeeController {
     @FXML
     private void updateEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 
-        String generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
+        String generatedSecuredPasswordHash;
+        String passField = txtPawd.getText();
 
-        try {
-            EmployeeDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                    txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
+        if(passField.equalsIgnoreCase("No change"))
+        {
+            try {
+                EmployeeDAO.updateEntries(returnID, txtID.getText(),txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
+                        txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while updating employee");
+            } catch (SQLException e) {
+                System.out.println("Problem occurred while updating employee");
+            }
+        } else {
+            generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
+            try {
+                EmployeeDAO.updateEntries(returnID, txtID.getText(),txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
+                        txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
+
+            } catch (SQLException e) {
+                System.out.println("Problem occurred while updating employee");
+            }
         }
     }
 
     @FXML
     private void insertEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
 
+        String generatedSecuredPasswordHash;
+
+        generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
         try {
             EmployeeDAO.insertEmp(returnID ,txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                    txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
+                    txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
 
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting employee");
@@ -401,6 +400,45 @@ public class EmployeeController {
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting employee");
         }
+    }
+
+    @FXML
+    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+
+        if(me.getClickCount() > 1)
+        {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+
+
+        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+            Employee employee = tableAll.getSelectionModel().getSelectedItem();
+            LocalDate lc = LocalDate.parse(employee.getDateBirth().toString());
+
+            txtID.setText(Integer.toString(employee.getId()));
+            txtNama.setText(employee.getName());
+            pickerDateBirth.setValue(lc);
+            txtTelp.setText(employee.getPhoneNumber());
+            txtAlamat.setText(employee.getAddress());
+            txtRole.setText(employee.getRole());
+            txtUname.setText(employee.getUsername());
+            txtPawd.setText("No change");
+        }
+    }
+
+    @FXML
+    private void clearFields(ActionEvent ae) {
+        txtID.clear();
+        txtNama.clear();
+        pickerDateBirth.setValue(null);
+        txtTelp.clear();
+        txtAlamat.clear();
+        txtRole.clear();
+        txtUname.clear();
+        txtPawd.clear();
     }
 
 }

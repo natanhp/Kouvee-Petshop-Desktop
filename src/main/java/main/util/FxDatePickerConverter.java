@@ -25,47 +25,31 @@ public class FxDatePickerConverter extends StringConverter<LocalDate> {
         dtFormatter = DateTimeFormatter.ofPattern(pattern);
     }
 
-    // Change String to LocalDate
-//    public LocalDate fromString(String text)
-//    {
-//        LocalDate date = null;
-//
-//        if (text != null && !text.trim().isEmpty())
-//        {
-//            date = LocalDate.parse(text, dtFormatter);
-//        }
-//
-//        return date;
-//    }
+//     Change String to LocalDate
+    public LocalDate fromString(String text)
+    {
+        LocalDate date = null;
 
-    @Override public String toString(LocalDate date) {
-        if (date != null) {
-            return dtFormatter.format(date);
-        } else {
-            return "";
+        if (text != null && !text.trim().isEmpty())
+        {
+            date = LocalDate.parse(text, dtFormatter);
         }
+
+        return date;
     }
 
-    @Override public LocalDate fromString(String string) {
-        if (string != null && !string.isEmpty()) {
-            return LocalDate.parse(string, dtFormatter);
-        } else {
-            return null;
-        }
-    }
+//     Change LocalDate to String
+    public String toString(LocalDate date)
+    {
+        String text = null;
 
-    // Change LocalDate to String
-//    public String toString(LocalDate date)
-//    {
-//        String text = null;
-//
-//        if (date != null)
-//        {
-//            text = dtFormatter.format(date);
-//        }
-//
-//        return text;
-//    }
+        if (date != null)
+        {
+            text = dtFormatter.format(date);
+        }
+
+        return text;
+    }
 
 
 

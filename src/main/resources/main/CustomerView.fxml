@@ -52,12 +52,11 @@
                         <ColumnConstraints hgrow="ALWAYS" maxWidth="163.80002441406253" minWidth="10.0" prefWidth="163.80002441406253" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="315.20001831054685" minHeight="10.0" prefHeight="242.99999389648437" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="213.5999816894531" minHeight="10.0" prefHeight="68.00000610351563" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="160.0000061035156" minHeight="10.0" prefHeight="72.80001220703122" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="315.20001831054685" minHeight="10.0" prefHeight="137.33334655761718" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="277.3333297729492" minHeight="10.0" prefHeight="247.46665344238278" vgrow="ALWAYS" />
                      </rowConstraints>
                      <children>
-                        <ImageView fitHeight="225.0" fitWidth="318.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <ImageView fitHeight="225.0" fitWidth="318.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -65,18 +64,18 @@
                               <Image url="@../logo/kouveeLogo.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" maxHeight="46.0" maxWidth="358.0" prefHeight="46.0" prefWidth="375.0" text="Menu Pelanggan" textAlignment="CENTER" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                        <Label alignment="CENTER" maxHeight="46.0" maxWidth="358.0" prefHeight="46.0" prefWidth="375.0" text="Menu Pelanggan" textAlignment="CENTER" textFill="WHITE" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                            <font>
                               <Font name="Franklin Gothic Heavy" size="30.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets />
+                              <Insets top="80.0" />
                            </GridPane.margin>
                            <effect>
                               <DropShadow color="#00000033" height="17.0" offsetY="2.0" radius="9.0" />
                            </effect>
                         </Label>
-                        <Button fx:id="btnMenuUtama" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonCustomer" style="-fx-background-radius: 10;" styleClass="mainButton" stylesheets="@../styleButton.css" text="Menu Utama" textFill="WHITE" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                        <Button fx:id="btnMenuUtama" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonCustomer" style="-fx-background-radius: 10;" styleClass="mainButton" stylesheets="@../styleButton.css" text="Menu Utama" textFill="WHITE" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                            <font>
                               <Font name="Franklin Gothic Medium" size="16.0" />
                            </font>
@@ -84,13 +83,13 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                            <GridPane.margin>
-                              <Insets />
+                              <Insets top="15.0" />
                            </GridPane.margin>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="btnPelangganKeluar" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonCustomer" style="-fx-background-radius: 10;" styleClass="mainButton" stylesheets="@../styleButton.css" text="Keluar" textFill="WHITE" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                        <Button fx:id="btnPelangganKeluar" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonCustomer" style="-fx-background-radius: 10;" styleClass="mainButton" stylesheets="@../styleButton.css" text="Keluar" textFill="WHITE" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                            <font>
                               <Font name="Franklin Gothic Medium" size="16.0" />
                            </font>
@@ -98,7 +97,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                            <GridPane.margin>
-                              <Insets />
+                              <Insets top="15.0" />
                            </GridPane.margin>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -170,12 +169,12 @@
                         <Font name="Franklin Gothic Medium Cond" size="14.0" />
                      </font>
                   </TextField>
-                  <DatePicker fx:id="pickerDateBirth" maxHeight="1.7976931348623157E308" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                  <DatePicker fx:id="pickerDateBirth" maxHeight="1.7976931348623157E308" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                      <effect>
                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                      </effect>
                   </DatePicker>
-                  <TextField fx:id="txtTelp" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                  <TextField fx:id="txtTelp" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -186,7 +185,7 @@
                         <Font name="Franklin Gothic Medium Cond" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtAlamat" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                  <TextField fx:id="txtAlamat" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -303,9 +302,9 @@
                         <DropShadow color="#00000033" height="17.0" offsetY="2.0" radius="9.0" />
                      </effect>
                   </Label>
-                  <Label text="Tanggal Lahir" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                  <Label text="Tanggal Lahir" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
-                        <Insets />
+                        <Insets left="30.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="Franklin Gothic Medium" size="18.0" />
@@ -314,7 +313,7 @@
                         <DropShadow color="#00000033" height="17.0" offsetY="2.0" radius="9.0" />
                      </effect>
                   </Label>
-                  <Label text="No. Telepon" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                  <Label text="No. Telepon" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -328,7 +327,7 @@
                         <Insets left="30.0" />
                      </padding>
                   </Label>
-                  <Label text="Alamat" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                  <Label text="Alamat" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
                      <font>
                         <Font name="Franklin Gothic Medium" size="18.0" />
                      </font>
