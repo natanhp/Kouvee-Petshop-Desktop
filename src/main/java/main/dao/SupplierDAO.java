@@ -14,7 +14,7 @@ public class SupplierDAO {
     public static Supplier searchSupplier(String sprName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM Suppliers WHERE name LINE '%" + sprName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT * FROM Suppliers WHERE name LIKE '%" + sprName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
