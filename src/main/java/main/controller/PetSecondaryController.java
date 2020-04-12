@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import main.dao.CustomerDAO;
 import main.dao.PetDAO;
 import main.dao.PetSizeDAO;
 import main.dao.PetTypeDAO;
@@ -88,7 +89,7 @@ public class PetSecondaryController implements Initializable {
     private Button btnBersih;
 
     @FXML
-    private TextField txtOwner;
+    private ComboBox<Customer> comboCustomer;
 
     @FXML
     private TableView<Pet> tableAll;
@@ -172,7 +173,7 @@ public class PetSecondaryController implements Initializable {
             txtID.setDisable(true);
             txtNama.setDisable(false);
             pickerDateBirth.setDisable(false);
-            txtOwner.setDisable(false);
+            comboCustomer.setDisable(false);
             comboUkuran.setDisable(false);
             comboTipe.setDisable(false);
 
@@ -195,7 +196,7 @@ public class PetSecondaryController implements Initializable {
             txtID.setDisable(false);
             txtNama.setDisable(false);
             pickerDateBirth.setDisable(false);
-            txtOwner.setDisable(false);
+            comboCustomer.setDisable(false);
             comboUkuran.setDisable(false);
             comboTipe.setDisable(false);
 
@@ -218,7 +219,7 @@ public class PetSecondaryController implements Initializable {
             txtID.setDisable(false);
             txtNama.setDisable(true);
             pickerDateBirth.setDisable(true);
-            txtOwner.setDisable(true);
+            comboCustomer.setDisable(true);
             comboUkuran.setDisable(true);
             comboTipe.setDisable(true);
 
@@ -329,11 +330,9 @@ public class PetSecondaryController implements Initializable {
         try {
             String tipe = Integer.toString(comboTipe.getValue().getId());
             String ukr = Integer.toString(comboUkuran.getValue().getId());
+            String customerId = Integer.toString(comboCustomer.getValue().getId());
 
-            Customer owner = PetDAO.searchOwner(txtOwner.getText());
-            String Customers_id = Integer.toString(owner.getId());
-
-            PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), Customers_id, tipe, ukr);
+            PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), customerId, tipe, ukr);
 
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating pet");
@@ -342,20 +341,20 @@ public class PetSecondaryController implements Initializable {
 
     @FXML
     void insertPet(ActionEvent event) throws SQLException, ClassNotFoundException {
-        try {
+        String petName = txtNama.getText().trim();
+        if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
+        comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
+            return;
+        }
 
+        try {
             String tipe = Integer.toString(comboTipe.getValue().getId());
             String ukr = Integer.toString(comboUkuran.getValue().getId());
+            String customerId = Integer.toString(comboCustomer.getValue().getId());
 
-            Customer owner = PetDAO.searchOwner(txtOwner.getText());
-            String Customers_id = Integer.toString(owner.getId());
-
-            System.out.println("Customers ID : " + Customers_id);
-
-            PetDAO.insertPet(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), Customers_id
+            PetDAO.insertPet(returnID, petName, pickerDateBirth.getValue().toString(), customerId
                     , tipe, ukr);
-
-
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting pettype");
         }
@@ -477,13 +476,15 @@ public class PetSecondaryController implements Initializable {
             populatePetTypeComboBox(typeData);
             ObservableList<PetSize> sizeData = PetSizeDAO.searchPetSizes();
             populatePetSizeComboBox(sizeData);
+            ObservableList<Customer> customerData = CustomerDAO.searchCustomers();
+            populateCustomerComboBox(customerData);
 
             LocalDate lc = LocalDate.parse(pet.getDateBirth().toString());
 
             txtID.setText(Integer.toString(pet.getId()));
             txtNama.setText(pet.getName());
             pickerDateBirth.setValue(lc);
-            txtOwner.setText(pet.getCustomer_name());
+//            txtOwner.setText(pet.getCustomer_name());
 
             comboTipe.getItems();
             comboUkuran.getItems();
@@ -513,9 +514,10 @@ public class PetSecondaryController implements Initializable {
         txtID.clear();
         txtNama.clear();
         pickerDateBirth.setValue(null);
-        txtOwner.clear();
+//        txtOwner.clear();
         comboUkuran.setValue(null);
         comboTipe.setValue(null);
+        comboCustomer.setValue(null);
         txtCari.clear();
 
         loadAllData();
@@ -538,6 +540,8 @@ public class PetSecondaryController implements Initializable {
         ObservableList typeList = FXCollections.observableArrayList();
         comboUkuran.getItems().clear();
         comboTipe.getItems().clear();
+        comboCustomer.getItems().clear();
+        comboCustomer.setItems(typeList);
         comboTipe.setItems(typeList);
         comboUkuran.setItems(typeList);
 
@@ -566,5 +570,52 @@ public class PetSecondaryController implements Initializable {
             throwables.printStackTrace();
         }
 
+    }
+
+    private void populateCustomerComboBox(ObservableList<Customer> typeData) {
+
+        //Set items to the comboBox
+        comboCustomer.setItems(typeData);
+        comboCustomer.setConverter(new StringConverter<Customer>() {
+
+            @Override
+            public String toString(Customer object) {
+                return object.getName();
+            }
+
+            public int getObjectID(Customer object) {
+                return object.getId();
+            }
+
+            @Override
+            public Customer fromString(String string) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+        });
+
+        comboCustomer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Customer>() {
+            @Override
+            public void changed(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue) {
+
+            }
+        });
+
+    }
+
+    @FXML
+    void selectCustomer(MouseEvent me) throws SQLException, ClassNotFoundException {
+        comboCustomer.setMaxHeight(20);
+
+        try {
+            //Try getting all the PetTypes and PetSizes information
+            ObservableList<Customer> sizeData = CustomerDAO.searchCustomers();
+
+            //Populate PetTypes and PetSizes on ComboBox
+            populateCustomerComboBox(sizeData);
+        } catch (SQLException e) {
+            System.out.println("Error occurred while getting all petsize information from DB " + e);
+            throw e;
+        }
     }
 }
