@@ -297,7 +297,7 @@ public class PetSizeController implements Initializable {
         try {
             psData = PetSizeDAO.searchPetSizes();
             populatePetSizes(psData);
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
