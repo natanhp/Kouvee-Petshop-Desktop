@@ -20,7 +20,7 @@ public class PetDAO {
                 "JOIN Customers cs ON cs.id = p.Customers_id " +
                 "JOIN PetTypes pt ON pt.id = p.PetTypes_id " +
                 "JOIN PetSizes ps ON ps.id = p.PetSizes_id " +
-                "WHERE p.name LIKE '%" + petName + "%' AND (p.deletedAt IS NULL OR cs.deletedAt IS NULL OR ps.deletedAt IS NULL);";
+                "WHERE p.name LIKE '%" + petName + "%' AND (p.deletedAt IS NULL AND cs.deletedAt IS NULL AND ps.deletedAt IS NULL);";
 
         //Execute SELECT Statement
         try {
@@ -61,7 +61,7 @@ public class PetDAO {
                 "FROM Pets AS p " +
                 "JOIN Customers AS cs ON cs.id = p.Customers_id " +
                 "JOIN PetTypes AS pt ON pt.id = p.PetTypes_id " +
-                "JOIN PetSizes AS ps ON ps.id = p.PetSizes_id WHERE (p.deletedAt IS NULL OR cs.deletedAt IS NULL OR ps.deletedAt IS NULL);";
+                "JOIN PetSizes AS ps ON ps.id = p.PetSizes_id WHERE (p.deletedAt IS NULL AND cs.deletedAt IS NULL AND ps.deletedAt IS NULL);";
 
         //Execute SELECT Statement
         try {
@@ -112,7 +112,7 @@ public class PetDAO {
             throws SQLException, ClassNotFoundException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE pets " +
+                "UPDATE Pets " +
                         "SET name = '" + name + "' " +
                         ", dateBirth = '" + dateBirth + "' " +
                         ", Customers_id = '" + Customers_id + "' " +
@@ -136,7 +136,7 @@ public class PetDAO {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM pets " +
+                "DELETE FROM Pets " +
                         "WHERE id = " + Id + ";";
 
         try {
@@ -153,7 +153,7 @@ public class PetDAO {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE pets " +
+                "UPDATE Pets " +
                         "SET name = NULL" +
                         ", dateBirth = NULL" +
                         ", Customers_id = NULL" +
@@ -176,7 +176,7 @@ public class PetDAO {
     public static Customer searchOwner(String Customers_name) throws SQLException, ClassNotFoundException {
 
         //Declare INSERT statement
-        String searchStmt = "SELECT id FROM customers WHERE name = '" + Customers_name + "'";
+        String searchStmt = "SELECT id FROM Customers WHERE name = '" + Customers_name + "'";
 
         //Execute query
         try {
@@ -212,7 +212,7 @@ public class PetDAO {
             throws SQLException, ClassNotFoundException {
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO pets " +
+                "INSERT INTO Pets " +
                         "(name, dateBirth, createdAt, Customers_id, PetTypes_id, PetSizes_id, createdBy)" +
                         "VALUES " +
                         "('" + name + "','" + dateBirth +

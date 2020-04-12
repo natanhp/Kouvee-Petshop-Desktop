@@ -14,7 +14,7 @@ public class CustomerDAO {
     public static Customer searchCustomer(String cusName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM customers WHERE name ='" + cusName + "';";
+        String selectStmt = "SELECT * FROM Customers WHERE name LIKE '%" + cusName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -48,10 +48,10 @@ public class CustomerDAO {
     }
 
     //SELECT Customers
-    public static ObservableList<Customer> searchCustomers() throws SQLException, ClassNotFoundException {
+    public static ObservableList<Customer> searchCustomers() throws SQLException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM customers";
+        String selectStmt = "SELECT * FROM Customers WHERE deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -59,10 +59,9 @@ public class CustomerDAO {
             ResultSet rsCuss = DBUtil.dbExecuteQuery(selectStmt);
 
             //Send ResultSet to the getCustomerList method and get customer object
-            ObservableList<Customer> cusList = getCustomerList(rsCuss);
 
             //Return Customer Object
-            return cusList;
+            return getCustomerList(rsCuss);
         } catch (SQLException ex) {
             System.out.println("SQL Select Operation has been failed: " + ex);
 
@@ -72,7 +71,7 @@ public class CustomerDAO {
     }
 
     //SELECT * FROM customers operation
-    public static ObservableList<Customer> getCustomerList(ResultSet rs) throws SQLException, ClassNotFoundException {
+    public static ObservableList<Customer> getCustomerList(ResultSet rs) throws SQLException {
 
         //Declare a observable List which comprises of Customer Objects
         ObservableList<Customer> cusList = FXCollections.observableArrayList();
