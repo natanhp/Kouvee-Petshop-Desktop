@@ -257,10 +257,16 @@ public class ServiceController implements Initializable {
 
     @FXML
     void insertService(ActionEvent event) throws ClassNotFoundException {
+        String serviceName = txtLayanan.getText().trim();
+
+        if (serviceName.equals("")) {
+            return;
+        }
 
         try {
-            ServiceDAO.insertS(returnID, txtLayanan.getText());
+            ServiceDAO.insertS(returnID, serviceName);
 
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting service");
         }
