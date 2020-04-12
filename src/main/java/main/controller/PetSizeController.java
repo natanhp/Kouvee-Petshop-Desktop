@@ -301,4 +301,13 @@ public class PetSizeController implements Initializable {
             throwables.printStackTrace();
         }
     }
+
+    @FXML
+    public void clearFields() {
+        txtCari.clear();
+        txtID.clear();
+        txtUkuran.clear();
+
+        loadAllData();
+    }
 }
