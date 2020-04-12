@@ -15,11 +15,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.ServiceDAO;
+import main.model.Employee;
 import main.model.Service;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 
@@ -246,10 +248,17 @@ public class ServiceController implements Initializable {
 
     @FXML
     void updateService(ActionEvent event) {
+        String serviceName = txtLayanan.getText().trim();
+        String id = txtID.getText().trim();
+
+        if (serviceName.equals("") || serviceName.equals("")) {
+            return;
+        }
 
         try {
-            ServiceDAO.updateEntries(returnID, txtID.getText(), txtLayanan.getText());
+            ServiceDAO.updateEntries(returnID, id, serviceName);
 
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating service");
         }
@@ -306,5 +315,24 @@ public class ServiceController implements Initializable {
         txtLayanan.clear();
 
         loadAllData();
+    }
+
+    @FXML
+    private void selectedRow(MouseEvent me) {
+
+        if (me.getClickCount() > 1) {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+
+
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
+            Service service = tableAll.getSelectionModel().getSelectedItem();
+
+            txtID.setText(Integer.toString(service.getId()));
+            txtLayanan.setText(service.getServiceName());
+        }
     }
 }
