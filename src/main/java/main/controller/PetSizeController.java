@@ -256,10 +256,15 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void updatePetSize(ActionEvent event) throws ClassNotFoundException {
-        try {
-            PetSizeDAO.updateEntries(returnID, txtID.getText(), txtUkuran.getText());
+    private void updatePetSize(ActionEvent event) {
+        String petSize = txtUkuran.getText();
+        if (!petSize.equals("Small") && !petSize.equals("Medium") && !petSize.equals("Large") && !petSize.equals("Extra Large")) {
+            return;
+        }
 
+        try {
+            PetSizeDAO.updateEntries(returnID, txtID.getText(), petSize);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating petsize");
         }
