@@ -320,4 +320,15 @@ public class SupplierController implements Initializable {
             throwables.printStackTrace();
         }
     }
+
+    @FXML
+    private void clearFields() {
+        txtAlamat.clear();
+        txtCari.clear();
+        txtID.clear();
+        txtNama.clear();
+        txtTelp.clear();
+
+        loadAllData();
+    }
 }
