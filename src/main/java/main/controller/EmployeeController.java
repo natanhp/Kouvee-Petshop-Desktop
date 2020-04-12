@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,6 +23,7 @@ import main.model.Employee;
 import main.util.BCryptHash;
 import main.util.FxDatePickerConverter;
 import java.io.IOException;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -31,9 +33,10 @@ import java.time.LocalDate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
 
-public class EmployeeController {
+public class EmployeeController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -253,45 +256,7 @@ public class EmployeeController {
 
     @FXML
     private void searchEmployees(ActionEvent ae) throws ClassNotFoundException, SQLException {
-
-        try {
-            //Get all Employee information
-            ObservableList<Employee> empData = EmployeeDAO.searchEmployees();
-
-            //Populate Employees on TableView
-            populateEmployees(empData);
-        } catch(SQLException e) {
-            System.out.println("Error occurred while getting employees information from DB " + e);
-            throw e;
-        }
-    }
-
-    @FXML
-    private void initialize() {
-
-        empId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        empName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        empDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
-        empAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
-        empPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-        empRole.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
-        empUname.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
-
-        pickerDateBirth.setEditable(true);
-        initializeDatePicker();
-
-        FxDatePickerConverter converter = new FxDatePickerConverter();
-
-        pickerDateBirth.setConverter(converter);
-
-        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue){
-                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
-                }
-            }
-        });
+        loadAllData();
     }
 
     private void initializeDatePicker() {
@@ -453,4 +418,45 @@ public class EmployeeController {
         txtPawd.clear();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        empId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        empName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        empDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
+        empAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
+        empPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+        empRole.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
+        empUname.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
+
+        pickerDateBirth.setEditable(true);
+        initializeDatePicker();
+
+        FxDatePickerConverter converter = new FxDatePickerConverter();
+
+        pickerDateBirth.setConverter(converter);
+
+        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue){
+                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
+                }
+            }
+        });
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        //Get all Employee information
+        ObservableList<Employee> empData = null;
+        try {
+            empData = EmployeeDAO.searchEmployees();
+            populateEmployees(empData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
+        //Populate Employees on TableView
+    }
 }
