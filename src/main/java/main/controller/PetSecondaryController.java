@@ -1,6 +1,5 @@
 package main.controller;
 
-import com.mysql.cj.jdbc.exceptions.MySQLQueryInterruptedException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -8,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,16 +21,20 @@ import javafx.util.StringConverter;
 import main.dao.PetDAO;
 import main.dao.PetSizeDAO;
 import main.dao.PetTypeDAO;
-import main.model.*;
+import main.model.Customer;
+import main.model.Pet;
+import main.model.PetSize;
+import main.model.PetType;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class PetSecondaryController {
+public class PetSecondaryController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -130,8 +134,8 @@ public class PetSecondaryController {
     }
 
     @FXML
-    void handleButtonPet (MouseEvent me){
-        if (me.getSource() == btnHewanKeluar){
+    void handleButtonPet(MouseEvent me) {
+        if (me.getSource() == btnHewanKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
@@ -161,7 +165,7 @@ public class PetSecondaryController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -184,7 +188,7 @@ public class PetSecondaryController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -207,7 +211,7 @@ public class PetSecondaryController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -251,22 +255,12 @@ public class PetSecondaryController {
 
     //Search all Pets
     @FXML
-    void searchPets(ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        try {
-            //Get all PetType information
-            ObservableList<Pet> pData = PetDAO.searchPets();
-
-            //Populate PetTypes on TableView
-            populatePets(pData);
-        } catch (SQLException e) {
-            System.out.println("Error occurred while getting pet information from DB " + e);
-            throw e;
-        }
+    void searchPets(ActionEvent event) {
+        loadAllData();
     }
 
     @FXML
-    private void populateAndShowPet (Pet p) throws ClassNotFoundException {
+    private void populateAndShowPet(Pet p) throws ClassNotFoundException {
         if (p != null) {
             populatePet(p);
         } else {
@@ -276,7 +270,7 @@ public class PetSecondaryController {
 
     //Populate Pets
     @FXML
-    private void populatePet (Pet p) throws ClassNotFoundException {
+    private void populatePet(Pet p) {
 
         //Declare an ObservableList for TableView
         ObservableList<Pet> pData = FXCollections.observableArrayList();
@@ -288,38 +282,10 @@ public class PetSecondaryController {
 
 
     @FXML
-    private void populatePets (ObservableList <Pet> pData) throws ClassNotFoundException {
+    private void populatePets(ObservableList<Pet> pData) throws ClassNotFoundException {
 
         //Set items to the tableAll
         tableAll.setItems(pData);
-    }
-
-    @FXML
-    private void initialize() {
-
-        petId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        petName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        petDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
-        petOwner.setCellValueFactory(cellData -> cellData.getValue().customer_nameProperty());
-        petType.setCellValueFactory(cellData -> cellData.getValue().petType_nameProperty());
-        petSize.setCellValueFactory(cellData -> cellData.getValue().petSize_nameProperty());
-
-        ObservableList typeList = FXCollections.observableArrayList();
-        comboUkuran.getItems().clear();
-        comboTipe.getItems().clear();
-        comboTipe.setItems(typeList);
-        comboUkuran.setItems(typeList);
-
-        initializeDatePicker();
-//        convertDatePicker();
-        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue){
-                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
-                }
-            }
-        });
     }
 
     private void initializeDatePicker() {
@@ -333,13 +299,11 @@ public class PetSecondaryController {
 
                         // Show Weekends in red color
                         DayOfWeek day = DayOfWeek.from(item);
-                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)
-                        {
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
                             this.setTextFill(Color.RED);
                         }
                         //Can only select until current date
-                        if (item.isAfter(LocalDate.now()))
-                        {
+                        if (item.isAfter(LocalDate.now())) {
                             this.setDisable(true);
                         }
                     }
@@ -361,7 +325,7 @@ public class PetSecondaryController {
     }
 
     @FXML
-    void updatePet(ActionEvent event) throws SQLException, ClassNotFoundException{
+    void updatePet(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             String tipe = Integer.toString(comboTipe.getValue().getId());
             String ukr = Integer.toString(comboUkuran.getValue().getId());
@@ -377,7 +341,7 @@ public class PetSecondaryController {
     }
 
     @FXML
-    void insertPet(ActionEvent event) throws SQLException, ClassNotFoundException{
+    void insertPet(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
 
             String tipe = Integer.toString(comboTipe.getValue().getId());
@@ -386,10 +350,10 @@ public class PetSecondaryController {
             Customer owner = PetDAO.searchOwner(txtOwner.getText());
             String Customers_id = Integer.toString(owner.getId());
 
-            System.out.println("Customers ID : "+Customers_id);
+            System.out.println("Customers ID : " + Customers_id);
 
             PetDAO.insertPet(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), Customers_id
-                    ,tipe, ukr);
+                    , tipe, ukr);
 
 
         } catch (SQLException e) {
@@ -494,10 +458,9 @@ public class PetSecondaryController {
     }
 
     @FXML
-    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+    private void selectedRow(MouseEvent me) throws ClassNotFoundException, SQLException {
 
-        if(me.getClickCount() > 1)
-        {
+        if (me.getClickCount() > 1) {
             editWithSelectedRow();
         }
     }
@@ -525,17 +488,17 @@ public class PetSecondaryController {
             comboTipe.getItems();
             comboUkuran.getItems();
 
-            for(PetType petType : comboTipe.getItems()) {
-                if(petType.getType().equals(pet.getPetType_name())) {
+            for (PetType petType : comboTipe.getItems()) {
+                if (petType.getType().equals(pet.getPetType_name())) {
                     idTipe = petType.getId();
                     idTipe--;
                 }
             }
 
-            for(PetSize petSize : comboUkuran.getItems()) {
-                if(petSize.getSize().equals(pet.getPetType_name())) {
+            for (PetSize petSize : comboUkuran.getItems()) {
+                if (petSize.getSize().equals(pet.getPetType_name())) {
                     idUkuran = petSize.getId();
-                    idUkuran --;
+                    idUkuran--;
                 }
             }
 
@@ -553,10 +516,55 @@ public class PetSecondaryController {
         txtOwner.clear();
         comboUkuran.setValue(null);
         comboTipe.setValue(null);
+        txtCari.clear();
+
+        loadAllData();
     }
 
     @FXML
     void e1d42b(ActionEvent event) {
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        petId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        petName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        petDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
+        petOwner.setCellValueFactory(cellData -> cellData.getValue().customer_nameProperty());
+        petType.setCellValueFactory(cellData -> cellData.getValue().petType_nameProperty());
+        petSize.setCellValueFactory(cellData -> cellData.getValue().petSize_nameProperty());
+
+        ObservableList typeList = FXCollections.observableArrayList();
+        comboUkuran.getItems().clear();
+        comboTipe.getItems().clear();
+        comboTipe.setItems(typeList);
+        comboUkuran.setItems(typeList);
+
+        initializeDatePicker();
+//        convertDatePicker();
+        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
+                }
+            }
+        });
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        //Get all PetType information
+        ObservableList<Pet> pData = null;
+        try {
+            pData = PetDAO.searchPets();
+            //Populate PetTypes on TableView
+            populatePets(pData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 }
