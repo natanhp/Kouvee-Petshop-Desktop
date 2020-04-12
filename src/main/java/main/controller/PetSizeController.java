@@ -49,7 +49,7 @@ public class PetSizeController implements Initializable {
     private TableView<PetSize> tableAll;
 
     @FXML
-    private Button btnUkuranKeluar;
+    private Button btnPetSizeKeluar;
 
     @FXML
     private TextField txtUkuran;
@@ -90,7 +90,7 @@ public class PetSizeController implements Initializable {
 
     @FXML
     public void handleButtonPetSize(MouseEvent me) {
-        if (me.getSource() == btnUkuranKeluar) {
+        if (me.getSource() == btnPetSizeKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
