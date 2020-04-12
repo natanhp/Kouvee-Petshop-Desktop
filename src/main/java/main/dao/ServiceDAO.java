@@ -14,7 +14,7 @@ public class ServiceDAO {
     public static Service searchService(String sName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  Services WHERE serviceName = '" + sName + "' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT * FROM  Services WHERE serviceName LIKE '%" + sName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
