@@ -267,10 +267,14 @@ public class PetSizeController implements Initializable {
 
     @FXML
     private void insertPetSize(ActionEvent event) throws ClassNotFoundException {
+        String petSize = txtUkuran.getText();
+        if (!petSize.equals("Small") && !petSize.equals("Medium") && !petSize.equals("Large") && !petSize.equals("Extra Large" )) {
+            return;
+        }
 
         try {
-            PetSizeDAO.insertPs(returnID, txtUkuran.getText());
-
+            PetSizeDAO.insertPs(returnID, petSize);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting petsize");
         }
@@ -280,12 +284,16 @@ public class PetSizeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         psId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         psSize.setCellValueFactory(cellData -> cellData.getValue().sizeProperty());
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        ObservableList<PetSize> psData = null;
         try {
-            ObservableList<PetSize> psData = PetSizeDAO.searchPetSizes();
+            psData = PetSizeDAO.searchPetSizes();
             populatePetSizes(psData);
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-
     }
 }
