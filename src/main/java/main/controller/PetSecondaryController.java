@@ -318,8 +318,8 @@ public class PetSecondaryController implements Initializable {
     @FXML
     void deletePet(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
-            PetDAO.deletePetWithId(txtID.getText());
-
+            PetDAO.softDeletePetWithId(returnID, txtID.getText());
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting pet");
         }
