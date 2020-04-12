@@ -234,7 +234,7 @@ public class ProductController implements Initializable {
 
     //Search Product
     @FXML
-    void searchProduct(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void searchProduct(ActionEvent event) throws SQLException {
 
         try {
             //Get Product Information
@@ -300,8 +300,8 @@ public class ProductController implements Initializable {
     void updateProduct(ActionEvent event) {
 
         try {
-            String qty = Integer.toString(spinJumlah.getValue().intValue());
-            String min = Integer.toString(spinMin.getValue().intValue());
+            String qty = Integer.toString(spinJumlah.getValue());
+            String min = Integer.toString(spinMin.getValue());
             String price = Integer.toString(spinHarga.getValue().intValue());
 
             ProductDAO.updateEntries(returnID, txtID.getText(), txtNamaProduk.getText(), txtSatuan.getText(), qty, price, min, filePath);
@@ -313,16 +313,27 @@ public class ProductController implements Initializable {
 
     @FXML
     void insertProduct(ActionEvent event) {
+        int quantity = spinJumlah.getValue();
+        int minQty = spinMin.getValue();
+        double priceValue = spinHarga.getValue();
+        String productName = txtNamaProduk.getText().trim();
+        String metric = txtSatuan.getText().trim();
+
+        if (quantity <= 0 || minQty <= 0 || priceValue <= 0) {
+            return;
+        }
+
+        if (productName.equals("") || metric.equals("")) {
+            return;
+        }
+
+        String qty = Integer.toString(quantity);
+        String min = Integer.toString(minQty);
+        String price = Double.toString(priceValue);
 
         try {
-
-            String qty = Integer.toString(spinJumlah.getValue().intValue());
-            String min = Integer.toString(spinMin.getValue().intValue());
-            String price = Integer.toString(spinHarga.getValue().intValue());
-
-            ProductDAO.insertPr(returnID, txtNamaProduk.getText(), qty, txtSatuan.getText(), price, min, filePath);
-
-
+            ProductDAO.insertPr(returnID, productName, qty, metric, price, min, filePath);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting product");
         }
@@ -339,8 +350,8 @@ public class ProductController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
 
-        fileChooser.setInitialDirectory(new File("C:\\"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg", "*.jpg"));
+        fileChooser.setInitialDirectory(new File("."));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpeg", "*.jpg"));
         File file = fileChooser.showOpenDialog(btnOpen.getScene().getWindow());
 
         if (file != null) {
@@ -468,10 +479,8 @@ public class ProductController implements Initializable {
             prData = ProductDAO.searchProducts();
             //Populate Products on TableView
             populateProducts(prData);
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
