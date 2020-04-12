@@ -121,6 +121,24 @@ public class ProductDAO {
         }
     }
 
+    public static void updateEntriesNoImage(String Logged, String Id, String name, String meas, String prQty,
+                                     String price, String minQty)
+            throws SQLException {
+        //Declare an UPDATE Statement
+        String updateStmt =
+                "UPDATE Products " +
+                        "SET productName = '" + name + "' " +
+                        ", productQuantity = '" + prQty + "' " +
+                        ", meassurement = '" + meas + "' " +
+                        ", productPrice = '" + price + "' " +
+                        ", minimumQty = '" + minQty + "' " +
+                        ", updatedAt = NOW()" +
+                        ", updatedBy = '" + Logged + "' " +
+                        "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
+
+        DBUtil.dbExecuteUpdate(updateStmt);
+    }
+
     //DELETE a product
     public static void deletePrWithId(String Id) throws SQLException {
 

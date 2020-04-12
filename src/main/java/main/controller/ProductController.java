@@ -298,14 +298,35 @@ public class ProductController implements Initializable {
 
     @FXML
     void updateProduct(ActionEvent event) {
+        int quantity = spinJumlah.getValue();
+        int minQty = spinMin.getValue();
+        double priceValue = spinHarga.getValue();
+        String productName = txtNamaProduk.getText().trim();
+        String metric = txtSatuan.getText().trim();
+
+        if (quantity <= 0 || minQty <= 0 || priceValue <= 0) {
+            return;
+        }
+
+        if (productName.equals("") || metric.equals("")) {
+            return;
+        }
+
+        String qty = Integer.toString(quantity);
+        String min = Integer.toString(minQty);
+        String price = Double.toString(priceValue);
 
         try {
-            String qty = Integer.toString(spinJumlah.getValue());
-            String min = Integer.toString(spinMin.getValue());
-            String price = Integer.toString(spinHarga.getValue().intValue());
 
-            ProductDAO.updateEntries(returnID, txtID.getText(), txtNamaProduk.getText(), txtSatuan.getText(), qty, price, min, filePath);
+            if (filePath == null) {
+                ProductDAO.updateEntriesNoImage(returnID, txtID.getText(), productName, metric, qty, price, min);
+                System.out.println("Yash");
+            } else {
+                ProductDAO.updateEntries(returnID, txtID.getText(), productName, metric, qty, price, min, filePath);
+                System.out.println("NOPE");
+            }
 
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating product");
         }
@@ -334,6 +355,7 @@ public class ProductController implements Initializable {
         try {
             ProductDAO.insertPr(returnID, productName, qty, metric, price, min, filePath);
             loadAllData();
+            filePath = null;
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting product");
         }
@@ -490,6 +512,9 @@ public class ProductController implements Initializable {
         txtNamaProduk.clear();
         txtCari.clear();
         txtSatuan.clear();
+        filePath = null;
+        imagePreviewDB.setImage(null);
+        imagePreview.setImage(null);
 
         SpinnerValueFactory<Double> priceSpinnerFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 9999, 0);
         spinHarga.setValueFactory(priceSpinnerFactory);
