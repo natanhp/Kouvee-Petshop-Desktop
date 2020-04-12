@@ -327,13 +327,19 @@ public class PetSecondaryController implements Initializable {
 
     @FXML
     void updatePet(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String petName = txtNama.getText().trim();
+        if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
+                comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
+            return;
+        }
+
         try {
             String tipe = Integer.toString(comboTipe.getValue().getId());
             String ukr = Integer.toString(comboUkuran.getValue().getId());
             String customerId = Integer.toString(comboCustomer.getValue().getId());
 
-            PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), customerId, tipe, ukr);
-
+            PetDAO.updateEntries(returnID, txtID.getText(), petName, pickerDateBirth.getValue().toString(), customerId, tipe, ukr);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating pet");
         }
@@ -343,7 +349,7 @@ public class PetSecondaryController implements Initializable {
     void insertPet(ActionEvent event) throws SQLException, ClassNotFoundException {
         String petName = txtNama.getText().trim();
         if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
-        comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
+                comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
             return;
         }
 
@@ -396,12 +402,20 @@ public class PetSecondaryController implements Initializable {
     private void populatePetTypeComboBox(ObservableList<PetType> typeData) throws SQLException, ClassNotFoundException {
 
         //Set items to the comboBox
+        if (comboTipe == null) {
+            return;
+        }
+
         comboTipe.setItems(typeData);
         comboTipe.setConverter(new StringConverter<PetType>() {
 
             @Override
             public String toString(PetType object) {
-                return object.getType();
+                if (object != null) {
+                    return object.getType();
+                }
+
+                return "";
             }
 
             public int getObjectID(PetType object) {
@@ -428,12 +442,20 @@ public class PetSecondaryController implements Initializable {
     private void populatePetSizeComboBox(ObservableList<PetSize> typeData) throws SQLException, ClassNotFoundException {
 
         //Set items to the comboBox
+        if (comboUkuran == null) {
+            return;
+        }
+
         comboUkuran.setItems(typeData);
         comboUkuran.setConverter(new StringConverter<PetSize>() {
 
             @Override
             public String toString(PetSize object) {
-                return object.getSize();
+                if (object != null) {
+                    return object.getSize();
+                }
+
+                return "";
             }
 
             public int getObjectID(PetSize object) {
@@ -465,10 +487,6 @@ public class PetSecondaryController implements Initializable {
     }
 
     private void editWithSelectedRow() throws SQLException, ClassNotFoundException {
-
-        int idTipe = 0;
-        int idUkuran = 0;
-
         if (tableAll.getSelectionModel().getSelectedItem() != null) {
             Pet pet = tableAll.getSelectionModel().getSelectedItem();
 
@@ -484,28 +502,27 @@ public class PetSecondaryController implements Initializable {
             txtID.setText(Integer.toString(pet.getId()));
             txtNama.setText(pet.getName());
             pickerDateBirth.setValue(lc);
-//            txtOwner.setText(pet.getCustomer_name());
-
+            comboCustomer.getItems();
             comboTipe.getItems();
             comboUkuran.getItems();
 
             for (PetType petType : comboTipe.getItems()) {
                 if (petType.getType().equals(pet.getPetType_name())) {
-                    idTipe = petType.getId();
-                    idTipe--;
+                    comboTipe.getSelectionModel().select(petType);
                 }
             }
 
             for (PetSize petSize : comboUkuran.getItems()) {
-                if (petSize.getSize().equals(pet.getPetType_name())) {
-                    idUkuran = petSize.getId();
-                    idUkuran--;
+                if (petSize.getSize().equals(pet.getPetSize_name())) {
+                    comboUkuran.getSelectionModel().select(petSize);
                 }
             }
 
-            comboTipe.getSelectionModel().select(idTipe);
-            comboUkuran.getSelectionModel().select(idUkuran);
-
+            for (Customer customer : comboCustomer.getItems()) {
+                if (customer.getName().equals(pet.getCustomer_name())) {
+                    comboCustomer.getSelectionModel().select(customer);
+                }
+            }
         }
     }
 
@@ -514,7 +531,6 @@ public class PetSecondaryController implements Initializable {
         txtID.clear();
         txtNama.clear();
         pickerDateBirth.setValue(null);
-//        txtOwner.clear();
         comboUkuran.setValue(null);
         comboTipe.setValue(null);
         comboCustomer.setValue(null);
@@ -546,13 +562,9 @@ public class PetSecondaryController implements Initializable {
         comboUkuran.setItems(typeList);
 
         initializeDatePicker();
-//        convertDatePicker();
-        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue) {
-                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
-                }
+        pickerDateBirth.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
             }
         });
 
@@ -575,12 +587,20 @@ public class PetSecondaryController implements Initializable {
     private void populateCustomerComboBox(ObservableList<Customer> typeData) {
 
         //Set items to the comboBox
+        if (comboCustomer == null) {
+            return;
+        }
+
         comboCustomer.setItems(typeData);
         comboCustomer.setConverter(new StringConverter<Customer>() {
 
             @Override
             public String toString(Customer object) {
-                return object.getName();
+                if (object != null) {
+                    return object.getName();
+                }
+
+                return "";
             }
 
             public int getObjectID(Customer object) {
