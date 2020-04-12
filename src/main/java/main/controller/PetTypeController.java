@@ -88,7 +88,7 @@ public class PetTypeController implements Initializable {
     }
 
     @FXML
-    public void handleButtonPetType (MouseEvent me){
+    public void handleButtonPetType(MouseEvent me) {
         if (me.getSource() == btnTipeKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
@@ -119,7 +119,7 @@ public class PetTypeController implements Initializable {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -138,7 +138,7 @@ public class PetTypeController implements Initializable {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -157,7 +157,7 @@ public class PetTypeController implements Initializable {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -180,13 +180,13 @@ public class PetTypeController implements Initializable {
 
     //Show All PetTypes
     @FXML
-    private void searchPetTypes (ActionEvent event) {
+    private void searchPetTypes(ActionEvent event) {
         loadAllData();
     }
 
     //Search a PetType
     @FXML
-    private void searchPetType (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void searchPetType(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get PetType Information
             PetType pt = PetTypeDAO.searchPetType(txtCari.getText());
@@ -203,7 +203,7 @@ public class PetTypeController implements Initializable {
 
     //Populate PetTypes
     @FXML
-    private void populatePetType (PetType pt) throws ClassNotFoundException {
+    private void populatePetType(PetType pt) throws ClassNotFoundException {
 
         //Declare an ObservableList for TableView
         ObservableList<PetType> ptData = FXCollections.observableArrayList();
@@ -214,7 +214,7 @@ public class PetTypeController implements Initializable {
     }
 
     @FXML
-    private void populateAndShowPetType (PetType pt) throws ClassNotFoundException {
+    private void populateAndShowPetType(PetType pt) throws ClassNotFoundException {
         if (pt != null) {
             populatePetType(pt);
         } else {
@@ -223,14 +223,14 @@ public class PetTypeController implements Initializable {
     }
 
     @FXML
-    private void populatePetTypes (ObservableList < PetType > ptData) throws ClassNotFoundException {
+    private void populatePetTypes(ObservableList<PetType> ptData) throws ClassNotFoundException {
 
         //Set items to the tableAll
         tableAll.setItems(ptData);
     }
 
     @FXML
-    private void deletePetType (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void deletePetType(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             PetTypeDAO.deletePtWithId(txtID.getText());
 
@@ -240,7 +240,7 @@ public class PetTypeController implements Initializable {
     }
 
     @FXML
-    private void updatePetType (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void updatePetType(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             PetTypeDAO.updateEntries(returnID, txtID.getText(), txtTipe.getText());
 
@@ -250,7 +250,7 @@ public class PetTypeController implements Initializable {
     }
 
     @FXML
-    private void insertPetType (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void insertPetType(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         try {
             PetTypeDAO.insertPt(returnID, txtTipe.getText());
@@ -276,7 +276,14 @@ public class PetTypeController implements Initializable {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
+    }
 
-        //Populate PetTypes on TableView
+    @FXML
+    public void clearFields() {
+        txtCari.clear();
+        txtID.clear();
+        txtTipe.clear();
+
+        loadAllData();
     }
 }
