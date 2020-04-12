@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -63,7 +64,10 @@
                               <Insets right="30.0" top="30.0" />
                            </HBox.margin>
                         </Button>
-                     </children></HBox>
+                     </children>
+                     <effect>
+                        <DropShadow color="#00000033" />
+                     </effect></HBox>
                   <HBox alignment="CENTER" maxHeight="1080.0" maxWidth="1920.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #E1D42B;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                      <children>
                         <GridPane alignment="CENTER" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="140.0" prefWidth="1280.0" vgap="10.0" HBox.hgrow="ALWAYS">
@@ -128,6 +132,9 @@
                            </padding>
                         </GridPane>
                      </children>
+                     <effect>
+                        <InnerShadow color="#00000080" />
+                     </effect>
                   </HBox>
                   <Label fx:id="nameLogged" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="600.0" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER">
                      <font>
@@ -136,6 +143,9 @@
                      <GridPane.margin>
                         <Insets left="50.0" top="55.0" />
                      </GridPane.margin>
+                     <effect>
+                        <DropShadow color="#00000033" offsetY="2.0" />
+                     </effect>
                   </Label>
                   <ImageView fitHeight="203.0" fitWidth="287.0" pickOnBounds="true" preserveRatio="true">
                      <viewport>
@@ -145,7 +155,7 @@
                         <Image url="@../logo/kouveeLogo.png" />
                      </image>
                      <effect>
-                        <DropShadow color="#00000033" offsetY="2.0" />
+                        <DropShadow color="#0000004d" offsetY="2.0" />
                      </effect>
                      <GridPane.margin>
                         <Insets left="50.0" />

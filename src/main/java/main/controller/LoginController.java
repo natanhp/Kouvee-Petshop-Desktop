@@ -1,5 +1,6 @@
 package main.controller;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -145,10 +146,15 @@ public class LoginController implements Initializable {
 
         String username = txtUname.getText();
         String password = txtPawd.getText();
-        String generatedSecuredPasswordHash = BCryptHash.hashpw(password, BCryptHash.gensalt(10));
+//        Using 2A Version
+//        String generatedSecuredPasswordHash = BCryptHash.hashpw(password, BCryptHash.gensalt(10));
+
+//      Using 2Y Version
+//        String generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, password.toCharArray());
         String temp = null;
         String tempPassword = null;
-        boolean matched = false;
+//        Was boolean matched = false;
+        BCrypt.Result matched = null;
 
         //Query
 //        String query = "SELECT id, role FROM employees WHERE username = ? and password = ?;";
@@ -176,10 +182,13 @@ public class LoginController implements Initializable {
                         System.out.println(temp);
                         tempPassword = temp;
                     } while (resultSet.next());
+//                      Using 2A version for comparing
+//                    matched = BCryptHash.checkpw(password, tempPassword);
+//              Using 2Y version for comparing
+                    matched = BCrypt.verifyer().verify(password.toCharArray(), tempPassword);
 
-                    matched = BCryptHash.checkpw(password, tempPassword);
-
-                    if(matched == true) {
+//              was matched == true
+                    if(matched.verified == true) {
                         resultSet.first();
                         do {
                             temp = resultSet.getString("id");

@@ -1,5 +1,6 @@
 package main.controller;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,12 +17,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 import main.dao.EmployeeDAO;
 import main.model.Employee;
 import main.util.BCryptHash;
 import main.util.FxDatePickerConverter;
-
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -366,7 +365,20 @@ public class EmployeeController {
                 System.out.println("Problem occurred while updating employee");
             }
         } else {
-            generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
+//            Example Hashing the password
+//            String password = "1234";
+//            String bcryptHashString = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, password.toCharArray());
+//            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
+//            System.out.println("Example result : " + result);
+            // result.verified == true
+
+//            Using 2A Version
+//            generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
+
+//          Using 2Y Version
+            generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, passField.toCharArray());
+            BCrypt.Result result1 = BCrypt.verifyer().verify(passField.toCharArray(), generatedSecuredPasswordHash);
+
             try {
                 EmployeeDAO.updateEntries(returnID, txtID.getText(),txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
                         txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);

@@ -114,7 +114,7 @@
       </VBox>
    </center>
    <top>
-      <Button fx:id="btnExit" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" stylesheets="@../styleButton.css" text="X" textFill="WHITE" BorderPane.alignment="TOP_RIGHT">
+      <Button fx:id="btnExit" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" stylesheets="@../styleButton.css" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="TOP_RIGHT">
          <font>
             <Font name="Franklin Gothic Heavy" size="13.0" />
          </font>
@@ -132,6 +132,13 @@
             <String fx:value="loginButton" />
             <String fx:value="loginExitButton" />
          </styleClass>
+         <graphic>
+            <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/ExitLogo-white.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
    </top>
 </BorderPane>

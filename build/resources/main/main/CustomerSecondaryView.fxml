@@ -291,7 +291,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </TextField>
-                        <Label text="ID" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label text="ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="Franklin Gothic Medium" size="18.0" />
                            </font>
@@ -299,7 +299,7 @@
                               <Insets left="48.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Nama" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Label text="Nama" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <font>
                               <Font name="Franklin Gothic Medium" size="18.0" />
                            </font>
@@ -307,7 +307,7 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Alamat" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <Label text="Alamat" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <font>
                               <Font name="Franklin Gothic Medium" size="18.0" />
                            </font>
@@ -315,7 +315,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Tanggal Lahir" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Label text="Tanggal Lahir" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <font>
                               <Font name="Franklin Gothic Medium" size="18.0" />
                            </font>
@@ -323,7 +323,7 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="No. Telp" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                        <Label text="No. Telp" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2">
                            <font>
                               <Font name="Franklin Gothic Medium" size="18.0" />
                            </font>
