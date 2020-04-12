@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class SupplierController implements Initializable {
 
@@ -272,10 +273,23 @@ public class SupplierController implements Initializable {
 
     @FXML
     void insertSupplier(ActionEvent event) throws ClassNotFoundException {
-        try {
-            SupplierDAO.insertSpr(returnID, txtNama.getText(), txtAlamat.getText(),
-                    txtTelp.getText());
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
 
+        if (name.equals("") || address.equals("") || phone.equals("")) {
+            return;
+        }
+
+        Pattern pattern = Pattern.compile("\\d+");
+        if (!pattern.matcher(phone).matches()) {
+            return;
+        }
+
+        try {
+            SupplierDAO.insertSpr(returnID, name, address,
+                    phone);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting supplier");
         }
