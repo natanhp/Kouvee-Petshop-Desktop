@@ -13,7 +13,7 @@ public class ProductDAO {
     public static Product searchProduct(String prName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM Products WHERE productName LINE '%" + prName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT * FROM Products WHERE productName LIKE '%" + prName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
