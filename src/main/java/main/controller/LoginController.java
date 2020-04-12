@@ -1,41 +1,25 @@
 package main.controller;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import main.dao.EmployeeDAO;
 import main.model.Employee;
-import main.model.PetSize;
-import main.util.BCryptHash;
 import main.util.DBUtil;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class LoginController implements Initializable {
 
@@ -65,13 +49,12 @@ public class LoginController implements Initializable {
 
     }
 
-    Connection conn = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
+    Connection conn = DBUtil.conDB();
+    EmployeeDAO employeeDAO = new EmployeeDAO();
 
 
     public void handleButtonAction(MouseEvent me) {
-        if(me.getSource() == btnExit) {
+        if (me.getSource() == btnExit) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
@@ -83,11 +66,9 @@ public class LoginController implements Initializable {
             });
         }
 
-        if(me.getSource() == btnLogin)
-        {
+        if (me.getSource() == btnLogin) {
             //login here
-            if(loginAction().equals("Admin") || loginAction().equals("Owner"))
-            {
+            if (loginAction().equals("Admin") || loginAction().equals("Owner")) {
                 Node node = (Node) me.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
@@ -99,9 +80,7 @@ public class LoginController implements Initializable {
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
                 }
-            }
-            else if(loginAction().equals("CS") || loginAction().equals("Customer Service"))
-            {
+            } else if (loginAction().equals("CS") || loginAction().equals("Customer Service")) {
                 Node node = (Node) me.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
@@ -114,10 +93,6 @@ public class LoginController implements Initializable {
                     System.err.println(e.getMessage());
                 }
             }
-//            else if(loginAction().equals("CS")){
-//                lblErrors.setTextFill(Color.TOMATO);
-//                lblErrors.setText("Access Denied !");
-//            }
 
         }
     }
@@ -134,10 +109,6 @@ public class LoginController implements Initializable {
         }
     }
 
-    public LoginController() {
-        conn = DBUtil.conDB();
-    }
-
     @FXML
     private String loginAction() {
 
@@ -146,77 +117,23 @@ public class LoginController implements Initializable {
 
         String username = txtUname.getText();
         String password = txtPawd.getText();
-//        Using 2A Version
-//        String generatedSecuredPasswordHash = BCryptHash.hashpw(password, BCryptHash.gensalt(10));
 
-//      Using 2Y Version
-//        String generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, password.toCharArray());
-        String temp = null;
-        String tempPassword = null;
-//        Was boolean matched = false;
-        BCrypt.Result matched = null;
-
-        //Query
-//        String query = "SELECT id, role FROM employees WHERE username = ? and password = ?;";
-        String queryCheck = "SELECT id, name, role, password FROM employees WHERE username = ?;";
-
-        if(username.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty()) {
             setLblError(Color.TOMATO, "Empty credentials");
             status = "Error";
         } else {
-            try {
-                preparedStatement = conn.prepareStatement(queryCheck);
-                preparedStatement.setString(1, username);
-//                preparedStatement.setString(2, password);
-                resultSet = preparedStatement.executeQuery();
+            Employee employee = employeeDAO.login(username, password);
+            if (employee != null) {
+                loginID = String.valueOf(employee.getId());
+                loginRole = employee.getRole();
+                loginUname = employee.getName();
 
-                if(resultSet.next() == false)
-                {
-                    setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
-                    status = "Error";
-                }
-                else if(resultSet.first() == true)
-                {
-                    do {
-                        temp = resultSet.getString("password");
-                        System.out.println(temp);
-                        tempPassword = temp;
-                    } while (resultSet.next());
-//                      Using 2A version for comparing
-//                    matched = BCryptHash.checkpw(password, tempPassword);
-//              Using 2Y version for comparing
-                    matched = BCrypt.verifyer().verify(password.toCharArray(), tempPassword);
-
-//              was matched == true
-                    if(matched.verified == true) {
-                        resultSet.first();
-                        do {
-                            temp = resultSet.getString("id");
-                            System.out.println(temp);
-                            loginID = temp;
-                            temp = resultSet.getString("role");
-                            System.out.println(temp);
-                            loginRole = temp;
-                            temp = resultSet.getString("name");
-                            loginUname = temp;
-                            System.out.println(temp);
-                        } while (resultSet.next());
-
-                        setAllUserLogin();
-                        setLblError(Color.GREEN, "Login Successful");
-                        status = loginRole;
-                    }
-                    else {
-                        setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
-                        status = "Error";
-                    }
-                }
-                else {
-                    setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
-                    status = "Error";
-                }
-            } catch (SQLException e) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, e);
+                setAllUserLogin();
+                setLblError(Color.GREEN, "Login Successful");
+                status = loginRole;
+            } else {
+                setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
+                status = "Error";
             }
         }
         return status;
