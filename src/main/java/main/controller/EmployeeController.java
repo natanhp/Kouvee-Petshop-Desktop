@@ -394,8 +394,9 @@ public class EmployeeController implements Initializable {
     @FXML
     private void deleteEmployee(ActionEvent ae) {
         try {
-            EmployeeDAO.deleteEmpWithId(txtID.getText());
+            EmployeeDAO.softDeleteEmpWithId(returnID, txtID.getText());
 
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting employee");
         }
