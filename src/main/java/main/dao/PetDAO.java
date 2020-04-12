@@ -205,7 +205,7 @@ public class PetDAO {
     //INSERT a Pet
     public static void insertPet(String Logged, String name, String dateBirth, String Customers_id,
                                  String PetTypes_id, String PetSizes_id)
-            throws SQLException, ClassNotFoundException {
+            throws SQLException {
         //Declare an INSERT Statement
         String updateStmt =
                 "INSERT INTO Pets " +

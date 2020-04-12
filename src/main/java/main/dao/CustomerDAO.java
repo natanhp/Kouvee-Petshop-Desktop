@@ -35,7 +35,7 @@ public class CustomerDAO {
     private static Customer getCustomersFromResultSet(ResultSet rs) throws SQLException {
         Customer cus = null;
 
-        if(rs.next()) {
+        if (rs.next()) {
             cus = new Customer();
             cus.setId(rs.getInt("id"));
             cus.setName(rs.getString("name"));
@@ -66,7 +66,7 @@ public class CustomerDAO {
             System.out.println("SQL Select Operation has been failed: " + ex);
 
             //Return exception
-            throw ex ;
+            throw ex;
         }
     }
 
@@ -76,7 +76,7 @@ public class CustomerDAO {
         //Declare a observable List which comprises of Customer Objects
         ObservableList<Customer> cusList = FXCollections.observableArrayList();
 
-        while(rs.next()) {
+        while (rs.next()) {
             Customer cus = new Customer();
             cus = new Customer();
             cus.setId(rs.getInt("id"));
@@ -94,10 +94,9 @@ public class CustomerDAO {
     }
 
     //Update an customer's entries
-    public static void updateEntries (String Logged, String Id, String name, String dateBirth, String address,
-                                      String phoneNumber)
-            throws SQLException, ClassNotFoundException
-    {
+    public static void updateEntries(String Logged, String Id, String name, String dateBirth, String address,
+                                     String phoneNumber)
+            throws SQLException, ClassNotFoundException {
         //Declare an UPDATE Statement
         String updateStmt =
                 "UPDATE customers " +
@@ -130,7 +129,7 @@ public class CustomerDAO {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while DELETE Operation: " +ex);
+            System.out.println("Error occurred while DELETE Operation: " + ex);
             throw ex;
         }
     }
@@ -153,7 +152,7 @@ public class CustomerDAO {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while SOFT_DELETE Operation: " +ex);
+            System.out.println("Error occurred while SOFT_DELETE Operation: " + ex);
             throw ex;
         }
     }
@@ -161,8 +160,7 @@ public class CustomerDAO {
     //INSERT a Customer
     public static void insertCus(String Logged, String name, String dateBirth, String address,
                                  String phoneNumber)
-            throws SQLException, ClassNotFoundException
-    {
+            throws SQLException, ClassNotFoundException {
 
         //Declare an INSERT Statement
         String updateStmt =

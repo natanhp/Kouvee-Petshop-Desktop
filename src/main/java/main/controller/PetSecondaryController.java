@@ -316,7 +316,7 @@ public class PetSecondaryController implements Initializable {
 
 
     @FXML
-    void deletePet(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void deletePet(ActionEvent event) throws ClassNotFoundException {
         try {
             PetDAO.softDeletePetWithId(returnID, txtID.getText());
             loadAllData();
@@ -326,7 +326,7 @@ public class PetSecondaryController implements Initializable {
     }
 
     @FXML
-    void updatePet(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void updatePet(ActionEvent event) throws ClassNotFoundException {
         String petName = txtNama.getText().trim();
         if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
                 comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
@@ -346,7 +346,7 @@ public class PetSecondaryController implements Initializable {
     }
 
     @FXML
-    void insertPet(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void insertPet(ActionEvent event) {
         String petName = txtNama.getText().trim();
         if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
                 comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
@@ -399,7 +399,7 @@ public class PetSecondaryController implements Initializable {
     }
 
     @FXML
-    private void populatePetTypeComboBox(ObservableList<PetType> typeData) throws SQLException, ClassNotFoundException {
+    private void populatePetTypeComboBox(ObservableList<PetType> typeData) throws SQLException {
 
         //Set items to the comboBox
         if (comboTipe == null) {
@@ -439,7 +439,7 @@ public class PetSecondaryController implements Initializable {
     }
 
     @FXML
-    private void populatePetSizeComboBox(ObservableList<PetSize> typeData) throws SQLException, ClassNotFoundException {
+    private void populatePetSizeComboBox(ObservableList<PetSize> typeData) throws SQLException {
 
         //Set items to the comboBox
         if (comboUkuran == null) {
