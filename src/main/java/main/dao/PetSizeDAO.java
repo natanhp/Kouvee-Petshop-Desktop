@@ -127,10 +127,9 @@ public class PetSizeDAO {
         //Declare an UPDATE Statement
         String deleteStmt =
                 "UPDATE PetSizes " +
-                        "SET size = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy " + Logged +
-                        "WHERE id = '" + Id + "';";
+                        "SET deletedAt = NOW()" +
+                        ", deletedBy = " + Logged +
+                        " WHERE id = " + Id + ";";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
