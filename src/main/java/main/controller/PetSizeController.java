@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,9 +19,11 @@ import main.model.PetSize;
 import main.model.PetSize;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class PetSizeController {
+public class PetSizeController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -44,12 +47,6 @@ public class PetSizeController {
     private TextField txtID;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<PetSize> tableAll;
 
     @FXML
@@ -57,9 +54,6 @@ public class PetSizeController {
 
     @FXML
     private TextField txtUkuran;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private TableColumn<PetSize, String> psSize;
@@ -219,16 +213,9 @@ public class PetSizeController {
         }
     }
 
-    @FXML
-    private void initialize () {
-
-        psId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        psSize.setCellValueFactory(cellData -> cellData.getValue().sizeProperty());
-    }
-
     //Populate PetSizes
     @FXML
-    private void populatePetSize (PetSize ps) throws ClassNotFoundException {
+    private void populatePetSize (PetSize ps) {
 
         //Declare an ObservableList for TableView
         ObservableList<PetSize> psData = FXCollections.observableArrayList();
@@ -248,6 +235,11 @@ public class PetSizeController {
     }
 
     @FXML
+    private void populatePetSizes() throws ClassNotFoundException {
+        populatePetSizes();
+    }
+
+    @FXML
     private void populatePetSizes (ObservableList < PetSize > psData) throws ClassNotFoundException {
 
         //Set items to the tableAll
@@ -255,7 +247,7 @@ public class PetSizeController {
     }
 
     @FXML
-    private void deletePetSize (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void deletePetSize (ActionEvent event) throws ClassNotFoundException {
         try {
             PetSizeDAO.deletePsWithId(txtID.getText());
 
@@ -265,7 +257,7 @@ public class PetSizeController {
     }
 
     @FXML
-    private void updatePetSize (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void updatePetSize (ActionEvent event) throws ClassNotFoundException {
         try {
             PetSizeDAO.updateEntries(returnID, txtID.getText(), txtUkuran.getText());
 
@@ -275,7 +267,7 @@ public class PetSizeController {
     }
 
     @FXML
-    private void insertPetSize (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void insertPetSize (ActionEvent event) throws ClassNotFoundException {
 
         try {
             PetSizeDAO.insertPs(returnID, txtUkuran.getText());
@@ -283,5 +275,18 @@ public class PetSizeController {
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting petsize");
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        psId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        psSize.setCellValueFactory(cellData -> cellData.getValue().sizeProperty());
+        try {
+            ObservableList<PetSize> psData = PetSizeDAO.searchPetSizes();
+            populatePetSizes(psData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }
