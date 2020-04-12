@@ -252,8 +252,8 @@ public class SupplierController implements Initializable {
     @FXML
     void deleteSupplier(ActionEvent event) {
         try {
-            SupplierDAO.deleteSprWithId(txtID.getText());
-
+            SupplierDAO.softDeleteSprWithId(returnID, txtID.getText());
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting supplier");
         }

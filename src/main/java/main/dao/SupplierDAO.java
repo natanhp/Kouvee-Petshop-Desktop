@@ -137,7 +137,7 @@ public class SupplierDAO {
                         "SET " +
                         "deletedAt = NOW()" +
                         ", deletedBy = " + Logged +
-                        " WHERE idSupplier = '" + Id + "' AND deletedAt IS NULL;";
+                        " WHERE idSupplier = " + Id + " AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
