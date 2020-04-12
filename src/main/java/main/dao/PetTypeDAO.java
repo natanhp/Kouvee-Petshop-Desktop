@@ -11,10 +11,10 @@ import java.sql.SQLException;
 public class PetTypeDAO {
 
     //SELECT a PetType
-    public static PetType searchPetType(String ptName) throws SQLException, ClassNotFoundException {
+    public static PetType searchPetType(String ptName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  pettypes WHERE type = '" + ptName + "';";
+        String selectStmt = "SELECT * FROM  PetTypes WHERE type LIKE '%" + ptName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -22,7 +22,7 @@ public class PetTypeDAO {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsPt = DBUtil.dbExecuteQuery(selectStmt);
 
-            PetType petType  = getPetTypesFromResultSet(rsPt);
+            PetType petType = getPetTypesFromResultSet(rsPt);
 
             return petType;
         } catch (SQLException ex) {
@@ -35,7 +35,7 @@ public class PetTypeDAO {
     private static PetType getPetTypesFromResultSet(ResultSet rs) throws SQLException {
         PetType pt = null;
 
-        if(rs.next()) {
+        if (rs.next()) {
             pt = new PetType();
             pt.setId(rs.getInt("id"));
             pt.setType(rs.getString("type"));
@@ -48,7 +48,7 @@ public class PetTypeDAO {
     public static ObservableList<PetType> searchPetTypes() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM pettypes";
+        String selectStmt = "SELECT * FROM PetTypes WHERE deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -64,17 +64,17 @@ public class PetTypeDAO {
             System.out.println("SQL Select Operation has been failed: " + ex);
 
             //Return exception
-            throw ex ;
+            throw ex;
         }
     }
 
     //SELECT * FROM pettypes operation
-    public static ObservableList<PetType> getPetTypeList(ResultSet rs) throws SQLException, ClassNotFoundException {
+    public static ObservableList<PetType> getPetTypeList(ResultSet rs) throws SQLException {
 
         //Declare a observable List which comprises of PetType Objects
         ObservableList<PetType> ptList = FXCollections.observableArrayList();
 
-        while(rs.next()) {
+        while (rs.next()) {
             PetType pt = new PetType();
             pt = new PetType();
             pt.setId(rs.getInt("id"));
@@ -89,15 +89,14 @@ public class PetTypeDAO {
     }
 
     //Update an pettype's entries
-    public static void updateEntries (String Logged, String Id, String type) throws SQLException, ClassNotFoundException
-    {
+    public static void updateEntries(String Logged, String Id, String type) throws SQLException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE pettypes " +
+                "UPDATE PetTypes " +
                         "SET type = '" + type + "' " +
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                        "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -113,45 +112,44 @@ public class PetTypeDAO {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM pettypes " +
+                "DELETE FROM PetTypes " +
                         "WHERE id = " + Id + ";";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while DELETE Operation: " +ex);
+            System.out.println("Error occurred while DELETE Operation: " + ex);
             throw ex;
         }
     }
 
     //SOFT DELETE a pettype
-    public static void softDeletePtWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+    public static void softDeletePtWithId(String Logged, String Id) throws SQLException {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE pettypes " +
-                        "SET type = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy " + Logged +
-                        "WHERE id = '" + Id + "';";
+                "UPDATE PetTypes " +
+                        "SET " +
+                        "deletedAt = NOW()" +
+                        ", deletedBy = " + Logged +
+                        " WHERE id = '" + Id + "' AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while SOFT_DELETE Operation: " +ex);
+            System.out.println("Error occurred while SOFT_DELETE Operation: " + ex);
             throw ex;
         }
     }
 
     //INSERT a PetType
-    public static void insertPt(String Logged, String type) throws SQLException, ClassNotFoundException
-    {
+    public static void insertPt(String Logged, String type) throws SQLException {
 
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO pettypes " +
+                "INSERT INTO PetTypes " +
                         "(type, createdAt, createdBy)" +
                         "VALUES " +
                         "('" + type + "', " + "NOW(), " +
