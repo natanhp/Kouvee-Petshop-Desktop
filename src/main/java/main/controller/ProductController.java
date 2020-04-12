@@ -419,9 +419,9 @@ public class ProductController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        int qty = 1;
-        int minQty = 1;
-        Double price = 1.0;
+        int qty = 0;
+        int minQty = 0;
+        Double price = 0.0;
 
         SpinnerValueFactory<Integer> spinnerQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, qty);
         SpinnerValueFactory<Integer> spinnerMinQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, minQty);
@@ -473,6 +473,24 @@ public class ProductController implements Initializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
+    @FXML
+    public void clearFields() {
+        txtID.clear();
+        txtNamaProduk.clear();
+        txtCari.clear();
+        txtSatuan.clear();
+
+        SpinnerValueFactory<Double> priceSpinnerFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 9999, 0);
+        spinHarga.setValueFactory(priceSpinnerFactory);
+
+        SpinnerValueFactory<Integer> productQtySpinnerFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, 0);
+        spinJumlah.setValueFactory(productQtySpinnerFactory);
+
+        SpinnerValueFactory<Integer> minimumQtySpinnerFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 999999999, 0);
+        spinMin.setValueFactory(minimumQtySpinnerFactory);
+
+        loadAllData();
     }
 }
