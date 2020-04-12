@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -17,9 +18,11 @@ import main.dao.PetTypeDAO;
 import main.model.PetType;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class PetTypeController {
+public class PetTypeController implements Initializable {
     private static String returnID;
     private static String returnRole;
 
@@ -42,12 +45,6 @@ public class PetTypeController {
     private TextField txtID;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<PetType> tableAll;
 
     @FXML
@@ -55,9 +52,6 @@ public class PetTypeController {
 
     @FXML
     private TextField txtTipe;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private TableColumn<PetType, String> ptType;
@@ -186,18 +180,8 @@ public class PetTypeController {
 
     //Show All PetTypes
     @FXML
-    private void searchPetTypes (ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        try {
-            //Get all PetType information
-            ObservableList<PetType> ptData = PetTypeDAO.searchPetTypes();
-
-            //Populate PetTypes on TableView
-            populatePetTypes(ptData);
-        } catch (SQLException e) {
-            System.out.println("Error occurred while getting pettype information from DB " + e);
-            throw e;
-        }
+    private void searchPetTypes (ActionEvent event) {
+        loadAllData();
     }
 
     //Search a PetType
@@ -215,13 +199,6 @@ public class PetTypeController {
             System.out.println("Error occurred while getting PetType information from DB" + e);
             throw e;
         }
-    }
-
-    @FXML
-    private void initialize () {
-
-        ptId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        ptType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
     }
 
     //Populate PetTypes
@@ -281,5 +258,25 @@ public class PetTypeController {
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting pettype");
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ptId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        ptType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        ObservableList<PetType> ptData = null;
+        try {
+            ptData = PetTypeDAO.searchPetTypes();
+            populatePetTypes(ptData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
+        //Populate PetTypes on TableView
     }
 }
