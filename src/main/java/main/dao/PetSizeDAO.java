@@ -93,7 +93,7 @@ public class PetSizeDAO {
                         "SET size = '" + size + "' " +
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                        "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -129,7 +129,7 @@ public class PetSizeDAO {
                 "UPDATE PetSizes " +
                         "SET deletedAt = NOW()" +
                         ", deletedBy = " + Logged +
-                        " WHERE id = " + Id + ";";
+                        " WHERE id = " + Id + " AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);

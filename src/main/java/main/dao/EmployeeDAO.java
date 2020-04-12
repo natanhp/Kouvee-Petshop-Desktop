@@ -140,7 +140,7 @@ public class EmployeeDAO {
                             ", updatedBy = '" + Logged + "' " +
                             ", username = '" + username + "' " +
                             ", password = '" + password + "' " +
-                            "WHERE id = '" + Id + "';";
+                            "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
         } else {
             updateStmt =
                     "UPDATE Employees " +
@@ -152,7 +152,7 @@ public class EmployeeDAO {
                             ", updatedAt = NOW()" +
                             ", updatedBy = '" + Logged + "' " +
                             ", username = '" + username + "' " +
-                            "WHERE id = '" + Id + "';";
+                            "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
         }
 
         try {
@@ -213,13 +213,10 @@ public class EmployeeDAO {
         //Declare an UPDATE Statement
         String deleteStmt =
                 "UPDATE Employees " +
-                        "SET name = NULL" +
-                        ", address = NULL" +
-                        ", dateBirth = NULL" +
-                        ", phoneNumber = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy " + Logged +
-                        "WHERE id = '" + Id + "';";
+                        "SET " +
+                        " deletedAt = NOW()" +
+                        ", deletedBy = " + Logged +
+                        " WHERE id = " + Id + " AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
@@ -254,7 +251,7 @@ public class EmployeeDAO {
     }
 
     public Employee login(String username, String password) {
-        String queryCheck = "SELECT id, name, role, password FROM Employees WHERE username = ?;";
+        String queryCheck = "SELECT id, name, role, password FROM Employees WHERE username = ? AND deletedAt IS NULL;";
         try (Connection connection = DBUtil.conDB()) {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(queryCheck);
             preparedStatement.setString(1, username);
