@@ -154,14 +154,10 @@ public class PetDAO {
         //Declare an UPDATE Statement
         String deleteStmt =
                 "UPDATE Pets " +
-                        "SET name = NULL" +
-                        ", dateBirth = NULL" +
-                        ", Customers_id = NULL" +
-                        ", PetTypes_id = NULL" +
-                        ", PetSizes_id = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                        "SET " +
+                        "deletedAt = NOW()" +
+                        ", deletedBy = " + Logged + " " +
+                        "WHERE id = " + Id + ";";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
