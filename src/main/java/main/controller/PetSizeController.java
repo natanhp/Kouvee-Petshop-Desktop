@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.PetSizeDAO;
 import main.model.PetSize;
-import main.model.PetSize;
 
 import java.io.IOException;
 import java.net.URL;
@@ -90,7 +89,7 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    public void handleButtonPetSize (MouseEvent me){
+    public void handleButtonPetSize(MouseEvent me) {
         if (me.getSource() == btnUkuranKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
@@ -121,7 +120,7 @@ public class PetSizeController implements Initializable {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -140,7 +139,7 @@ public class PetSizeController implements Initializable {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -159,7 +158,7 @@ public class PetSizeController implements Initializable {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -182,7 +181,7 @@ public class PetSizeController implements Initializable {
 
     //Show All PetSizes
     @FXML
-    private void searchPetSizes (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void searchPetSizes(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         try {
             //Get all PetSize information
@@ -198,7 +197,7 @@ public class PetSizeController implements Initializable {
 
     //Search a PetSize
     @FXML
-    private void searchPetSize (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void searchPetSize(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get PetSize Information
             PetSize ps = PetSizeDAO.searchPetSize(txtCari.getText());
@@ -215,7 +214,7 @@ public class PetSizeController implements Initializable {
 
     //Populate PetSizes
     @FXML
-    private void populatePetSize (PetSize ps) {
+    private void populatePetSize(PetSize ps) {
 
         //Declare an ObservableList for TableView
         ObservableList<PetSize> psData = FXCollections.observableArrayList();
@@ -226,7 +225,7 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void populateAndShowPetSize (PetSize ps) throws ClassNotFoundException {
+    private void populateAndShowPetSize(PetSize ps) throws ClassNotFoundException {
         if (ps != null) {
             populatePetSize(ps);
         } else {
@@ -240,14 +239,14 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void populatePetSizes (ObservableList < PetSize > psData) throws ClassNotFoundException {
+    private void populatePetSizes(ObservableList<PetSize> psData) throws ClassNotFoundException {
 
         //Set items to the tableAll
         tableAll.setItems(psData);
     }
 
     @FXML
-    private void deletePetSize (ActionEvent event) throws ClassNotFoundException {
+    private void deletePetSize(ActionEvent event) throws ClassNotFoundException {
         try {
             PetSizeDAO.deletePsWithId(txtID.getText());
 
@@ -257,7 +256,7 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void updatePetSize (ActionEvent event) throws ClassNotFoundException {
+    private void updatePetSize(ActionEvent event) throws ClassNotFoundException {
         try {
             PetSizeDAO.updateEntries(returnID, txtID.getText(), txtUkuran.getText());
 
@@ -267,7 +266,7 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void insertPetSize (ActionEvent event) throws ClassNotFoundException {
+    private void insertPetSize(ActionEvent event) throws ClassNotFoundException {
 
         try {
             PetSizeDAO.insertPs(returnID, txtUkuran.getText());
