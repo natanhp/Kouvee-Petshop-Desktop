@@ -289,8 +289,8 @@ public class ProductController implements Initializable {
     void deleteProduct(ActionEvent event) {
 
         try {
-            ProductDAO.deletePrWithId(txtID.getText());
-
+            ProductDAO.softDeletePrWithId(returnID, txtID.getText());
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting product");
         }
