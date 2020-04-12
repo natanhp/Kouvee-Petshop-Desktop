@@ -10,16 +10,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import main.dao.ProductDAO;
+import main.model.Employee;
 import main.model.Product;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductController {
 
@@ -119,6 +126,12 @@ public class ProductController {
 
     @FXML
     private TextField txtCari;
+
+    @FXML
+    private ImageView imagePreviewDB;
+
+    @FXML
+    private Label labelImageError;
 
     public static void getUserLogin(String loginID) {
 
@@ -395,6 +408,18 @@ public class ProductController {
 //        return bytes;
 //    }
 
+//    private static Image convertToJavaFXImage(byte[] raw, final int width, final int height) {
+//        WritableImage image = new WritableImage(width, height);
+//        try {
+//            ByteArrayInputStream bis = new ByteArrayInputStream(raw);
+//            BufferedImage read = ImageIO.read(bis);
+//            image = SwingFXUtils.toFXImage(read, null);
+//        } catch (IOException ex) {
+//            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return image;
+//    }
+
     @FXML
     private void initialize() {
 
@@ -439,8 +464,6 @@ public class ProductController {
         prSatuan.setCellValueFactory(cellData -> cellData.getValue().meassurementProperty());
         prPrice.setCellValueFactory(cellData -> cellData.getValue().productPriceProperty().asObject());
         prMinQty.setCellValueFactory(cellData -> cellData.getValue().minimumQuantityProperty().asObject());
-//        prGambar.setCellValueFactory(cellData -> cellData.toString().);
-
     }
 
     @FXML
@@ -452,4 +475,72 @@ public class ProductController {
     void loadImage(ActionEvent ae) throws ClassNotFoundException {
 
     }
+
+    @FXML
+    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException, IOException {
+
+        if(me.getClickCount() > 1)
+        {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() throws IOException {
+
+        ByteArrayInputStream bais = null;
+
+        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+            Product product = tableAll.getSelectionModel().getSelectedItem();
+
+            SpinnerValueFactory<Integer> spinnerQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, product.getProductQuantity());
+            SpinnerValueFactory<Integer> spinnerMinQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, product.getMinimumQuantity());
+            SpinnerValueFactory<Double> spinnerPrice = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 999999999, product.getProductPrice());
+
+            txtID.setText(Integer.toString(product.getId()));
+            txtNamaProduk.setText(product.getProductName());
+            txtSatuan.setText(product.getMeassurement());
+            spinMin.setValueFactory(spinnerMinQuantity);
+            spinHarga.setValueFactory(spinnerPrice);
+            spinJumlah.setValueFactory(spinnerQuantity);
+
+            imagePreviewDB.setImage(null);
+
+            try {
+                bais = new ByteArrayInputStream(product.getImage());
+                bais.close();
+
+                // read till the end of the stream
+                while(bais.available() >0) {
+
+                    // convert byte to character
+//                    char c = (char)bais.read();
+
+                    // print number of bytes available
+//                    System.out.print("available byte(s) : "+ count);
+
+                    // print characters read form the byte array
+//                    System.out.println(" & byte read : "+c);
+
+                    Image image = new Image(bais);
+                    imagePreviewDB.setImage(image);
+                }
+
+
+            } catch (IOException | NullPointerException ex) {
+                Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+                System.out.println("Error occurred when opening the image / no image available " + ex);
+                labelImageError.setText("No Image Available");
+
+            } finally {
+                if(bais != null) {
+                    bais.close();
+                }
+
+            }
+
+
+        }
+    }
+
 }

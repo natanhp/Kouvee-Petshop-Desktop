@@ -42,6 +42,9 @@
                            <image>
                               <Image url="@../logo/kouveeLogo.png" />
                            </image>
+                           <effect>
+                              <DropShadow color="#00000033" height="1.0" offsetY="3.0" radius="0.0" width="0.0" />
+                           </effect>
                         </ImageView>
                         <Label maxHeight="0.0" prefWidth="431.0" text="Menu Pelanggan" textFill="WHITE" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <font>
@@ -50,6 +53,9 @@
                            <GridPane.margin>
                               <Insets left="150.0" />
                            </GridPane.margin>
+                           <effect>
+                              <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
+                           </effect>
                         </Label>
                         <Button fx:id="btnPelangganKeluar" alignment="CENTER" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonCustomer" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" styleClass="exitButton" stylesheets="@../styleButtonSecondary.css" text="Keluar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <GridPane.margin>
@@ -141,7 +147,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </Label>
-                        <TextField fx:id="txtCari" maxHeight="26.0" maxWidth="326.0" prefHeight="26.0" prefWidth="326.0" GridPane.rowIndex="1">
+                        <TextField fx:id="txtCari" maxHeight="26.0" maxWidth="326.0" prefHeight="26.0" prefWidth="326.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets right="70.0" />
                            </GridPane.margin>
@@ -233,7 +239,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </Button>
-                        <TextField fx:id="txtID" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="txtID" disable="true" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="78.0" />
                            </GridPane.margin>
@@ -244,7 +250,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </TextField>
-                        <TextField fx:id="txtNama" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="txtNama" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="150.0" right="30.0" />
                            </GridPane.margin>
@@ -255,7 +261,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </TextField>
-                        <DatePicker fx:id="pickerDateBirth" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <DatePicker fx:id="pickerDateBirth" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="150.0" right="30.0" />
                            </GridPane.margin>
@@ -263,7 +269,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </DatePicker>
-                        <TextField fx:id="txtAlamat" prefWidth="180.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                        <TextField fx:id="txtAlamat" prefWidth="180.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="80.0" />
                            </GridPane.margin>
@@ -274,7 +280,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </TextField>
-                        <TextField fx:id="txtTelp" prefWidth="100.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                        <TextField fx:id="txtTelp" prefWidth="100.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="80.0" />
                            </GridPane.margin>

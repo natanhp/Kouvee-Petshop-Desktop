@@ -1,5 +1,6 @@
 package main.controller;
 
+import com.mysql.cj.jdbc.exceptions.MySQLQueryInterruptedException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,20 +11,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 import main.dao.PetDAO;
 import main.dao.PetSizeDAO;
 import main.dao.PetTypeDAO;
-import main.model.Customer;
-import main.model.Pet;
-import main.model.PetSize;
-import main.model.PetType;
+import main.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 public class PetSecondaryController {
 
@@ -37,7 +42,7 @@ public class PetSecondaryController {
     private Button btnHapus;
 
     @FXML
-    private TextField txtTglLahir;
+    private DatePicker pickerDateBirth;
 
     @FXML
     private ComboBox<PetType> comboTipe;
@@ -96,6 +101,24 @@ public class PetSecondaryController {
     @FXML
     private TextField txtCari;
 
+    @FXML
+    private Label addLabel;
+
+    @FXML
+    private Label editLabel;
+
+    @FXML
+    private ImageView deleteLogo;
+
+    @FXML
+    private ImageView addLogo;
+
+    @FXML
+    private Label deleteLabel;
+
+    @FXML
+    private ImageView editLogo;
+
     public static void getUserLogin(String loginID) {
 
         returnID = loginID;
@@ -132,6 +155,79 @@ public class PetSecondaryController {
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    private void switchOperations(MouseEvent me) {
+        addLabel.setTextFill(Color.WHITE);
+        if(me.getSource() == addLabel) {
+            btnPerbarui.setDisable(true);
+            btnTambah.setDisable(false);
+            btnHapus.setDisable(true);
+            txtID.setDisable(true);
+            txtNama.setDisable(false);
+            pickerDateBirth.setDisable(false);
+            txtOwner.setDisable(false);
+            comboUkuran.setDisable(false);
+            comboTipe.setDisable(false);
+
+            addLabel.setTextFill(Color.WHITE);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_white_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == editLabel) {
+            btnPerbarui.setDisable(false);
+            btnTambah.setDisable(true);
+            btnHapus.setDisable(true);
+            txtID.setDisable(false);
+            txtNama.setDisable(false);
+            pickerDateBirth.setDisable(false);
+            txtOwner.setDisable(false);
+            comboUkuran.setDisable(false);
+            comboTipe.setDisable(false);
+
+            addLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.WHITE);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_white_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == deleteLabel) {
+            btnPerbarui.setDisable(true);
+            btnTambah.setDisable(true);
+            btnHapus.setDisable(false);
+            txtID.setDisable(false);
+            txtNama.setDisable(true);
+            pickerDateBirth.setDisable(true);
+            txtOwner.setDisable(true);
+            comboUkuran.setDisable(true);
+            comboTipe.setDisable(true);
+
+            addLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.WHITE);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_white_18dp.png"));
+            addLogo.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
         }
     }
 
@@ -213,6 +309,44 @@ public class PetSecondaryController {
         comboTipe.getItems().clear();
         comboTipe.setItems(typeList);
         comboUkuran.setItems(typeList);
+
+        initializeDatePicker();
+//        convertDatePicker();
+        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue){
+                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
+                }
+            }
+        });
+    }
+
+    private void initializeDatePicker() {
+        //Create a day cell factory
+        Callback<DatePicker, DateCell> dayCellFactory =
+                (final DatePicker datePicker) -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        //Must call super
+                        super.updateItem(item, empty);
+
+                        // Show Weekends in red color
+                        DayOfWeek day = DayOfWeek.from(item);
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)
+                        {
+                            this.setTextFill(Color.RED);
+                        }
+                        //Can only select until current date
+                        if (item.isAfter(LocalDate.now()))
+                        {
+                            this.setDisable(true);
+                        }
+                    }
+                };
+
+        //Disable invalid date of births
+        pickerDateBirth.setDayCellFactory(dayCellFactory);
     }
 
 
@@ -235,7 +369,7 @@ public class PetSecondaryController {
             Customer owner = PetDAO.searchOwner(txtOwner.getText());
             String Customers_id = Integer.toString(owner.getId());
 
-            PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtTglLahir.getText(), Customers_id, tipe, ukr);
+            PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), Customers_id, tipe, ukr);
 
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating pet");
@@ -254,7 +388,7 @@ public class PetSecondaryController {
 
             System.out.println("Customers ID : "+Customers_id);
 
-            PetDAO.insertPet(returnID, txtNama.getText(), txtTglLahir.getText(), Customers_id
+            PetDAO.insertPet(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), Customers_id
                     ,tipe, ukr);
 
 
@@ -264,18 +398,15 @@ public class PetSecondaryController {
     }
 
     @FXML
-    private void pickerType(MouseEvent me) throws SQLException, ClassNotFoundException {
-
+    private void selectType(MouseEvent me) throws SQLException, ClassNotFoundException {
         comboTipe.setMaxHeight(20);
 
         try {
-            //Try getting all the PetTypes and PetSizes information
+            //Try getting all the PetTypes information
             ObservableList<PetType> typeData = PetTypeDAO.searchPetTypes();
-            ObservableList<PetSize> sizeData = PetSizeDAO.searchPetSizes();
 
-            //Populate PetTypes and PetSizes on ComboBox
+            //Populate PetTypes on ComboBox
             populatePetTypeComboBox(typeData);
-            populatePetSizeComboBox(sizeData);
         } catch (SQLException e) {
             System.out.println("Error occurred while getting all pettypes information from DB " + e);
             throw e;
@@ -283,8 +414,19 @@ public class PetSecondaryController {
     }
 
     @FXML
-    private void selectType(ActionEvent ae) throws SQLException, ClassNotFoundException {
+    void selectSize(MouseEvent me) throws SQLException, ClassNotFoundException {
+        comboTipe.setMaxHeight(20);
 
+        try {
+            //Try getting all the PetTypes and PetSizes information
+            ObservableList<PetSize> sizeData = PetSizeDAO.searchPetSizes();
+
+            //Populate PetTypes and PetSizes on ComboBox
+            populatePetSizeComboBox(sizeData);
+        } catch (SQLException e) {
+            System.out.println("Error occurred while getting all petsize information from DB " + e);
+            throw e;
+        }
     }
 
     @FXML
@@ -342,13 +484,75 @@ public class PetSecondaryController {
             }
         });
 
+        comboUkuran.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PetSize>() {
+            @Override
+            public void changed(ObservableValue<? extends PetSize> observable, PetSize oldValue, PetSize newValue) {
+
+            }
+        });
+
     }
 
+    @FXML
+    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
 
+        if(me.getClickCount() > 1)
+        {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() throws SQLException, ClassNotFoundException {
+
+        int idTipe = 0;
+        int idUkuran = 0;
+
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
+            Pet pet = tableAll.getSelectionModel().getSelectedItem();
+
+            ObservableList<PetType> typeData = PetTypeDAO.searchPetTypes();
+            populatePetTypeComboBox(typeData);
+            ObservableList<PetSize> sizeData = PetSizeDAO.searchPetSizes();
+            populatePetSizeComboBox(sizeData);
+
+            LocalDate lc = LocalDate.parse(pet.getDateBirth().toString());
+
+            txtID.setText(Integer.toString(pet.getId()));
+            txtNama.setText(pet.getName());
+            pickerDateBirth.setValue(lc);
+            txtOwner.setText(pet.getCustomer_name());
+
+            comboTipe.getItems();
+            comboUkuran.getItems();
+
+            for(PetType petType : comboTipe.getItems()) {
+                if(petType.getType().equals(pet.getPetType_name())) {
+                    idTipe = petType.getId();
+                    idTipe--;
+                }
+            }
+
+            for(PetSize petSize : comboUkuran.getItems()) {
+                if(petSize.getSize().equals(pet.getPetType_name())) {
+                    idUkuran = petSize.getId();
+                    idUkuran --;
+                }
+            }
+
+            comboTipe.getSelectionModel().select(idTipe);
+            comboUkuran.getSelectionModel().select(idUkuran);
+
+        }
+    }
 
     @FXML
-    void selectSize(ActionEvent event) {
-
+    private void clearFields(ActionEvent ae) {
+        txtID.clear();
+        txtNama.clear();
+        pickerDateBirth.setValue(null);
+        txtOwner.clear();
+        comboUkuran.setValue(null);
+        comboTipe.setValue(null);
     }
 
     @FXML

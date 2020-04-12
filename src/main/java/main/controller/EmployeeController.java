@@ -281,7 +281,7 @@ public class EmployeeController {
         pickerDateBirth.setEditable(true);
         initializeDatePicker();
 
-        FxDatePickerConverter converter = new FxDatePickerConverter("dd-MM-yyyy");
+        FxDatePickerConverter converter = new FxDatePickerConverter();
 
         pickerDateBirth.setConverter(converter);
 

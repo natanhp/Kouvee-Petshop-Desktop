@@ -15,6 +15,11 @@ public class PetType {
         this.type = new SimpleStringProperty();
     }
 
+    public PetType(String type) {
+        this.Id = new SimpleIntegerProperty();
+        this.type = new SimpleStringProperty();
+    }
+
     public int getId() {
         return Id.get();
     }

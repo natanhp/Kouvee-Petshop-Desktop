@@ -12,6 +12,11 @@ public class PetSize {
         this.size = new SimpleStringProperty();
     }
 
+    public PetSize(String size) {
+        this.Id = new SimpleIntegerProperty();
+        this.size = new SimpleStringProperty();
+    }
+
     public int getId() {
         return Id.get();
     }

@@ -179,7 +179,7 @@
                         <Font name="Franklin Gothic Medium Cond" size="14.0" />
                      </font>
                   </TextField>
-                  <DatePicker fx:id="pickerDateBirth" maxHeight="1.7976931348623157E308" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                  <DatePicker fx:id="pickerDateBirth" maxHeight="1.7976931348623157E308" promptText="01/01/1970" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
                      <effect>
                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                      </effect>
