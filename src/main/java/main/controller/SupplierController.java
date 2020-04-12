@@ -261,11 +261,23 @@ public class SupplierController implements Initializable {
 
     @FXML
     void updateSupplier(ActionEvent event) {
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
+        String id = txtID.getText().trim();
 
+        if (name.equals("") || address.equals("") || phone.equals("") || id.equals("")) {
+            return;
+        }
+
+        Pattern pattern = Pattern.compile("\\d+");
+        if (!pattern.matcher(phone).matches()) {
+            return;
+        }
         try {
-            SupplierDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtAlamat.getText(),
-                    txtTelp.getText());
-
+            SupplierDAO.updateEntries(returnID, id, name, address,
+                    phone);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating supplier");
         }
