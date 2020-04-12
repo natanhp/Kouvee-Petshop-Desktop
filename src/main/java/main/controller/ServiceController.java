@@ -251,7 +251,7 @@ public class ServiceController implements Initializable {
         String serviceName = txtLayanan.getText().trim();
         String id = txtID.getText().trim();
 
-        if (serviceName.equals("") || serviceName.equals("")) {
+        if (serviceName.equals("") || id.equals("")) {
             return;
         }
 
