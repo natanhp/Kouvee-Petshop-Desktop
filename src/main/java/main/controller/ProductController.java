@@ -5,30 +5,29 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import main.dao.ProductDAO;
-import main.model.Employee;
 import main.model.Product;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.sql.Blob;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ProductController {
+public class ProductController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -80,12 +79,6 @@ public class ProductController {
     private Spinner<Integer> spinMin;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<Product> tableAll;
 
     @FXML
@@ -93,12 +86,6 @@ public class ProductController {
 
     @FXML
     private TableColumn<Product, String> prSatuan;
-
-    @FXML
-    private TableColumn<Product, byte[]> prGambar;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private ImageView imagePreview;
@@ -175,7 +162,7 @@ public class ProductController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -198,7 +185,7 @@ public class ProductController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -221,7 +208,7 @@ public class ProductController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -265,22 +252,12 @@ public class ProductController {
 
     //Show all Products
     @FXML
-    void searchProducts(ActionEvent event) throws SQLException, ClassNotFoundException{
-
-        try {
-            //Get all Products information
-            ObservableList<Product> prData = ProductDAO.searchProducts();
-
-            //Populate Products on TableView
-            populateProducts(prData);
-        } catch (SQLException e) {
-            System.out.println("Error occurred while getting product information from DB " + e);
-            throw e;
-        }
+    void searchProducts(ActionEvent event) {
+        loadAllData();
     }
 
     @FXML
-    private void populateAndShowProduct (Product pr) throws ClassNotFoundException {
+    private void populateAndShowProduct(Product pr) {
         if (pr != null) {
             populateProduct(pr);
         } else {
@@ -290,7 +267,7 @@ public class ProductController {
 
     //Populate Products
     @FXML
-    private void populateProduct (Product pr) throws ClassNotFoundException {
+    private void populateProduct(Product pr) {
 
         //Declare an ObservableList for TableView
         ObservableList<Product> prData = FXCollections.observableArrayList();
@@ -302,14 +279,14 @@ public class ProductController {
 
 
     @FXML
-    private void populateProducts (ObservableList <Product> prData) throws ClassNotFoundException {
+    private void populateProducts(ObservableList<Product> prData) throws ClassNotFoundException {
 
         //Set items to the tableAll
         tableAll.setItems(prData);
     }
 
     @FXML
-    void deleteProduct(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void deleteProduct(ActionEvent event) {
 
         try {
             ProductDAO.deletePrWithId(txtID.getText());
@@ -320,7 +297,7 @@ public class ProductController {
     }
 
     @FXML
-    void updateProduct(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void updateProduct(ActionEvent event) {
 
         try {
             String qty = Integer.toString(spinJumlah.getValue().intValue());
@@ -335,7 +312,7 @@ public class ProductController {
     }
 
     @FXML
-    void insertProduct(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void insertProduct(ActionEvent event) {
 
         try {
 
@@ -357,7 +334,7 @@ public class ProductController {
     }
 
     @FXML
-    void openFileChooser(ActionEvent ae) throws IOException, ClassNotFoundException {
+    void openFileChooser(ActionEvent ae) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
@@ -366,104 +343,13 @@ public class ProductController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg", "*.jpg"));
         File file = fileChooser.showOpenDialog(btnOpen.getScene().getWindow());
 
-        if(file != null) {
+        if (file != null) {
             filePath = file.getPath();
-        }
-        else
-        {
+        } else {
             System.out.println("Select image file");
         }
         Image image = new Image(file.toURI().toString());
         imagePreview.setImage(image);
-    }
-
-//    private byte[] convertFileContentIntoBlob(String filePath) throws IOException{
-//
-//        // create file object
-//        File file = new File(filePath);
-//        // initialize a byte array of size of the file
-//        byte[] fileContent = new byte[(int) file.length()];
-//        FileInputStream inputStream = new FileInputStream(file);
-//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//        try {
-//            for (int readNum; (readNum = inputStream.read(fileContent)) != -1;) {
-//                //Writes to this byte array output stream
-//                bos.write(fileContent, 0, readNum);
-//                System.out.println("read " + readNum + " bytes,");
-//            }
-//            // create an input stream pointing to the file
-//            // read the contents of file into byte array
-////            inputStream.read(fileContent);
-//        } catch (IOException e) {
-//            throw new IOException("Unable to convert file to byte array. " +
-//                    e.getMessage());
-//        } finally {
-//            // close input stream
-//            if (inputStream != null) {
-//                inputStream.close();
-//            }
-//        }
-//
-//        byte[] bytes = bos.toByteArray();
-//        return bytes;
-//    }
-
-//    private static Image convertToJavaFXImage(byte[] raw, final int width, final int height) {
-//        WritableImage image = new WritableImage(width, height);
-//        try {
-//            ByteArrayInputStream bis = new ByteArrayInputStream(raw);
-//            BufferedImage read = ImageIO.read(bis);
-//            image = SwingFXUtils.toFXImage(read, null);
-//        } catch (IOException ex) {
-//            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return image;
-//    }
-
-    @FXML
-    private void initialize() {
-
-        int qty = 1;
-        int minQty = 1;
-        Double price = 1.0;
-
-        SpinnerValueFactory<Integer> spinnerQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, qty);
-        SpinnerValueFactory<Integer> spinnerMinQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, minQty);
-        SpinnerValueFactory<Double> spinnerPrice = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 999999999, price);
-
-        spinJumlah.setValueFactory(spinnerQuantity);
-        spinJumlah.setEditable(true);
-        spinJumlah.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue)
-            {
-                spinJumlah.increment(0); // won't change value, but will commit editor
-            }
-        });
-
-        spinMin.setValueFactory(spinnerMinQuantity);
-        spinMin.setEditable(true);
-        spinMin.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue)
-            {
-                spinMin.increment(0); // won't change value, but will commit editor
-            }
-        });
-
-        spinHarga.setValueFactory(spinnerPrice);
-        spinHarga.setEditable(true);
-        spinHarga.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue)
-            {
-                spinHarga.increment(0); // won't change value, but will commit editor
-            }
-        });
-
-        prId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        prName.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
-        prQty.setCellValueFactory(cellData -> cellData.getValue().productQuantityProperty().asObject());
-        prSatuan.setCellValueFactory(cellData -> cellData.getValue().meassurementProperty());
-        prPrice.setCellValueFactory(cellData -> cellData.getValue().productPriceProperty().asObject());
-        prMinQty.setCellValueFactory(cellData -> cellData.getValue().minimumQuantityProperty().asObject());
     }
 
     @FXML
@@ -477,10 +363,9 @@ public class ProductController {
     }
 
     @FXML
-    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException, IOException {
+    private void selectedRow(MouseEvent me) throws ClassNotFoundException, SQLException, IOException {
 
-        if(me.getClickCount() > 1)
-        {
+        if (me.getClickCount() > 1) {
             editWithSelectedRow();
         }
     }
@@ -489,7 +374,7 @@ public class ProductController {
 
         ByteArrayInputStream bais = null;
 
-        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
             Product product = tableAll.getSelectionModel().getSelectedItem();
 
             SpinnerValueFactory<Integer> spinnerQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, product.getProductQuantity());
@@ -509,18 +394,7 @@ public class ProductController {
                 bais = new ByteArrayInputStream(product.getImage());
                 bais.close();
 
-                // read till the end of the stream
-                while(bais.available() >0) {
-
-                    // convert byte to character
-//                    char c = (char)bais.read();
-
-                    // print number of bytes available
-//                    System.out.print("available byte(s) : "+ count);
-
-                    // print characters read form the byte array
-//                    System.out.println(" & byte read : "+c);
-
+                while (bais.available() > 0) {
                     Image image = new Image(bais);
                     imagePreviewDB.setImage(image);
                 }
@@ -533,7 +407,7 @@ public class ProductController {
                 labelImageError.setText("No Image Available");
 
             } finally {
-                if(bais != null) {
+                if (bais != null) {
                     bais.close();
                 }
 
@@ -543,4 +417,62 @@ public class ProductController {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        int qty = 1;
+        int minQty = 1;
+        Double price = 1.0;
+
+        SpinnerValueFactory<Integer> spinnerQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, qty);
+        SpinnerValueFactory<Integer> spinnerMinQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, minQty);
+        SpinnerValueFactory<Double> spinnerPrice = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 999999999, price);
+
+        spinJumlah.setValueFactory(spinnerQuantity);
+        spinJumlah.setEditable(true);
+        spinJumlah.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                spinJumlah.increment(0); // won't change value, but will commit editor
+            }
+        });
+
+        spinMin.setValueFactory(spinnerMinQuantity);
+        spinMin.setEditable(true);
+        spinMin.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                spinMin.increment(0); // won't change value, but will commit editor
+            }
+        });
+
+        spinHarga.setValueFactory(spinnerPrice);
+        spinHarga.setEditable(true);
+        spinHarga.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                spinHarga.increment(0); // won't change value, but will commit editor
+            }
+        });
+
+        prId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        prName.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
+        prQty.setCellValueFactory(cellData -> cellData.getValue().productQuantityProperty().asObject());
+        prSatuan.setCellValueFactory(cellData -> cellData.getValue().meassurementProperty());
+        prPrice.setCellValueFactory(cellData -> cellData.getValue().productPriceProperty().asObject());
+        prMinQty.setCellValueFactory(cellData -> cellData.getValue().minimumQuantityProperty().asObject());
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        //Get all Products information
+        ObservableList<Product> prData = null;
+        try {
+            prData = ProductDAO.searchProducts();
+            //Populate Products on TableView
+            populateProducts(prData);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
