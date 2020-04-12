@@ -298,4 +298,13 @@ public class ServiceController implements Initializable {
             populateServices(sData);
 
     }
+
+    @FXML
+    public void clearFields() {
+        txtCari.clear();
+        txtID.clear();
+        txtLayanan.clear();
+
+        loadAllData();
+    }
 }
