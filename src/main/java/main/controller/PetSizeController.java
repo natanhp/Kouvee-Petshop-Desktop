@@ -239,17 +239,17 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void populatePetSizes(ObservableList<PetSize> psData) throws ClassNotFoundException {
+    private void populatePetSizes(ObservableList<PetSize> psData) {
 
         //Set items to the tableAll
         tableAll.setItems(psData);
     }
 
     @FXML
-    private void deletePetSize(ActionEvent event) throws ClassNotFoundException {
+    private void deletePetSize(ActionEvent event) {
         try {
-            PetSizeDAO.deletePsWithId(txtID.getText());
-
+            PetSizeDAO.softDeletePsWithId(returnID, txtID.getText());
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting petsize");
         }
@@ -266,9 +266,9 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void insertPetSize(ActionEvent event) throws ClassNotFoundException {
+    private void insertPetSize(ActionEvent event) {
         String petSize = txtUkuran.getText();
-        if (!petSize.equals("Small") && !petSize.equals("Medium") && !petSize.equals("Large") && !petSize.equals("Extra Large" )) {
+        if (!petSize.equals("Small") && !petSize.equals("Medium") && !petSize.equals("Large") && !petSize.equals("Extra Large")) {
             return;
         }
 
