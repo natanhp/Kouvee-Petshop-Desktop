@@ -239,8 +239,8 @@ public class ServiceController implements Initializable {
     void deleteService(ActionEvent event) throws ClassNotFoundException {
 
         try {
-            ServiceDAO.deleteSWithId(txtID.getText());
-
+            ServiceDAO.softDeleteSWithId(returnID, txtID.getText());
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting service");
         }
