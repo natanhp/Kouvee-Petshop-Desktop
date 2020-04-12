@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.PetTypeDAO;
 import main.model.PetType;
-import main.model.Service;
 
 import java.io.IOException;
 import java.net.URL;
@@ -242,9 +241,16 @@ public class PetTypeController implements Initializable {
 
     @FXML
     private void updatePetType(ActionEvent event) throws SQLException, ClassNotFoundException {
-        try {
-            PetTypeDAO.updateEntries(returnID, txtID.getText(), txtTipe.getText());
+        String petType = txtTipe.getText().trim();
+        String id = txtID.getText().trim();
 
+        if (petType.equals("") || id.equals("")) {
+            return;
+        }
+
+        try {
+            PetTypeDAO.updateEntries(returnID, id, petType);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating pettype");
         }
@@ -304,8 +310,6 @@ public class PetTypeController implements Initializable {
     }
 
     private void editWithSelectedRow() {
-
-
         if (tableAll.getSelectionModel().getSelectedItem() != null) {
             PetType petType = tableAll.getSelectionModel().getSelectedItem();
 
