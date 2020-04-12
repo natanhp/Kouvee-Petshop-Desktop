@@ -3,7 +3,6 @@ package main.dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.model.Service;
-import main.model.Service;
 import main.util.DBUtil;
 
 import java.sql.ResultSet;
@@ -12,10 +11,10 @@ import java.sql.SQLException;
 public class ServiceDAO {
 
     //SELECT a Service
-    public static Service searchService(String sName) throws SQLException, ClassNotFoundException {
+    public static Service searchService(String sName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  services WHERE serviceName = '" + sName + "';";
+        String selectStmt = "SELECT * FROM  Services WHERE serviceName = '" + sName + "' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -36,7 +35,7 @@ public class ServiceDAO {
     private static Service getServicesFromResultSet(ResultSet rs) throws SQLException {
         Service s = null;
 
-        if(rs.next()) {
+        if (rs.next()) {
             s = new Service();
             s.setId(rs.getInt("id"));
             s.setServiceName(rs.getString("serviceName"));
@@ -49,7 +48,7 @@ public class ServiceDAO {
     public static ObservableList<Service> searchServices() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM services";
+        String selectStmt = "SELECT * FROM Services WHERE deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -65,7 +64,7 @@ public class ServiceDAO {
             System.out.println("SQL Select Operation has been failed: " + ex);
 
             //Return exception
-            throw ex ;
+            throw ex;
         }
     }
 
@@ -75,8 +74,8 @@ public class ServiceDAO {
         //Declare a observable List which comprises of Service Objects
         ObservableList<Service> sList = FXCollections.observableArrayList();
 
-        while(rs.next()) {
-            Service s = new Service();
+        while (rs.next()) {
+            Service s;
             s = new Service();
             s.setId(rs.getInt("id"));
             s.setServiceName(rs.getString("serviceName"));
@@ -90,15 +89,14 @@ public class ServiceDAO {
     }
 
     //Update a service's entries
-    public static void updateEntries (String Logged, String Id, String serviceName) throws SQLException, ClassNotFoundException
-    {
+    public static void updateEntries(String Logged, String Id, String serviceName) throws SQLException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE services " +
+                "UPDATE Services " +
                         "SET serviceName = '" + serviceName + "' " +
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                        "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -114,14 +112,14 @@ public class ServiceDAO {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM services " +
+                "DELETE FROM Services " +
                         "WHERE id = " + Id + ";";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while DELETE Operation: " +ex);
+            System.out.println("Error occurred while DELETE Operation: " + ex);
             throw ex;
         }
     }
@@ -131,28 +129,27 @@ public class ServiceDAO {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE services " +
-                        "SET serviceName = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy " + Logged +
-                        "WHERE id = '" + Id + "';";
+                "UPDATE Services " +
+                        "SET " +
+                        "deletedAt = NOW()" +
+                        ", deletedBy = " + Logged +
+                        " WHERE id = '" + Id + "' AND deletedAt is NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while SOFT_DELETE Operation: " +ex);
+            System.out.println("Error occurred while SOFT_DELETE Operation: " + ex);
             throw ex;
         }
     }
 
     //INSERT a Service
-    public static void insertS(String Logged, String serviceName) throws SQLException, ClassNotFoundException
-    {
+    public static void insertS(String Logged, String serviceName) throws SQLException, ClassNotFoundException {
 
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO services " +
+                "INSERT INTO Services " +
                         "(serviceName, createdAt, createdBy)" +
                         "VALUES " +
                         "('" + serviceName + "', " + "NOW(), " +
