@@ -5,24 +5,24 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import main.dao.CustomerDAO;
-import main.dao.EmployeeDAO;
 import main.dao.SupplierDAO;
-import main.model.Employee;
 import main.model.Supplier;
 
-import javafx.scene.input.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class SupplierController {
+public class SupplierController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -49,12 +49,6 @@ public class SupplierController {
     private TextField txtID;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<Supplier> tableAll;
 
     @FXML
@@ -62,9 +56,6 @@ public class SupplierController {
 
     @FXML
     private TableColumn<Supplier, String> sprName;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private TableColumn<Supplier, Integer> sprId;
@@ -112,7 +103,7 @@ public class SupplierController {
     @FXML
     public void handleButtonSupplier(MouseEvent me) {
 
-        if(me.getSource() == btnSupplierKeluar) {
+        if (me.getSource() == btnSupplierKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
@@ -124,8 +115,7 @@ public class SupplierController {
             });
         }
 
-        if(me.getSource() == btnMenuUtama)
-        {
+        if (me.getSource() == btnMenuUtama) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -143,7 +133,7 @@ public class SupplierController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -164,7 +154,7 @@ public class SupplierController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -185,7 +175,7 @@ public class SupplierController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -210,7 +200,7 @@ public class SupplierController {
 
     //Search a Supplier
     @FXML
-    void searchSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void searchSupplier(ActionEvent event) throws SQLException {
         try {
             //Get Employee Information
             Supplier spr = SupplierDAO.searchSupplier(txtCari.getText());
@@ -218,7 +208,7 @@ public class SupplierController {
             //Populate Employee on TableView and Display on TextField
             populateAndShowSupplier(spr);
 
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Supplier information from DB" + e);
             throw e;
@@ -226,32 +216,13 @@ public class SupplierController {
     }
 
     @FXML
-    void searchSuppliers(ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        try {
-            //Get all Supplier information
-            ObservableList<Supplier> sprData = SupplierDAO.searchSuppliers();
-
-            //Populate Suppliers on TableView
-            populateSuppliers(sprData);
-        } catch(SQLException e) {
-            System.out.println("Error occurred while getting suppliers information from DB " + e);
-            throw e;
-        }
-    }
-
-    @FXML
-    private void initialize() {
-
-        sprId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        sprName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        sprAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
-        sprPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+    void searchSuppliers(ActionEvent event) {
+        loadAllData();
     }
 
     //Populate Supplier
     @FXML
-    private void populateSupplier(Supplier spr) throws ClassNotFoundException {
+    private void populateSupplier(Supplier spr) {
 
         //Declare an ObservableList for TableView
         ObservableList<Supplier> sprData = FXCollections.observableArrayList();
@@ -262,8 +233,8 @@ public class SupplierController {
     }
 
     @FXML
-    private void populateAndShowSupplier(Supplier spr) throws ClassNotFoundException {
-        if(spr != null) {
+    private void populateAndShowSupplier(Supplier spr) {
+        if (spr != null) {
             populateSupplier(spr);
         } else {
             System.out.println("This supplier doesn't exist");
@@ -278,7 +249,7 @@ public class SupplierController {
     }
 
     @FXML
-    void deleteSupplier(ActionEvent event) throws SQLException, ClassNotFoundException{
+    void deleteSupplier(ActionEvent event) {
         try {
             SupplierDAO.deleteSprWithId(txtID.getText());
 
@@ -288,7 +259,7 @@ public class SupplierController {
     }
 
     @FXML
-    void updateSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void updateSupplier(ActionEvent event) {
 
         try {
             SupplierDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtAlamat.getText(),
@@ -300,7 +271,7 @@ public class SupplierController {
     }
 
     @FXML
-    void insertSupplier(ActionEvent event) throws SQLException, ClassNotFoundException{
+    void insertSupplier(ActionEvent event) throws ClassNotFoundException {
         try {
             SupplierDAO.insertSpr(returnID, txtNama.getText(), txtAlamat.getText(),
                     txtTelp.getText());
@@ -315,4 +286,24 @@ public class SupplierController {
 
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        sprId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        sprName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        sprAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
+        sprPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        //Get all Supplier information
+        ObservableList<Supplier> sprData = null;
+        try {
+            sprData = SupplierDAO.searchSuppliers();
+            populateSuppliers(sprData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }
