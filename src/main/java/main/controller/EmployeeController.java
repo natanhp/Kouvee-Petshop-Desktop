@@ -305,7 +305,6 @@ public class EmployeeController implements Initializable {
     private void updateEmployee(ActionEvent ae) {
 
         String name = txtNama.getText().trim();
-        String birthDate = pickerDateBirth.getValue().toString().trim();
         String address = txtAlamat.getText().trim();
         String phone = txtTelp.getText().trim();
         String role = txtRole.getText().trim();
@@ -313,7 +312,7 @@ public class EmployeeController implements Initializable {
         String password = txtPawd.getText().trim();
         String id = txtID.getText().trim();
 
-        if (name.equals("") || birthDate.equals("") || address.equals("") || phone.equals("") ||
+        if (name.equals("") || pickerDateBirth.getValue() == null || address.equals("") || phone.equals("") ||
                 userName.equals("") || password.equals("") || id.equals("")) {
             return;
         }
@@ -331,7 +330,7 @@ public class EmployeeController implements Initializable {
 
         if (password.equalsIgnoreCase("No change")) {
             try {
-                EmployeeDAO.updateEntries(returnID, id, name, birthDate, address,
+                EmployeeDAO.updateEntries(returnID, id, name, pickerDateBirth.getValue().toString().trim(), address,
                         phone, role, userName, password);
 
             } catch (SQLException e) {
@@ -342,7 +341,7 @@ public class EmployeeController implements Initializable {
             BCrypt.Result result1 = BCrypt.verifyer().verify(password.toCharArray(), generatedSecuredPasswordHash);
 
             try {
-                EmployeeDAO.updateEntries(returnID, id, name, birthDate, address,
+                EmployeeDAO.updateEntries(returnID, id, name, pickerDateBirth.getValue().toString().trim(), address,
                         phone, role, userName, generatedSecuredPasswordHash);
 
             } catch (SQLException e) {
@@ -357,14 +356,13 @@ public class EmployeeController implements Initializable {
     private void insertEmployee(ActionEvent ae) {
 
         String name = txtNama.getText().trim();
-        String birthDate = pickerDateBirth.getValue().toString().trim();
         String address = txtAlamat.getText().toString().trim();
         String phone = txtTelp.getText().toString().trim();
         String role = txtRole.getText().toString().trim();
         String userName = txtUname.getText().toString().trim();
         String password = txtPawd.getText().toString().trim();
 
-        if (name.equals("") || birthDate.equals("") || address.equals("") || phone.equals("") ||
+        if (name.equals("") || pickerDateBirth.getValue() == null || address.equals("") || phone.equals("") ||
                 userName.equals("") || password.equals("")) {
             return;
         }
@@ -382,7 +380,7 @@ public class EmployeeController implements Initializable {
 
         generatedSecuredPasswordHash = BCryptHash.hashpw(password, BCryptHash.gensalt(10));
         try {
-            EmployeeDAO.insertEmp(returnID, name, birthDate, address,
+            EmployeeDAO.insertEmp(returnID, name, pickerDateBirth.getValue().toString().trim(), address,
                     phone, role, userName, generatedSecuredPasswordHash);
 
             loadAllData();
