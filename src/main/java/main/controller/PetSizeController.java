@@ -225,7 +225,7 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void populateAndShowPetSize(PetSize ps) throws ClassNotFoundException {
+    private void populateAndShowPetSize(PetSize ps) {
         if (ps != null) {
             populatePetSize(ps);
         } else {
@@ -234,7 +234,7 @@ public class PetSizeController implements Initializable {
     }
 
     @FXML
-    private void populatePetSizes() throws ClassNotFoundException {
+    private void populatePetSizes() {
         populatePetSizes();
     }
 
