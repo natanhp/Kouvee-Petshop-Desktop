@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,16 +14,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import main.dao.PetSizeDAO;
 import main.dao.ServiceDAO;
-import main.model.PetSize;
 import main.model.Service;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 
-public class ServiceController {
+public class ServiceController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -52,19 +53,10 @@ public class ServiceController {
     private TextField txtID;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<Service> tableAll;
 
     @FXML
     private TextField txtLayanan;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private TextField txtCari;
@@ -130,7 +122,7 @@ public class ServiceController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -149,7 +141,7 @@ public class ServiceController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -168,7 +160,7 @@ public class ServiceController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -208,30 +200,13 @@ public class ServiceController {
 
     //Show all Services
     @FXML
-    void searchServices(ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        try {
-            //Get all Service information
-            ObservableList<Service> sData = ServiceDAO.searchServices();
-
-            //Populate Services on TableView
-            populateServices(sData);
-        } catch (SQLException e) {
-            System.out.println("Error occurred while getting petsize information from DB " + e);
-            throw e;
-        }
-    }
-
-    @FXML
-    private void initialize() {
-
-        sId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        sService.setCellValueFactory(cellData -> cellData.getValue().serviceNameProperty());
+    void searchServices(ActionEvent event) {
+        loadAllData();
     }
 
     //Populate services
     @FXML
-    private void populateService(Service s) throws ClassNotFoundException {
+    private void populateService(Service s) {
 
         //Declare an ObservableList for TableView
         ObservableList<Service> sData = FXCollections.observableArrayList();
@@ -244,7 +219,7 @@ public class ServiceController {
     @FXML
     private void populateAndShowService(Service s) throws ClassNotFoundException {
 
-        if(s != null) {
+        if (s != null) {
             populateService(s);
         } else {
             System.out.println("This service doesn't exists");
@@ -252,14 +227,14 @@ public class ServiceController {
     }
 
     @FXML
-    private void populateServices(ObservableList<Service> sData) throws ClassNotFoundException {
+    private void populateServices(ObservableList<Service> sData) {
 
         //Set items to the tableAll
         tableAll.setItems(sData);
     }
 
     @FXML
-    void deleteService(ActionEvent event) throws SQLException, ClassNotFoundException{
+    void deleteService(ActionEvent event) throws ClassNotFoundException {
 
         try {
             ServiceDAO.deleteSWithId(txtID.getText());
@@ -270,7 +245,7 @@ public class ServiceController {
     }
 
     @FXML
-    void updateService(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void updateService(ActionEvent event) {
 
         try {
             ServiceDAO.updateEntries(returnID, txtID.getText(), txtLayanan.getText());
@@ -281,7 +256,7 @@ public class ServiceController {
     }
 
     @FXML
-    void insertService(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void insertService(ActionEvent event) throws ClassNotFoundException {
 
         try {
             ServiceDAO.insertS(returnID, txtLayanan.getText());
@@ -296,4 +271,25 @@ public class ServiceController {
 
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        sId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        sService.setCellValueFactory(cellData -> cellData.getValue().serviceNameProperty());
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+                    //Get all Service information
+        ObservableList<Service> sData = null;
+        try {
+            sData = ServiceDAO.searchServices();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
+        //Populate Services on TableView
+            populateServices(sData);
+
+    }
 }
