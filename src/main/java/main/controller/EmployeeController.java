@@ -1,8 +1,6 @@
 package main.controller;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,18 +20,15 @@ import main.dao.EmployeeDAO;
 import main.model.Employee;
 import main.util.BCryptHash;
 import main.util.FxDatePickerConverter;
+
 import java.io.IOException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 
 public class EmployeeController implements Initializable {
@@ -51,16 +46,12 @@ public class EmployeeController implements Initializable {
     private DatePicker pickerDateBirth;
     @FXML
     private TextField txtID;
-    @FXML
-    private Button btnCari;
-    @FXML
-    private Button btnBersih;
+
     @FXML
     private TableView<Employee> tableAll;
     @FXML
     private TableColumn<Employee, String> empName;
-    @FXML
-    private Button btnLihat;
+
     @FXML
     private TableColumn<Employee, Date> empDateBirth;
     @FXML
@@ -75,8 +66,7 @@ public class EmployeeController implements Initializable {
     private Button btnTambah;
     @FXML
     private TextField txtPawd;
-    @FXML
-    private ImageView imgLogo;
+
     @FXML
     private Button btnPegawaiKeluar;
     @FXML
@@ -128,7 +118,7 @@ public class EmployeeController implements Initializable {
     }
 
     public void handleButtonEmployee(MouseEvent me) {
-        if(me.getSource() == btnPegawaiKeluar) {
+        if (me.getSource() == btnPegawaiKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
@@ -140,8 +130,7 @@ public class EmployeeController implements Initializable {
             });
         }
 
-        if(me.getSource() == btnMenuUtama)
-        {
+        if (me.getSource() == btnMenuUtama) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -159,7 +148,7 @@ public class EmployeeController implements Initializable {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -184,7 +173,7 @@ public class EmployeeController implements Initializable {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -209,7 +198,7 @@ public class EmployeeController implements Initializable {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -247,7 +236,7 @@ public class EmployeeController implements Initializable {
             //Populate Employee on TableView and Display on TextField
             populateAndShowEmployee(emp);
 
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Employee information from DB" + e);
             throw e;
@@ -255,7 +244,7 @@ public class EmployeeController implements Initializable {
     }
 
     @FXML
-    private void searchEmployees(ActionEvent ae) throws ClassNotFoundException, SQLException {
+    private void searchEmployees(ActionEvent ae) {
         loadAllData();
     }
 
@@ -270,13 +259,11 @@ public class EmployeeController implements Initializable {
 
                         // Show Weekends in red color
                         DayOfWeek day = DayOfWeek.from(item);
-                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)
-                        {
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
                             this.setTextFill(Color.RED);
                         }
                         //Can only select until current date
-                        if (item.isAfter(LocalDate.now()))
-                        {
+                        if (item.isAfter(LocalDate.now())) {
                             this.setDisable(true);
                         }
                     }
@@ -288,7 +275,7 @@ public class EmployeeController implements Initializable {
 
     //Populate Employee
     @FXML
-    private void populateEmployee(Employee emp) throws ClassNotFoundException {
+    private void populateEmployee(Employee emp) {
 
         //Declare an ObservableList for TableView
         ObservableList<Employee> empData = FXCollections.observableArrayList();
@@ -299,8 +286,8 @@ public class EmployeeController implements Initializable {
     }
 
     @FXML
-    private void populateAndShowEmployee(Employee emp) throws ClassNotFoundException {
-        if(emp != null) {
+    private void populateAndShowEmployee(Employee emp) {
+        if (emp != null) {
             populateEmployee(emp);
         } else {
             System.out.println("This employee doesn't exist");
@@ -315,62 +302,97 @@ public class EmployeeController implements Initializable {
     }
 
     @FXML
-    private void updateEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+    private void updateEmployee(ActionEvent ae) {
+
+        String name = txtNama.getText().trim();
+        String birthDate = pickerDateBirth.getValue().toString().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
+        String role = txtRole.getText().trim();
+        String userName = txtUname.getText().trim();
+        String password = txtPawd.getText().trim();
+        String id = txtID.getText().trim();
+
+        if (name.equals("") || birthDate.equals("") || address.equals("") || phone.equals("") ||
+                userName.equals("") || password.equals("") || id.equals("")) {
+            return;
+        }
+
+        Pattern pattern = Pattern.compile("\\d+");
+        if (!pattern.matcher(phone).matches()) {
+            return;
+        }
+
+        if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir")) {
+            return;
+        }
 
         String generatedSecuredPasswordHash;
-        String passField = txtPawd.getText();
 
-        if(passField.equalsIgnoreCase("No change"))
-        {
+        if (password.equalsIgnoreCase("No change")) {
             try {
-                EmployeeDAO.updateEntries(returnID, txtID.getText(),txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                        txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
+                EmployeeDAO.updateEntries(returnID, id, name, birthDate, address,
+                        phone, role, userName, password);
 
             } catch (SQLException e) {
                 System.out.println("Problem occurred while updating employee");
             }
         } else {
-//            Example Hashing the password
-//            String password = "1234";
-//            String bcryptHashString = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, password.toCharArray());
-//            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
-//            System.out.println("Example result : " + result);
-            // result.verified == true
-
-//            Using 2A Version
-//            generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
-
-//          Using 2Y Version
-            generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, passField.toCharArray());
-            BCrypt.Result result1 = BCrypt.verifyer().verify(passField.toCharArray(), generatedSecuredPasswordHash);
+            generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, password.toCharArray());
+            BCrypt.Result result1 = BCrypt.verifyer().verify(password.toCharArray(), generatedSecuredPasswordHash);
 
             try {
-                EmployeeDAO.updateEntries(returnID, txtID.getText(),txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                        txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
+                EmployeeDAO.updateEntries(returnID, id, name, birthDate, address,
+                        phone, role, userName, generatedSecuredPasswordHash);
 
             } catch (SQLException e) {
                 System.out.println("Problem occurred while updating employee");
             }
         }
+
+        loadAllData();
     }
 
     @FXML
-    private void insertEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
+    private void insertEmployee(ActionEvent ae) {
+
+        String name = txtNama.getText().trim();
+        String birthDate = pickerDateBirth.getValue().toString().trim();
+        String address = txtAlamat.getText().toString().trim();
+        String phone = txtTelp.getText().toString().trim();
+        String role = txtRole.getText().toString().trim();
+        String userName = txtUname.getText().toString().trim();
+        String password = txtPawd.getText().toString().trim();
+
+        if (name.equals("") || birthDate.equals("") || address.equals("") || phone.equals("") ||
+                userName.equals("") || password.equals("")) {
+            return;
+        }
+
+        Pattern pattern = Pattern.compile("\\d+");
+        if (!pattern.matcher(phone).matches()) {
+            return;
+        }
+
+        if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir")) {
+            return;
+        }
 
         String generatedSecuredPasswordHash;
 
-        generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
+        generatedSecuredPasswordHash = BCryptHash.hashpw(password, BCryptHash.gensalt(10));
         try {
-            EmployeeDAO.insertEmp(returnID ,txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                    txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
+            EmployeeDAO.insertEmp(returnID, name, birthDate, address,
+                    phone, role, userName, generatedSecuredPasswordHash);
 
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting employee");
         }
     }
 
     @FXML
-    private void deleteEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
+    private void deleteEmployee(ActionEvent ae) {
         try {
             EmployeeDAO.deleteEmpWithId(txtID.getText());
 
@@ -380,10 +402,9 @@ public class EmployeeController implements Initializable {
     }
 
     @FXML
-    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+    private void selectedRow(MouseEvent me) {
 
-        if(me.getClickCount() > 1)
-        {
+        if (me.getClickCount() > 1) {
             editWithSelectedRow();
         }
     }
@@ -391,7 +412,7 @@ public class EmployeeController implements Initializable {
     private void editWithSelectedRow() {
 
 
-        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
             Employee employee = tableAll.getSelectionModel().getSelectedItem();
             LocalDate lc = LocalDate.parse(employee.getDateBirth().toString());
 
@@ -416,6 +437,9 @@ public class EmployeeController implements Initializable {
         txtRole.clear();
         txtUname.clear();
         txtPawd.clear();
+        txtCari.clear();
+
+        loadAllData();
     }
 
     @Override
@@ -435,12 +459,9 @@ public class EmployeeController implements Initializable {
 
         pickerDateBirth.setConverter(converter);
 
-        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue){
-                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
-                }
+        pickerDateBirth.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
             }
         });
 
@@ -456,7 +477,5 @@ public class EmployeeController implements Initializable {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-
-        //Populate Employees on TableView
     }
 }
