@@ -14,7 +14,7 @@ public class PetSizeDAO {
     public static PetSize searchPetSize(String psName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  PetSizes WHERE size LIKE '%" + psName + "%';";
+        String selectStmt = "SELECT * FROM  PetSizes WHERE size LIKE '%" + psName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {

@@ -18,7 +18,7 @@ public class EmployeeDAO {
     public static Employee searchEmployee(String empName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM Employees WHERE name = '" + empName + "';";
+        String selectStmt = "SELECT * FROM Employees WHERE name LIKE '%" + empName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
