@@ -43,7 +43,7 @@ public class PetSizeDAO {
     }
 
     //SELECT PetSizes
-    public static ObservableList<PetSize> searchPetSizes() throws SQLException, ClassNotFoundException {
+    public static ObservableList<PetSize> searchPetSizes() throws SQLException {
 
         //Declare a SELECT statement
         String selectStmt = "SELECT * FROM PetSizes WHERE deletedAt IS NULL";
