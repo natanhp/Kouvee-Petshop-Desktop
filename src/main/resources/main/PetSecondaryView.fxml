@@ -271,17 +271,14 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </DatePicker>
-                        <TextField fx:id="txtOwner" prefWidth="180.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                        <ComboBox fx:id="comboCustomer" onMouseClicked="#selectCustomer" prefWidth="180.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="150.0" right="30.0" />
                            </GridPane.margin>
-                           <font>
-                              <Font name="Franklin Gothic Book" size="14.0" />
-                           </font>
                            <effect>
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
-                        </TextField>
+                        </ComboBox>
                         <Label text="ID" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="Franklin Gothic Medium" size="18.0" />
