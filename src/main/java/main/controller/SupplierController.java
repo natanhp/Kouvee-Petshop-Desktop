@@ -331,4 +331,25 @@ public class SupplierController implements Initializable {
 
         loadAllData();
     }
+
+    @FXML
+    private void selectedRow(MouseEvent me) {
+
+        if (me.getClickCount() > 1) {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+
+
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
+            Supplier supplier = tableAll.getSelectionModel().getSelectedItem();
+
+            txtID.setText(Integer.toString(supplier.getId()));
+            txtNama.setText(supplier.getName());
+            txtTelp.setText(supplier.getPhoneNumber());
+            txtAlamat.setText(supplier.getAddress());
+        }
+    }
 }
