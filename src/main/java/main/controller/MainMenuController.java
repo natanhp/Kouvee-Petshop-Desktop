@@ -1,22 +1,20 @@
 package main.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import main.dao.EmployeeDAO;
-import main.model.Employee;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
@@ -68,7 +66,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private Button btnMainKeluar;
 
-    public static void getUnameLogin (String uname) {
+    public static void getUnameLogin(String uname) {
         returnName = uname;
     }
 
@@ -84,7 +82,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void handleMainButtonAction(MouseEvent me) {
-        if(me.getSource() == btnMainKeluar) {
+        if (me.getSource() == btnMainKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
@@ -96,8 +94,7 @@ public class MainMenuController implements Initializable {
             });
         }
 
-        if(me.getSource() == btnMainLogout)
-        {
+        if (me.getSource() == btnMainLogout) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -111,8 +108,7 @@ public class MainMenuController implements Initializable {
             }
         }
 
-        if(me.getSource() == btnKelPegawai)
-        {
+        if (me.getSource() == btnKelPegawai) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -128,8 +124,7 @@ public class MainMenuController implements Initializable {
 
         }
 
-        if(me.getSource() == btnKelCustomer)
-        {
+        if (me.getSource() == btnKelCustomer) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -145,8 +140,7 @@ public class MainMenuController implements Initializable {
 
         }
 
-        if(me.getSource() == btnKelUkrHewan)
-        {
+        if (me.getSource() == btnKelUkrHewan) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -162,8 +156,7 @@ public class MainMenuController implements Initializable {
 
         }
 
-        if(me.getSource() == btnKelJnsHewan)
-        {
+        if (me.getSource() == btnKelJnsHewan) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -179,8 +172,7 @@ public class MainMenuController implements Initializable {
 
         }
 
-        if(me.getSource() == btnKelSupplier)
-        {
+        if (me.getSource() == btnKelSupplier) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -196,8 +188,7 @@ public class MainMenuController implements Initializable {
 
         }
 
-        if(me.getSource() == btnKelHewan)
-        {
+        if (me.getSource() == btnKelHewan) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -213,8 +204,7 @@ public class MainMenuController implements Initializable {
 
         }
 
-        if(me.getSource() == btnKelLayanan)
-        {
+        if (me.getSource() == btnKelLayanan) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -230,8 +220,7 @@ public class MainMenuController implements Initializable {
 
         }
 
-        if(me.getSource() == btnKelProduk)
-        {
+        if (me.getSource() == btnKelProduk) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
