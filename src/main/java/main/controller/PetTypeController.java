@@ -250,10 +250,17 @@ public class PetTypeController implements Initializable {
     }
 
     @FXML
-    private void insertPetType(ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void insertPetType(ActionEvent event) {
+        String petType = txtTipe.getText().trim();
+
+        if (petType.equals("")) {
+            return;
+        }
 
         try {
-            PetTypeDAO.insertPt(returnID, txtTipe.getText());
+            PetTypeDAO.insertPt(returnID, petType);
+
+            loadAllData();
 
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting pettype");
