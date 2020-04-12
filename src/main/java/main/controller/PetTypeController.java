@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.PetTypeDAO;
 import main.model.PetType;
+import main.model.Service;
 
 import java.io.IOException;
 import java.net.URL;
@@ -292,5 +293,24 @@ public class PetTypeController implements Initializable {
         txtTipe.clear();
 
         loadAllData();
+    }
+
+    @FXML
+    private void selectedRow(MouseEvent me) {
+
+        if (me.getClickCount() > 1) {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+
+
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
+            PetType petType = tableAll.getSelectionModel().getSelectedItem();
+
+            txtID.setText(Integer.toString(petType.getId()));
+            txtTipe.setText(petType.getType());
+        }
     }
 }
