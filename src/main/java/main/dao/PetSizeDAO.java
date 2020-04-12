@@ -14,7 +14,7 @@ public class PetSizeDAO {
     public static PetSize searchPetSize(String psName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  petsizes WHERE size = '" + psName + "';";
+        String selectStmt = "SELECT * FROM  PetSizes WHERE size LIKE '%" + psName + "%';";
 
         //Execute SELECT Statement
         try {
@@ -46,7 +46,7 @@ public class PetSizeDAO {
     public static ObservableList<PetSize> searchPetSizes() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM PetSizes WHERE deletedAt IS NOT NULL";
+        String selectStmt = "SELECT * FROM PetSizes WHERE deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -72,7 +72,7 @@ public class PetSizeDAO {
         ObservableList<PetSize> psList = FXCollections.observableArrayList();
 
         while (rs.next()) {
-            PetSize ps;
+            PetSize ps = new PetSize();
             ps = new PetSize();
             ps.setId(rs.getInt("id"));
             ps.setSize(rs.getString("size"));
@@ -89,7 +89,7 @@ public class PetSizeDAO {
     public static void updateEntries(String Logged, String Id, String size) throws SQLException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE petsizes " +
+                "UPDATE PetSizes " +
                         "SET size = '" + size + "' " +
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
@@ -109,7 +109,7 @@ public class PetSizeDAO {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM petsizes " +
+                "DELETE FROM PetSizes " +
                         "WHERE id = " + Id + ";";
 
         try {
@@ -126,7 +126,7 @@ public class PetSizeDAO {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE petsizes " +
+                "UPDATE PetSizes " +
                         "SET size = NULL" +
                         ", deletedAt = NOW()" +
                         ", deletedBy " + Logged +
@@ -146,7 +146,7 @@ public class PetSizeDAO {
 
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO petsizes " +
+                "INSERT INTO PetSizes " +
                         "(size, createdAt, createdBy)" +
                         "VALUES " +
                         "('" + size + "', " + "NOW(), " +
