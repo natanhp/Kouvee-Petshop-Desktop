@@ -232,8 +232,8 @@ public class PetTypeController implements Initializable {
     @FXML
     private void deletePetType(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
-            PetTypeDAO.deletePtWithId(txtID.getText());
-
+            PetTypeDAO.softDeletePtWithId(returnID, txtID.getText());
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting pettype");
         }
