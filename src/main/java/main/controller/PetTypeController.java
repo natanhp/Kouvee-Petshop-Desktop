@@ -189,10 +189,7 @@ public class PetTypeController implements Initializable {
     private void searchPetType(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get PetType Information
-            PetType pt = PetTypeDAO.searchPetType(txtCari.getText());
-
-            //Populate PetType on TableView and Display on TextField
-            populateAndShowPetType(pt);
+            populatePetTypes(PetTypeDAO.searchPetType(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();

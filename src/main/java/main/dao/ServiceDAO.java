@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class ServiceDAO {
 
     //SELECT a Service
-    public static Service searchService(String sName) throws SQLException {
+    public static ObservableList<Service> searchService(String sName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT * FROM  Services WHERE serviceName LIKE '%" + sName + "%' AND deletedAt IS NULL;";
@@ -22,10 +22,8 @@ public class ServiceDAO {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsS = DBUtil.dbExecuteQuery(selectStmt);
 
-            Service service = getServicesFromResultSet(rsS);
-
-            return service;
-        } catch (SQLException ex) {
+            return getServiceList(rsS);
+        } catch (SQLException | ClassNotFoundException ex) {
             System.out.println("While searching a service with Service Name : " + sName + ", an error occurred: " + ex);
             //Return Exception
             throw ex;

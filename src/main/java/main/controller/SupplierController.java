@@ -201,15 +201,12 @@ public class SupplierController implements Initializable {
 
     //Search a Supplier
     @FXML
-    void searchSupplier(ActionEvent event) throws SQLException {
+    void searchSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get Employee Information
-            Supplier spr = SupplierDAO.searchSupplier(txtCari.getText());
+            populateSuppliers(SupplierDAO.searchSupplier(txtCari.getText()));
 
-            //Populate Employee on TableView and Display on TextField
-            populateAndShowSupplier(spr);
-
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Supplier information from DB" + e);
             throw e;

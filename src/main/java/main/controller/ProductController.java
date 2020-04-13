@@ -238,15 +238,14 @@ public class ProductController implements Initializable {
 
         try {
             //Get Product Information
-            Product pr = ProductDAO.searchProduct(txtCari.getText());
-
-            //Populate Product on TableView and Display on TextField
-            populateAndShowProduct(pr);
+            populateProducts(ProductDAO.searchProduct(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Product information from DB" + e);
             throw e;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

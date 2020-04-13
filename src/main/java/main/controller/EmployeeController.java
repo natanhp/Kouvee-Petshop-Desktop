@@ -231,10 +231,7 @@ public class EmployeeController implements Initializable {
 
         try {
             //Get Employee Information
-            Employee emp = EmployeeDAO.searchEmployee(txtCari.getText());
-
-            //Populate Employee on TableView and Display on TextField
-            populateAndShowEmployee(emp);
+            populateEmployees(EmployeeDAO.searchEmployee(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();

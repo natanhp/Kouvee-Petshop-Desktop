@@ -11,19 +11,17 @@ import java.sql.SQLException;
 public class CustomerDAO {
 
     //SELECT a Customer
-    public static Customer searchCustomer(String cusName) throws SQLException {
+    public static ObservableList<Customer> searchCustomer(String cusName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT * FROM Customers WHERE name LIKE '%" + cusName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
-
+            ObservableList<Customer> customer = FXCollections.observableArrayList();
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsCus = DBUtil.dbExecuteQuery(selectStmt);
-
-            Customer customer = getCustomersFromResultSet(rsCus);
-
+            customer = getCustomerList(rsCus);
             return customer;
         } catch (SQLException ex) {
             System.out.println("While searching a customer with Id : " + cusName + ", an error occurred: " + ex);

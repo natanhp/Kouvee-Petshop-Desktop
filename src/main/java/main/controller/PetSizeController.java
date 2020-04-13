@@ -200,10 +200,7 @@ public class PetSizeController implements Initializable {
     private void searchPetSize(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get PetSize Information
-            PetSize ps = PetSizeDAO.searchPetSize(txtCari.getText());
-
-            //Populate PetSize on TableView and Display on TextField
-            populateAndShowPetSize(ps);
+            populatePetSizes(PetSizeDAO.searchPetSize(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();

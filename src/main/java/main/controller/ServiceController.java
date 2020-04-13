@@ -15,13 +15,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.ServiceDAO;
-import main.model.Employee;
 import main.model.Service;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 
@@ -188,11 +186,7 @@ public class ServiceController implements Initializable {
 
         try {
             //Get Service Information
-            Service s = ServiceDAO.searchService(txtCari.getText());
-
-            //Populate PetSize on TableView and Display on TextField
-            populateAndShowService(s);
-
+            populateServices(ServiceDAO.searchService(txtCari.getText()));
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting PetSize information from DB" + e);
@@ -295,7 +289,7 @@ public class ServiceController implements Initializable {
     }
 
     private void loadAllData() {
-                    //Get all Service information
+        //Get all Service information
         ObservableList<Service> sData = null;
         try {
             sData = ServiceDAO.searchServices();
@@ -304,7 +298,7 @@ public class ServiceController implements Initializable {
         }
 
         //Populate Services on TableView
-            populateServices(sData);
+        populateServices(sData);
 
     }
 

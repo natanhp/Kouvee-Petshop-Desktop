@@ -15,7 +15,7 @@ import java.util.Objects;
 public class EmployeeDAO {
 
     //SELECT an Employee
-    public static Employee searchEmployee(String empName) throws SQLException {
+    public static ObservableList<Employee> searchEmployee(String empName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT * FROM Employees WHERE name LIKE '%" + empName + "%' AND deletedAt IS NULL;";
@@ -26,7 +26,7 @@ public class EmployeeDAO {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsEmp = DBUtil.dbExecuteQuery(selectStmt);
 
-            return getEmployeeFromResultSet(rsEmp);
+            return getEmployeeList(rsEmp);
         } catch (SQLException ex) {
             System.out.println("While searching an employee with Name : " + empName + ", an error occurred: " + ex);
             //Return Exception

@@ -1,7 +1,5 @@
 package main.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -225,10 +223,8 @@ public class CustomerSecondaryController implements Initializable {
     private void searchCustomer(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get Customer Information
-            Customer cus = CustomerDAO.searchCustomer(txtCari.getText());
 
-            //Populate Customer on TableView and Display on TextField
-            populateAndShowCustomer(cus);
+            populateCustomers(CustomerDAO.searchCustomer(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -308,7 +304,7 @@ public class CustomerSecondaryController implements Initializable {
         String id = txtID.getText().trim();
 
         if (name.equals("") || address.equals("") || phone.equals("") || pickerDateBirth.getValue() == null ||
-        id.equals("")) {
+                id.equals("")) {
             return;
         }
 

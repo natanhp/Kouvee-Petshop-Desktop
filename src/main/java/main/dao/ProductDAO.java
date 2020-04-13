@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class ProductDAO {
     //SELECT a Product
-    public static Product searchProduct(String prName) throws SQLException {
+    public static ObservableList<Product> searchProduct(String prName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT * FROM Products WHERE productName LIKE '%" + prName + "%' AND deletedAt IS NULL;";
@@ -21,7 +21,7 @@ public class ProductDAO {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsPr = DBUtil.dbExecuteQuery(selectStmt);
 
-            return getProductsFromResultSet(rsPr);
+            return getProductList(rsPr);
         } catch (SQLException ex) {
             System.out.println("While searching a product with Id : " + prName + ", an error occurred: " + ex);
             //Return Exception
@@ -122,7 +122,7 @@ public class ProductDAO {
     }
 
     public static void updateEntriesNoImage(String Logged, String Id, String name, String meas, String prQty,
-                                     String price, String minQty)
+                                            String price, String minQty)
             throws SQLException {
         //Declare an UPDATE Statement
         String updateStmt =

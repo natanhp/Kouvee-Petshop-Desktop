@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class PetTypeDAO {
 
     //SELECT a PetType
-    public static PetType searchPetType(String ptName) throws SQLException {
+    public static ObservableList<PetType> searchPetType(String ptName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT * FROM  PetTypes WHERE type LIKE '%" + ptName + "%' AND deletedAt IS NULL;";
@@ -21,10 +21,8 @@ public class PetTypeDAO {
 
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsPt = DBUtil.dbExecuteQuery(selectStmt);
-
-            PetType petType = getPetTypesFromResultSet(rsPt);
-
-            return petType;
+            
+            return getPetTypeList(rsPt);
         } catch (SQLException ex) {
             System.out.println("While searching a pet type with Type : " + ptName + ", an error occurred: " + ex);
             //Return Exception

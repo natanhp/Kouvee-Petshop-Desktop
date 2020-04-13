@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class PetSizeDAO {
 
     //SELECT a PetSize
-    public static PetSize searchPetSize(String psName) throws SQLException {
+    public static ObservableList<PetSize> searchPetSize(String psName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT * FROM  PetSizes WHERE size LIKE '%" + psName + "%' AND deletedAt IS NULL;";
@@ -22,7 +22,7 @@ public class PetSizeDAO {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsPs = DBUtil.dbExecuteQuery(selectStmt);
 
-            return getPetSizesFromResultSet(rsPs);
+            return getPetSizeList(rsPs);
         } catch (SQLException ex) {
             System.out.println("While searching a pet size with Size : " + psName + ", an error occurred: " + ex);
             //Return Exception

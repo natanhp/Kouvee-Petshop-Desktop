@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class SupplierDAO {
 
     //SELECT an Supplier
-    public static Supplier searchSupplier(String sprName) throws SQLException {
+    public static ObservableList<Supplier> searchSupplier(String sprName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT * FROM Suppliers WHERE name LIKE '%" + sprName + "%' AND deletedAt IS NULL;";
@@ -22,7 +22,7 @@ public class SupplierDAO {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsSpr = DBUtil.dbExecuteQuery(selectStmt);
 
-            return getSupplierFromResultSet(rsSpr);
+            return getSupplierList(rsSpr);
         } catch (SQLException ex) {
             System.out.println("While searching an supplier with Name : " + sprName + ", an error occured: " + ex);
             //Return Exception
