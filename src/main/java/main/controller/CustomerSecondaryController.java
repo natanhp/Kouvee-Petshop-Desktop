@@ -302,10 +302,20 @@ public class CustomerSecondaryController implements Initializable {
 
     @FXML
     private void updateCustomer(ActionEvent event) throws ClassNotFoundException {
-        try {
-            CustomerDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                    txtTelp.getText());
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
+        String id = txtID.getText().trim();
 
+        if (name.equals("") || address.equals("") || phone.equals("") || pickerDateBirth.getValue() == null ||
+        id.equals("")) {
+            return;
+        }
+
+        try {
+            CustomerDAO.updateEntries(returnID, id, name, pickerDateBirth.getValue().toString().trim(), address,
+                    phone);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating customer");
         }
