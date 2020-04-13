@@ -2,8 +2,6 @@ package main.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.model.Customer;
-import main.model.Pet;
 import main.model.ServiceDetail;
 import main.util.DBUtil;
 
@@ -12,48 +10,6 @@ import java.sql.SQLException;
 
 public class ServiceDetailDAO {
 
-//    public static ServiceDetail searchPet(String petName) throws SQLException {
-
-//        //Declare a SELECT Statement
-//        String selectStmt = "SELECT sd.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner', pt.type 'type', ps.size 'size' " +
-//                "FROM Pets p " +
-//                "JOIN Customers cs ON cs.id = p.Customers_id " +
-//                "JOIN PetTypes pt ON pt.id = p.PetTypes_id " +
-//                "JOIN PetSizes ps ON ps.id = p.PetSizes_id " +
-//                "WHERE p.name LIKE '%" + petName + "%' AND (p.deletedAt IS NULL AND cs.deletedAt IS NULL AND ps.deletedAt IS NULL);";
-//
-//        //Execute SELECT Statement
-//        try {
-//
-//            //Get ResultSet from dbExecuteQuery method
-//            ResultSet rsPet = DBUtil.dbExecuteQuery(selectStmt);
-//
-//            Pet pet = getPetFromResultSet(rsPet);
-//
-//            return pet;
-//        } catch (SQLException ex) {
-//            System.out.println("While searching an pet with Id : " + petName + ", an error occurred: " + ex);
-//            //Return Exception
-//            throw ex;
-//        }
-//    }
-
-    private static Pet getPetFromResultSet(ResultSet rs) throws SQLException {
-        Pet pet = null;
-
-        if (rs.next()) {
-            pet = new Pet();
-            pet.setId(rs.getInt("id"));
-            pet.setName(rs.getString("name"));
-            pet.setDateBirth(rs.getDate("dateBirth"));
-            pet.setCustomer_name(rs.getString("owner"));
-            pet.setPetSize_name(rs.getString("size"));
-            pet.setPetType_name(rs.getString("type"));
-        }
-        return pet;
-    }
-
-    //SELECT Pets
     public static ObservableList<ServiceDetail> getServiceDetails() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
