@@ -105,6 +105,8 @@ public class PetTypeController {
     public void handleButtonPetType (MouseEvent me){
         if (me.getSource() == btnTipeKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -221,6 +223,7 @@ public class PetTypeController {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting PetType information from DB" + e);
+            DialogShowInfo("Error occurred while getting pet type information. Check your database.");
             throw e;
         }
     }
@@ -251,6 +254,7 @@ public class PetTypeController {
             populatePetType(pt);
         } else {
             System.out.println("This pettype doesn't exist");
+            DialogShowInfo("No type with name " + txtCari.getText());
         }
     }
 
@@ -263,32 +267,49 @@ public class PetTypeController {
 
     @FXML
     private void deletePetType (ActionEvent event) throws SQLException, ClassNotFoundException {
-        try {
-            PetTypeDAO.deletePtWithId(txtID.getText());
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                PetTypeDAO.deletePtWithId(txtID.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting pettype");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while deleting pettype. Check your database connection.");
+            }
         }
     }
 
     @FXML
     private void updatePetType (ActionEvent event) throws SQLException, ClassNotFoundException {
-        try {
-            PetTypeDAO.updateEntries(returnID, txtID.getText(), txtTipe.getText());
+        if (txtID.getText().isEmpty() || txtTipe.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                PetTypeDAO.updateEntries(returnID, txtID.getText(), txtTipe.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while updating pettype");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while updating pet type. Check your database connection");
+            }
         }
     }
 
     @FXML
     private void insertPetType (ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        try {
-            PetTypeDAO.insertPt(returnID, txtTipe.getText());
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        }
+        else {
+            try {
+                PetTypeDAO.insertPt(returnID, txtTipe.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting pettype");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while inserting pet type. Check your database connection");
+            }
         }
     }
 
@@ -315,5 +336,14 @@ public class PetTypeController {
     private void clearFields(ActionEvent ae) {
         txtID.clear();
         txtTipe.clear();
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
     }
 }

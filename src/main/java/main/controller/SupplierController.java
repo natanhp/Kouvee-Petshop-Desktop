@@ -117,6 +117,8 @@ public class SupplierController {
         if(me.getSource() == btnSupplierKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
+            alert.setX(550);
+            alert.setY(300);
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
             alert.showAndWait().ifPresent((btnType) -> {
@@ -223,6 +225,7 @@ public class SupplierController {
         } catch(SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Supplier information from DB" + e);
+            DialogShowInfo("Error occurred while getting supplier information. Check your database connection");
             throw e;
         }
     }
@@ -271,6 +274,7 @@ public class SupplierController {
             populateSupplier(spr);
         } else {
             System.out.println("This supplier doesn't exist");
+            DialogShowInfo("Supplie not found with name " + txtCari.getText());
         }
     }
 
@@ -282,35 +286,53 @@ public class SupplierController {
     }
 
     @FXML
-    void deleteSupplier(ActionEvent event) throws SQLException, ClassNotFoundException{
-        try {
-            SupplierDAO.deleteSprWithId(txtID.getText());
+    void deleteSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting supplier");
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                SupplierDAO.deleteSprWithId(txtID.getText());
+
+            } catch (SQLException e) {
+                System.out.println("Problem occurred while deleting supplier");
+            }
         }
     }
 
     @FXML
     void updateSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        try {
-            SupplierDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtAlamat.getText(),
-                    txtTelp.getText());
+        if (checkFields()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                SupplierDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtAlamat.getText(),
+                        txtTelp.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while updating supplier");
+            } catch (SQLException e) {
+                System.out.println("Problem occurred while updating supplier");
+            }
         }
     }
 
     @FXML
     void insertSupplier(ActionEvent event) throws SQLException, ClassNotFoundException{
-        try {
-            SupplierDAO.insertSpr(returnID, txtNama.getText(), txtAlamat.getText(),
-                    txtTelp.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting supplier");
+        if (checkFieldsNoID()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else {
+            try {
+                SupplierDAO.insertSpr(returnID, txtNama.getText(), txtAlamat.getText(),
+                        txtTelp.getText());
+
+            } catch (SQLException e) {
+                System.out.println("Problem occurred while inserting supplier");
+            }
         }
     }
 
@@ -347,5 +369,44 @@ public class SupplierController {
         txtNama.clear();
         txtTelp.clear();
         txtAlamat.clear();
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
+    }
+
+    private boolean checkFields() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtID.getText(), txtNama.getText(), txtAlamat.getText(), txtTelp.getText()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
+    private boolean checkFieldsNoID() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtNama.getText(), txtAlamat.getText(), txtTelp.getText()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
     }
 }

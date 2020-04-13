@@ -139,6 +139,8 @@ public class PetSecondaryController {
     void handleButtonPet (MouseEvent me){
         if (me.getSource() == btnHewanKeluar){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -251,6 +253,7 @@ public class PetSecondaryController {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Pet information from DB" + e);
+            DialogShowInfo("No pet found with name " + txtCari.getText());
             throw e;
         }
     }
@@ -277,6 +280,7 @@ public class PetSecondaryController {
             populatePet(p);
         } else {
             System.out.println("This pet doesn't exist");
+            DialogShowInfo("No Pet found with name " + txtCari.getText());
         }
     }
 
@@ -360,48 +364,73 @@ public class PetSecondaryController {
 
     @FXML
     void deletePet(ActionEvent event) throws SQLException, ClassNotFoundException {
-        try {
-            PetDAO.deletePetWithId(txtID.getText());
-
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting pet");
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                PetDAO.deletePetWithId(txtID.getText());
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while deleting pet. Check your database connection");
+            }
         }
     }
 
     @FXML
     void updatePet(ActionEvent event) throws SQLException, ClassNotFoundException{
-        try {
-            String tipe = Integer.toString(comboTipe.getValue().getId());
-            String ukr = Integer.toString(comboUkuran.getValue().getId());
 
-            Customer owner = PetDAO.searchOwner(txtOwner.getText());
-            String Customers_id = Integer.toString(owner.getId());
+        int Customers_id = 0;
 
-            PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), Customers_id, tipe, ukr);
+        if (checkFields()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                String tipe = Integer.toString(comboTipe.getValue().getId());
+                String ukr = Integer.toString(comboUkuran.getValue().getId());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while updating pet");
+                Customer owner = PetDAO.searchOwner(txtOwner.getText());
+                Customers_id = owner.getId();
+
+                if(Customers_id == 0) {
+                    DialogShowInfo("No owner found with name" + txtOwner.getText());
+                }
+                else {
+                    PetDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), Integer.toString(Customers_id), tipe, ukr);
+                }
+
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while updating pet. Check your database connection");
+            }
         }
     }
 
     @FXML
     void insertPet(ActionEvent event) throws SQLException, ClassNotFoundException{
-        try {
 
-            String tipe = Integer.toString(comboTipe.getValue().getId());
-            String ukr = Integer.toString(comboUkuran.getValue().getId());
+        int Customers_id = 0;
+        if (checkFieldsNoID()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else {
+            try {
+                String tipe = Integer.toString(comboTipe.getValue().getId());
+                String ukr = Integer.toString(comboUkuran.getValue().getId());
 
-            Customer owner = PetDAO.searchOwner(txtOwner.getText());
-            int Customers_id = owner.getId();
+                Customer owner = PetDAO.searchOwner(txtOwner.getText());
+                Customers_id = owner.getId();
 
-            System.out.println("Customers ID : "+Customers_id);
-
-            PetDAO.insertPet(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), Integer.toString(Customers_id)
-                    ,tipe, ukr);
-
-
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting pet");
+                if(Customers_id == 0) {
+                    DialogShowInfo("No owner found with name" + txtOwner.getText());
+                }
+                else {
+                    PetDAO.insertPet(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), Integer.toString(Customers_id)
+                            , tipe, ukr);
+                }
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while inserting pet. Check your database connection");
+            }
         }
     }
 
@@ -559,12 +588,48 @@ public class PetSecondaryController {
         txtNama.clear();
         pickerDateBirth.setValue(null);
         txtOwner.clear();
-        comboUkuran.setValue(null);
-        comboTipe.setValue(null);
+        comboUkuran.getEditor().clear();
+        comboTipe.getEditor().clear();
     }
 
-    @FXML
-    void e1d42b(ActionEvent event) {
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
+    }
 
+    private boolean checkFields() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtID.getText(), txtNama.getText(), txtOwner.getText(), pickerDateBirth.getValue().toString(),
+                Integer.toString(comboTipe.getValue().getId()), Integer.toString(comboUkuran.getValue().getId())};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
+    private boolean checkFieldsNoID() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtNama.getText(), txtOwner.getText(), pickerDateBirth.getValue().toString(),
+                Integer.toString(comboTipe.getValue().getId()), Integer.toString(comboUkuran.getValue().getId())};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
     }
 }

@@ -131,6 +131,8 @@ public class EmployeeController {
     public void handleButtonEmployee(MouseEvent me) {
         if(me.getSource() == btnPegawaiKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -251,6 +253,7 @@ public class EmployeeController {
         } catch(SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Employee information from DB" + e);
+            DialogShowInfo("Error occurred while getting employee information. Check your database connection");
             throw e;
         }
     }
@@ -346,6 +349,7 @@ public class EmployeeController {
             populateEmployee(emp);
         } else {
             System.out.println("This employee doesn't exist");
+            DialogShowInfo("Employe not found with name " + txtCari.getText());
         }
     }
 
@@ -362,36 +366,41 @@ public class EmployeeController {
         String generatedSecuredPasswordHash;
         String passField = txtPawd.getText();
 
-        if(passField.equalsIgnoreCase("No change"))
-        {
-            try {
-                EmployeeDAO.updateEntries(returnID, txtID.getText(),txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                        txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
-
-            } catch (SQLException e) {
-                System.out.println("Problem occurred while updating employee");
-            }
+        if (checkFields()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
         } else {
+            if (passField.equalsIgnoreCase("No change")) {
+                try {
+                    EmployeeDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
+                            txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
+
+                } catch (SQLException e) {
+                    System.out.println("Problem occurred while updating employee");
+                }
+            } else {
 //            Example Hashing the password
 //            String password = "1234";
 //            String bcryptHashString = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, password.toCharArray());
 //            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
 //            System.out.println("Example result : " + result);
-            // result.verified == true
+                // result.verified == true
 
 //            Using 2A Version
 //            generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
 
 //          Using 2Y Version
-            generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, passField.toCharArray());
-            BCrypt.Result result1 = BCrypt.verifyer().verify(passField.toCharArray(), generatedSecuredPasswordHash);
+                generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, passField.toCharArray());
+                BCrypt.Result result1 = BCrypt.verifyer().verify(passField.toCharArray(), generatedSecuredPasswordHash);
 
-            try {
-                EmployeeDAO.updateEntries(returnID, txtID.getText(),txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                        txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
+                try {
+                    EmployeeDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
+                            txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
 
-            } catch (SQLException e) {
-                System.out.println("Problem occurred while updating employee");
+                } catch (SQLException e) {
+                    DialogShowInfo("Problem occurred while updating employee");
+                }
             }
         }
     }
@@ -402,22 +411,33 @@ public class EmployeeController {
         String generatedSecuredPasswordHash;
 
         generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
-        try {
-            EmployeeDAO.insertEmp(returnID ,txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                    txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting employee");
+        if (checkFieldsNoID()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else {
+            try {
+                EmployeeDAO.insertEmp(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
+                        txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
+
+            } catch (SQLException e) {
+                System.out.println("Problem occurred while inserting employee");
+            }
         }
     }
 
     @FXML
     private void deleteEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
-        try {
-            EmployeeDAO.deleteEmpWithId(txtID.getText());
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                EmployeeDAO.deleteEmpWithId(txtID.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting employee");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while deleting employee. Check database connection.");
+            }
         }
     }
 
@@ -458,6 +478,47 @@ public class EmployeeController {
         txtRole.clear();
         txtUname.clear();
         txtPawd.clear();
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
+    }
+
+    private boolean checkFields() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtID.getText(), txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString(),
+        txtUname.getText(), txtPawd.getText(), txtRole.getText()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
+    private boolean checkFieldsNoID() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString(),
+                txtUname.getText(), txtPawd.getText(), txtRole.getText()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
     }
 
 }

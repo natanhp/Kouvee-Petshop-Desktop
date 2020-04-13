@@ -130,6 +130,8 @@ public class CustomerSecondaryController {
     public void handleButtonCustomer (MouseEvent me){
         if (me.getSource() == btnPelangganKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -247,6 +249,7 @@ public class CustomerSecondaryController {
     //Search a Customer
     @FXML
     private void searchCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
+
         try {
             //Get Customer Information
             Customer cus = CustomerDAO.searchCustomer(txtCari.getText());
@@ -255,8 +258,8 @@ public class CustomerSecondaryController {
             populateAndShowCustomer(cus);
 
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("Error occurred while getting Customer information from DB" + e);
+            e.printStackTrace();
             throw e;
         }
     }
@@ -334,6 +337,7 @@ public class CustomerSecondaryController {
             populateCustomer(cus);
         } else {
             System.out.println("This customer doesn't exist");
+            DialogShowInfo("No Customer found with name " + txtCari.getText());
         }
     }
 
@@ -346,34 +350,52 @@ public class CustomerSecondaryController {
 
     @FXML
     private void deleteCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
-        try {
-            CustomerDAO.deleteCusWithId(txtID.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting customer");
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                CustomerDAO.deleteCusWithId(txtID.getText());
+
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while deleting customer. Check your database connection");
+            }
         }
     }
 
     @FXML
     private void updateCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
-        try {
-            CustomerDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                    txtTelp.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while updating customer");
+            if (checkFields()) {
+                DialogShowInfo("Fields cannot be empty");
+            } else if (!txtID.getText().matches("[0-9]+")) {
+                DialogShowInfo("ID can only contain numbers.");
+            } else {
+                try {
+                    CustomerDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
+                            txtTelp.getText());
+
+                } catch (SQLException e) {
+                    DialogShowInfo("Problem occurred while updating customer. Check your database connection.");
+                }
+            }
         }
-    }
 
     @FXML
     private void insertCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        try {
-            CustomerDAO.insertCus(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                    txtTelp.getText());
+        if (checkFieldsNoID()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else {
+            try {
+                CustomerDAO.insertCus(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
+                        txtTelp.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting customer");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while inserting customer. Check your database connection.");
+            }
         }
     }
 
@@ -409,5 +431,45 @@ public class CustomerSecondaryController {
         txtTelp.clear();
         txtAlamat.clear();
     }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
+    }
+
+    private boolean checkFields() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtID.getText(), txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
+    private boolean checkFieldsNoID() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
 
 }

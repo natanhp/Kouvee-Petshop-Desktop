@@ -108,6 +108,8 @@ public class ServiceController {
 
         if (me.getSource() == btnLayananKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -255,6 +257,7 @@ public class ServiceController {
             populateService(s);
         } else {
             System.out.println("This service doesn't exists");
+            DialogShowInfo("Service not found with service name " + txtCari.getText());
         }
     }
 
@@ -268,33 +271,49 @@ public class ServiceController {
     @FXML
     void deleteService(ActionEvent event) throws SQLException, ClassNotFoundException{
 
-        try {
-            ServiceDAO.deleteSWithId(txtID.getText());
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                ServiceDAO.deleteSWithId(txtID.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting service");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while deleting service. Check your database connection");
+            }
         }
     }
 
     @FXML
     void updateService(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        try {
-            ServiceDAO.updateEntries(returnID, txtID.getText(), txtLayanan.getText());
+        if (txtID.getText().isEmpty() || txtLayanan.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                ServiceDAO.updateEntries(returnID, txtID.getText(), txtLayanan.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while updating service");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while updating service. Check your database connection");
+            }
         }
     }
 
     @FXML
     void insertService(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        try {
-            ServiceDAO.insertS(returnID, txtLayanan.getText());
+        if (txtLayanan.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else {
+            try {
+                ServiceDAO.insertS(returnID, txtLayanan.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting service");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while inserting service. Check your database connection");
+            }
         }
     }
 
@@ -321,6 +340,15 @@ public class ServiceController {
     private void clearFields(ActionEvent ae) {
         txtID.clear();
         txtLayanan.clear();
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
     }
 
 }

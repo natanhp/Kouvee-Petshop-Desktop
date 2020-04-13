@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="baf6ca64-8172-47ab-83d2-70f280c4e256" name="Default Changelist" comment="Encryption now use 2Y version.">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/baseline_search_black_18dp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/baseline_search_white_18dp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/stylesearchButton.css" afterDir="false" />
+    <list default="true" id="baf6ca64-8172-47ab-83d2-70f280c4e256" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerSecondaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerSecondaryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/LoginController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/MainMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/MainMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/MainMenuSecondaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/MainMenuSecondaryController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSizeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSizeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetTypeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetTypeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/ProductController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/ServiceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/ServiceController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/SupplierController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/SupplierController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/util/DBUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/util/DBUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/EmployeeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/EmployeeView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/SupplierView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/SupplierView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/CustomerDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/CustomerDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/ProductDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/ProductDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetSizeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/PetSizeView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetTypeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/PetTypeView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/ProductView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/ProductView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/ServiceView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/ServiceView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/CustomerSecondaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/CustomerSecondaryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/EmployeeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/LoginController.java" afterDir="false" />
@@ -41,16 +46,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/ProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/ServiceController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/SupplierController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/SupplierController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/dao/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/dao/ProductDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/util/DBUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/util/DBUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/CustomerSecondaryViev-new.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/EmployeeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/EmployeeView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/PetSizeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/PetSizeView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/PetTypeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/PetTypeView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/dao/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/dao/CustomerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/main/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/Main.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/main/ProductView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/ProductView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/ServiceView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/ServiceView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/SupplierView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/SupplierView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -463,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586670310789</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="All views are fixed. Adding Pop-ups.">
+      <created>1586766358359</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1586766358359</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -485,7 +490,8 @@
     <MESSAGE value="Showing image from database has been implemented.  Nox fixing views and adding more popups" />
     <MESSAGE value="Showing image from database has been implemented. Now fixing views and adding more popups" />
     <MESSAGE value="Encryption now use 2Y version." />
-    <option name="LAST_COMMIT_MESSAGE" value="Encryption now use 2Y version." />
+    <MESSAGE value="All views are fixed. Adding Pop-ups." />
+    <option name="LAST_COMMIT_MESSAGE" value="All views are fixed. Adding Pop-ups." />
   </component>
   <component name="WindowStateProjectService">
     <state x="496" y="39" key="#Kouvee-Petshop-Desktop_[jar]" timestamp="1586681860092">
@@ -496,10 +502,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="70" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1584355206894" />
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586701867591">
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586768041463">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1586701867591" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1586768041463" />
     <state x="513" y="215" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586746573394">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -532,10 +538,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="469" y="249" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1586619840752" />
-    <state x="424" y="0" key="CommitChangelistDialog2" timestamp="1586766332144">
+    <state x="424" y="0" key="CommitChangelistDialog2" timestamp="1586766353847">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="424" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586766332144" />
+    <state x="424" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586766353847" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1586697343901">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -552,22 +558,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="591" y="311" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1586760566017" />
-    <state width="1493" height="151" key="GridCell.Tab.0.bottom" timestamp="1586765920780">
+    <state width="1493" height="151" key="GridCell.Tab.0.bottom" timestamp="1586791050941">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586765920780" />
-    <state width="1493" height="151" key="GridCell.Tab.0.center" timestamp="1586765920780">
+    <state width="1493" height="151" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586791050941" />
+    <state width="1493" height="151" key="GridCell.Tab.0.center" timestamp="1586791050940">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586765920780" />
-    <state width="1493" height="151" key="GridCell.Tab.0.left" timestamp="1586765920780">
+    <state width="1493" height="151" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586791050940" />
+    <state width="1493" height="151" key="GridCell.Tab.0.left" timestamp="1586791050940">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586765920780" />
-    <state width="1493" height="151" key="GridCell.Tab.0.right" timestamp="1586765920780">
+    <state width="1493" height="151" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586791050940" />
+    <state width="1493" height="151" key="GridCell.Tab.0.right" timestamp="1586791050940">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586765920780" />
+    <state width="1493" height="151" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586791050940" />
     <state width="1493" height="168" key="GridCell.Tab.1.bottom" timestamp="1586099304959">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -588,18 +594,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="349" y="155" key="IDE.errors.dialog/0.0.1536.824@0.0.1536.824" timestamp="1584617906919" />
-    <state x="308" y="0" key="SettingsEditor" timestamp="1586702952896">
+    <state x="308" y="0" key="SettingsEditor" timestamp="1586768013800">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="308" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1586702952896" />
+    <state x="308" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1586768013800" />
     <state x="618" y="328" key="VCS.ChangelistChooser" timestamp="1586697310420">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="328" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1586697310420" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1586670366635">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1586766363658">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1586670366635" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1586766363658" />
     <state x="499" y="146" key="VcsDiffUtil.ChangesDialog" timestamp="1586697241749">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -608,10 +614,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="199" y="196" key="chooseDestDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1584355837582" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1586731429452">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1586778220733">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586731429452" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586778220733" />
     <state x="419" y="41" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1584972373146">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -636,14 +642,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="475" y="31" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1585210602840" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1586750643343">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1586791172632">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1586750643343" />
-    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1586761432099">
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1586791172632" />
+    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1586790783549">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1586761432099" />
+    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1586790783549" />
     <state x="1018" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585092915363" />
   </component>
 </project>

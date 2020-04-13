@@ -17,6 +17,7 @@ public class CustomerDAO {
         String selectStmt = "SELECT * FROM customers WHERE name ='" + cusName + "';";
 
         //Execute SELECT Statement
+        //Execute SELECT Statement
         try {
 
             //Get ResultSet from dbExecuteQuery method

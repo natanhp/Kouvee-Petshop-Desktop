@@ -152,6 +152,8 @@ public class ProductController {
     void handleButtonProduct(MouseEvent me) {
         if (me.getSource() == btnProdukKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -264,6 +266,7 @@ public class ProductController {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Product information from DB" + e);
+            DialogShowInfo("Error occurred while getting product information from database. Check your database connection");
             throw e;
         }
     }
@@ -290,6 +293,7 @@ public class ProductController {
             populateProduct(pr);
         } else {
             System.out.println("This product doesn't exist");
+            DialogShowInfo("Product not found with product name " + txtCari.getText());
         }
     }
 
@@ -316,43 +320,61 @@ public class ProductController {
     @FXML
     void deleteProduct(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        try {
-            ProductDAO.deletePrWithId(txtID.getText());
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                ProductDAO.deletePrWithId(txtID.getText());
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting product");
+            } catch (SQLException e) {
+                System.out.println("Problem occurred while deleting product");
+                DialogShowInfo("Problem occurred while deleting product. Check your database connection");
+            }
         }
     }
 
     @FXML
     void updateProduct(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        try {
-            String qty = Integer.toString(spinJumlah.getValue().intValue());
-            String min = Integer.toString(spinMin.getValue().intValue());
-            String price = Integer.toString(spinHarga.getValue().intValue());
+        if (checkFields()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                String qty = Integer.toString(spinJumlah.getValue().intValue());
+                String min = Integer.toString(spinMin.getValue().intValue());
+                String price = Integer.toString(spinHarga.getValue().intValue());
 
-            ProductDAO.updateEntries(returnID, txtID.getText(), txtNamaProduk.getText(), txtSatuan.getText(), qty, price, min, filePath);
+                ProductDAO.updateEntries(returnID, txtID.getText(), txtNamaProduk.getText(), txtSatuan.getText(), qty, price, min, filePath);
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while updating product");
+            } catch (SQLException e) {
+                System.out.println("Problem occurred while updating product");
+                DialogShowInfo("Problem occurred while updating product. Check your database connection");
+            }
         }
     }
 
     @FXML
     void insertProduct(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        try {
+        if (checkFieldsNoID()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else {
+            try {
 
-            String qty = Integer.toString(spinJumlah.getValue().intValue());
-            String min = Integer.toString(spinMin.getValue().intValue());
-            String price = Integer.toString(spinHarga.getValue().intValue());
+                String qty = Integer.toString(spinJumlah.getValue().intValue());
+                String min = Integer.toString(spinMin.getValue().intValue());
+                String price = Integer.toString(spinHarga.getValue().intValue());
 
-            ProductDAO.insertPr(returnID, txtNamaProduk.getText(), qty, txtSatuan.getText(), price, min, filePath);
+                ProductDAO.insertPr(returnID, txtNamaProduk.getText(), qty, txtSatuan.getText(), price, min, filePath);
 
 
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting product");
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while inserting product. Check your database connection");
+            }
         }
     }
 
@@ -495,7 +517,8 @@ public class ProductController {
 
     private void editWithSelectedRow() throws IOException {
 
-        ByteArrayInputStream bais = null;
+        InputStream is = null;
+//        ByteArrayInputStream bais = null;
 
         if(tableAll.getSelectionModel().getSelectedItem() != null) {
             Product product = tableAll.getSelectionModel().getSelectedItem();
@@ -515,11 +538,12 @@ public class ProductController {
 
             try {
                 labelImageError.setText(null);
-                bais = new ByteArrayInputStream(product.getImage());
-                bais.close();
+                is = new ByteArrayInputStream(product.getImage());
+
+                is.close();
 
                 // read till the end of the stream
-                while(bais.available() > 0) {
+                while(is.available() > 0) {
 
                     // convert byte to character
 //                    char c = (char)bais.read();
@@ -530,7 +554,7 @@ public class ProductController {
                     // print characters read form the byte array
 //                    System.out.println(" & byte read : "+c);
 
-                    Image image = new Image(bais);
+                    Image image = new Image(is);
                     imagePreviewDB.setImage(image);
                 }
 
@@ -542,8 +566,8 @@ public class ProductController {
                 labelImageError.setText("No Image Available");
 
             } finally {
-                if(bais != null) {
-                    bais.close();
+                if(is != null) {
+                    is.close();
                 }
 
             }
@@ -564,4 +588,44 @@ public class ProductController {
 
     }
 
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
+    }
+
+    private boolean checkFields() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtID.getText(), txtNamaProduk.getText(), txtSatuan.getText(), spinMin.getEditor().getText(),
+                spinHarga.getEditor().getText(), spinJumlah.getEditor().getText()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
+    private boolean checkFieldsNoID() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtID.getText(), txtNamaProduk.getText(), txtSatuan.getText(), spinMin.getEditor().getText(),
+                spinHarga.getEditor().getText(), spinJumlah.getEditor().getText()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
 }
