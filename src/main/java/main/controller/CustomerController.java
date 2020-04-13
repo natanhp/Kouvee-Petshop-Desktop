@@ -232,10 +232,7 @@ public class CustomerController {
     private void searchCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get Customer Information
-            Customer cus = CustomerDAO.searchCustomer(txtCari.getText());
-
-            //Populate Customer on TableView and Display on TextField
-            populateAndShowCustomer(cus);
+            populateCustomers(CustomerDAO.searchCustomer(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();

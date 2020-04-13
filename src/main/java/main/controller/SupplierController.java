@@ -5,21 +5,25 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.SupplierDAO;
 import main.model.Supplier;
 
-import javafx.scene.input.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
-public class SupplierController {
+public class SupplierController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -47,12 +51,6 @@ public class SupplierController {
     private TextField txtID;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<Supplier> tableAll;
 
     @FXML
@@ -60,9 +58,6 @@ public class SupplierController {
 
     @FXML
     private TableColumn<Supplier, String> sprName;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private TableColumn<Supplier, Integer> sprId;
@@ -114,7 +109,7 @@ public class SupplierController {
     @FXML
     public void handleButtonSupplier(MouseEvent me) {
 
-        if(me.getSource() == btnSupplierKeluar) {
+        if (me.getSource() == btnSupplierKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setX(550);
@@ -128,8 +123,7 @@ public class SupplierController {
             });
         }
 
-        if(me.getSource() == btnMenuUtama)
-        {
+        if (me.getSource() == btnMenuUtama) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -147,7 +141,7 @@ public class SupplierController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -168,7 +162,7 @@ public class SupplierController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -189,7 +183,7 @@ public class SupplierController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -217,12 +211,9 @@ public class SupplierController {
     void searchSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get Employee Information
-            Supplier spr = SupplierDAO.searchSupplier(txtCari.getText());
+            populateSuppliers(SupplierDAO.searchSupplier(txtCari.getText()));
 
-            //Populate Employee on TableView and Display on TextField
-            populateAndShowSupplier(spr);
-
-        } catch(SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Supplier information from DB" + e);
             DialogShowInfo("Error occurred while getting supplier information. Check your database connection");
@@ -231,34 +222,13 @@ public class SupplierController {
     }
 
     @FXML
-    void searchSuppliers(ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        try {
-            //Get all Supplier information
-            ObservableList<Supplier> sprData = SupplierDAO.searchSuppliers();
-
-            //Populate Suppliers on TableView
-            populateSuppliers(sprData);
-        } catch(SQLException e) {
-            System.out.println("Error occurred while getting suppliers information from DB " + e);
-            throw e;
-        }
-    }
-
-    @FXML
-    private void initialize() throws SQLException, ClassNotFoundException {
-
-        sprId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        sprName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        sprAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
-        sprPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-
-        searchSuppliers(getEvent);
+    void searchSuppliers(ActionEvent event) {
+        loadAllData();
     }
 
     //Populate Supplier
     @FXML
-    private void populateSupplier(Supplier spr) throws ClassNotFoundException {
+    private void populateSupplier(Supplier spr) {
 
         //Declare an ObservableList for TableView
         ObservableList<Supplier> sprData = FXCollections.observableArrayList();
@@ -269,8 +239,8 @@ public class SupplierController {
     }
 
     @FXML
-    private void populateAndShowSupplier(Supplier spr) throws ClassNotFoundException {
-        if(spr != null) {
+    private void populateAndShowSupplier(Supplier spr) {
+        if (spr != null) {
             populateSupplier(spr);
         } else {
             System.out.println("This supplier doesn't exist");
@@ -286,53 +256,62 @@ public class SupplierController {
     }
 
     @FXML
-    void deleteSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        if (txtID.getText().isEmpty()) {
-            DialogShowInfo("Fields cannot be empty");
-        } else if (!txtID.getText().matches("[0-9]+")) {
-            DialogShowInfo("ID can only contain numbers.");
-        } else {
-            try {
-                SupplierDAO.deleteSprWithId(txtID.getText());
-
-            } catch (SQLException e) {
-                System.out.println("Problem occurred while deleting supplier");
-            }
+    void deleteSupplier(ActionEvent event) {
+        try {
+            SupplierDAO.softDeleteSprWithId(returnID, txtID.getText());
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while deleting supplier");
         }
     }
 
     @FXML
-    void updateSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void updateSupplier(ActionEvent event) {
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
+        String id = txtID.getText().trim();
 
-        if (checkFields()) {
+        if (name.equals("") || address.equals("") || phone.equals("") || id.equals("")) {
             DialogShowInfo("Fields cannot be empty");
-        } else if (!txtID.getText().matches("[0-9]+")) {
-            DialogShowInfo("ID can only contain numbers.");
-        } else {
-            try {
-                SupplierDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), txtAlamat.getText(),
-                        txtTelp.getText());
+            return;
+        }
 
-            } catch (SQLException e) {
-                System.out.println("Problem occurred while updating supplier");
-            }
+        Pattern pattern = Pattern.compile("\\d+");
+        if (!pattern.matcher(phone).matches()) {
+            DialogShowInfo("Nomor telepon hanya boleh angka");
+            return;
+        }
+        try {
+            SupplierDAO.updateEntries(returnID, id, name, address,
+                    phone);
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while updating supplier");
         }
     }
 
     @FXML
-    void insertSupplier(ActionEvent event) throws SQLException, ClassNotFoundException{
+    void insertSupplier(ActionEvent event) throws ClassNotFoundException {
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
 
-        if (checkFieldsNoID()) {
-            DialogShowInfo("Fields cannot be empty");
-        } else {
-            try {
-                SupplierDAO.insertSpr(returnID, txtNama.getText(), txtAlamat.getText(),
-                        txtTelp.getText());
+        if (name.equals("") || address.equals("") || phone.equals("")) {
+            return;
+        }
 
-            } catch (SQLException e) {
-                System.out.println("Problem occurred while inserting supplier");
-            }
+        Pattern pattern = Pattern.compile("\\d+");
+        if (!pattern.matcher(phone).matches()) {
+            return;
+        }
+
+        try {
+            SupplierDAO.insertSpr(returnID, name, address,
+                    phone);
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while inserting supplier");
         }
     }
 
@@ -341,11 +320,42 @@ public class SupplierController {
 
     }
 
-    @FXML
-    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        sprId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        sprName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        sprAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
+        sprPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
 
-        if(me.getClickCount() > 1)
-        {
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        //Get all Supplier information
+        ObservableList<Supplier> sprData = null;
+        try {
+            sprData = SupplierDAO.searchSuppliers();
+            populateSuppliers(sprData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void clearFields() {
+        txtAlamat.clear();
+        txtCari.clear();
+        txtID.clear();
+        txtNama.clear();
+        txtTelp.clear();
+
+        loadAllData();
+    }
+
+    @FXML
+    private void selectedRow(MouseEvent me) {
+
+        if (me.getClickCount() > 1) {
             editWithSelectedRow();
         }
     }
@@ -353,7 +363,7 @@ public class SupplierController {
     private void editWithSelectedRow() {
 
 
-        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
             Supplier supplier = tableAll.getSelectionModel().getSelectedItem();
 
             txtID.setText(Integer.toString(supplier.getId()));
@@ -363,14 +373,6 @@ public class SupplierController {
         }
     }
 
-    @FXML
-    private void clearFields(ActionEvent ae) {
-        txtID.clear();
-        txtNama.clear();
-        txtTelp.clear();
-        txtAlamat.clear();
-    }
-
     private void DialogShowInfo(String text) {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.setX(550);
@@ -378,35 +380,5 @@ public class SupplierController {
         info.setHeaderText("");
         info.setContentText(text);
         info.showAndWait();
-    }
-
-    private boolean checkFields() {
-        int counter = 0;
-        boolean status = false;
-        String[] text = {txtID.getText(), txtNama.getText(), txtAlamat.getText(), txtTelp.getText()};
-
-        while (counter < text.length) {
-            if (text[counter].isEmpty()) {
-                status = true;
-            }
-            counter++;
-        }
-
-        return status;
-    }
-
-    private boolean checkFieldsNoID() {
-        int counter = 0;
-        boolean status = false;
-        String[] text = {txtNama.getText(), txtAlamat.getText(), txtTelp.getText()};
-
-        while (counter < text.length) {
-            if (text[counter].isEmpty()) {
-                status = true;
-            }
-            counter++;
-        }
-
-        return status;
     }
 }

@@ -15,10 +15,10 @@ import java.util.Objects;
 public class EmployeeDAO {
 
     //SELECT an Employee
-    public static Employee searchEmployee(String empName) throws SQLException, ClassNotFoundException {
+    public static ObservableList<Employee> searchEmployee(String empName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM Employees WHERE name = '" + empName + "';";
+        String selectStmt = "SELECT * FROM Employees WHERE name LIKE '%" + empName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -26,7 +26,7 @@ public class EmployeeDAO {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsEmp = DBUtil.dbExecuteQuery(selectStmt);
 
-            return getEmployeeFromResultSet(rsEmp);
+            return getEmployeeList(rsEmp);
         } catch (SQLException ex) {
             System.out.println("While searching an employee with Name : " + empName + ", an error occurred: " + ex);
             //Return Exception
@@ -35,10 +35,10 @@ public class EmployeeDAO {
     }
 
     //Search an existing Employee with Username
-    public static Employee searchUsername(String empUname) throws SQLException, ClassNotFoundException {
+    public static Employee searchUsername(String empUname) throws SQLException {
 
         //Declare a specific SELECT statement
-        String queryCheck = "SELECT id, name, role, password FROM employees WHERE username = '" + empUname + "';";
+        String queryCheck = "SELECT id, name, role, password FROM Employees WHERE username = '" + empUname + "';";
 
         //Execute SELECT the Statement
         try {
@@ -72,10 +72,10 @@ public class EmployeeDAO {
     }
 
     //SELECT Employees
-    public static ObservableList<Employee> searchEmployees() throws SQLException, ClassNotFoundException {
+    public static ObservableList<Employee> searchEmployees() throws SQLException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM Employees";
+        String selectStmt = "SELECT * FROM Employees WHERE deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -123,14 +123,14 @@ public class EmployeeDAO {
     //Update an employee's entries
     public static void updateEntries(String Logged, String Id, String name, String dateBirth, String address,
                                      String phoneNumber, String role, String username, String password)
-            throws SQLException, ClassNotFoundException {
+            throws SQLException {
         //Declare an UPDATE Statement
         String updateStmt;
         //Update statement will be checked if new password is entered
         System.out.println(password);
         if (!password.equals("No change")) {
             updateStmt =
-                    "UPDATE employees " +
+                    "UPDATE Employees " +
                             "SET name = '" + name + "' " +
                             ", address = '" + address + "' " +
                             ", dateBirth = '" + dateBirth + "' " +
@@ -140,10 +140,10 @@ public class EmployeeDAO {
                             ", updatedBy = '" + Logged + "' " +
                             ", username = '" + username + "' " +
                             ", password = '" + password + "' " +
-                            "WHERE id = '" + Id + "';";
+                            "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
         } else {
             updateStmt =
-                    "UPDATE employees " +
+                    "UPDATE Employees " +
                             "SET name = '" + name + "' " +
                             ", address = '" + address + "' " +
                             ", dateBirth = '" + dateBirth + "' " +
@@ -152,7 +152,7 @@ public class EmployeeDAO {
                             ", updatedAt = NOW()" +
                             ", updatedBy = '" + Logged + "' " +
                             ", username = '" + username + "' " +
-                            "WHERE id = '" + Id + "';";
+                            "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
         }
 
         try {
@@ -167,10 +167,10 @@ public class EmployeeDAO {
     //Update an employee's entries
     public static void updateSpecificEntries(String Logged, String Id, String name, String dateBirth, String address,
                                              String phoneNumber, String role, String username)
-            throws SQLException, ClassNotFoundException {
+            throws SQLException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE employees " +
+                "UPDATE Employees " +
                         "SET name = '" + name + "' " +
                         ", address = '" + address + "' " +
                         ", dateBirth = '" + dateBirth + "' " +
@@ -191,11 +191,11 @@ public class EmployeeDAO {
     }
 
     //DELETE an employee
-    public static void deleteEmpWithId(String Id) throws SQLException, ClassNotFoundException {
+    public static void deleteEmpWithId(String Id) throws SQLException {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM employees " +
+                "DELETE FROM Employees " +
                         "WHERE id = " + Id + ";";
 
         try {
@@ -208,18 +208,15 @@ public class EmployeeDAO {
     }
 
     //SOFT DELETE an employee
-    public static void softDeleteEmpWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+    public static void softDeleteEmpWithId(String Logged, String Id) throws SQLException {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE employees " +
-                        "SET name = NULL" +
-                        ", address = NULL" +
-                        ", dateBirth = NULL" +
-                        ", phoneNumber = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy " + Logged +
-                        "WHERE id = '" + Id + "';";
+                "UPDATE Employees " +
+                        "SET " +
+                        " deletedAt = NOW()" +
+                        ", deletedBy = " + Logged +
+                        " WHERE id = " + Id + " AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
@@ -233,11 +230,11 @@ public class EmployeeDAO {
     //INSERT an Employee
     public static void insertEmp(String Logged, String name, String dateBirth, String address,
                                  String phoneNumber, String role, String username, String password)
-            throws SQLException, ClassNotFoundException {
+            throws SQLException {
 
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO employees " +
+                "INSERT INTO Employees " +
                         "(name, address, dateBirth, phoneNumber, createdAt, role, createdBy, username, password)" +
                         "VALUES " +
                         "('" + name + "','" + address + "','" + dateBirth + "','" + phoneNumber +
@@ -254,7 +251,7 @@ public class EmployeeDAO {
     }
 
     public Employee login(String username, String password) {
-        String queryCheck = "SELECT id, name, role, password FROM Employees WHERE username = ?;";
+        String queryCheck = "SELECT id, name, role, password FROM Employees WHERE username = ? AND deletedAt IS NULL;";
         try (Connection connection = DBUtil.conDB()) {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(queryCheck);
             preparedStatement.setString(1, username);

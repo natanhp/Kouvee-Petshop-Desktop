@@ -1,12 +1,11 @@
 package main.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,20 +15,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 import main.dao.CustomerDAO;
 import main.model.Customer;
-import main.model.Employee;
 import main.util.FxDatePickerConverter;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.ResourceBundle;
 
-public class CustomerSecondaryController {
+public class CustomerSecondaryController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -63,12 +61,6 @@ public class CustomerSecondaryController {
     private TextField txtID;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<Customer> tableAll;
 
     @FXML
@@ -79,9 +71,6 @@ public class CustomerSecondaryController {
 
     @FXML
     private Button btnPelangganKeluar;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private TableColumn<Customer, String> cusAddress;
@@ -127,7 +116,7 @@ public class CustomerSecondaryController {
         getEvent = ae;
     }
 
-    public void handleButtonCustomer (MouseEvent me){
+    public void handleButtonCustomer(MouseEvent me) {
         if (me.getSource() == btnPelangganKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setX(550);
@@ -161,7 +150,7 @@ public class CustomerSecondaryController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -183,7 +172,7 @@ public class CustomerSecondaryController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -205,7 +194,7 @@ public class CustomerSecondaryController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -232,64 +221,23 @@ public class CustomerSecondaryController {
 
     //Show All Customers
     @FXML
-    private void searchCustomers (ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        try {
-            //Get all Customer information
-            ObservableList<Customer> cusData = CustomerDAO.searchCustomers();
-
-            //Populate Customers on TableView
-            populateCustomers(cusData);
-        } catch (SQLException e) {
-            System.out.println("Error occurred while getting customers information from DB " + e);
-            throw e;
-        }
+    private void searchCustomers(ActionEvent event) {
+        loadAllData();
     }
 
     //Search a Customer
     @FXML
-    private void searchCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
-
+    private void searchCustomer(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get Customer Information
-            Customer cus = CustomerDAO.searchCustomer(txtCari.getText());
 
-            //Populate Customer on TableView and Display on TextField
-            populateAndShowCustomer(cus);
+            populateCustomers(CustomerDAO.searchCustomer(txtCari.getText()));
 
         } catch (SQLException e) {
-            System.out.println("Error occurred while getting Customer information from DB" + e);
             e.printStackTrace();
+            System.out.println("Error occurred while getting Customer information from DB" + e);
             throw e;
         }
-    }
-
-    @FXML
-    private void initialize () throws SQLException, ClassNotFoundException {
-
-        cusId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        cusName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        cusDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
-        cusAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
-        cusPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-
-        pickerDateBirth.setEditable(true);
-        initializeDatePicker();
-
-        FxDatePickerConverter converter = new FxDatePickerConverter("dd-MM-yyyy");
-
-        pickerDateBirth.setConverter(converter);
-
-        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue){
-                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
-                }
-            }
-        });
-
-        searchCustomers(getEvent);
     }
 
     private void initializeDatePicker() {
@@ -303,13 +251,11 @@ public class CustomerSecondaryController {
 
                         // Show Weekends in red color
                         DayOfWeek day = DayOfWeek.from(item);
-                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)
-                        {
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
                             this.setTextFill(Color.RED);
                         }
                         //Can only select until current date
-                        if (item.isAfter(LocalDate.now()))
-                        {
+                        if (item.isAfter(LocalDate.now())) {
                             this.setDisable(true);
                         }
                     }
@@ -321,7 +267,7 @@ public class CustomerSecondaryController {
 
     //Populate Customers
     @FXML
-    private void populateCustomer (Customer cus) throws ClassNotFoundException {
+    private void populateCustomer(Customer cus) {
 
         //Declare an ObservableList for TableView
         ObservableList<Customer> cusData = FXCollections.observableArrayList();
@@ -332,7 +278,7 @@ public class CustomerSecondaryController {
     }
 
     @FXML
-    private void populateAndShowCustomer (Customer cus) throws ClassNotFoundException {
+    private void populateAndShowCustomer(Customer cus) throws ClassNotFoundException {
         if (cus != null) {
             populateCustomer(cus);
         } else {
@@ -342,14 +288,14 @@ public class CustomerSecondaryController {
     }
 
     @FXML
-    private void populateCustomers (ObservableList < Customer > cusData) throws ClassNotFoundException {
+    private void populateCustomers(ObservableList<Customer> cusData) throws ClassNotFoundException {
 
         //Set items to the tableAll
         tableAll.setItems(cusData);
     }
 
     @FXML
-    private void deleteCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void deleteCustomer(ActionEvent event) throws ClassNotFoundException {
 
         if (txtID.getText().isEmpty()) {
             DialogShowInfo("Fields cannot be empty");
@@ -357,8 +303,8 @@ public class CustomerSecondaryController {
             DialogShowInfo("ID can only contain numbers.");
         } else {
             try {
-                CustomerDAO.deleteCusWithId(txtID.getText());
-
+                CustomerDAO.softDeleteCusWithId(returnID, txtID.getText());
+                loadAllData();
             } catch (SQLException e) {
                 DialogShowInfo("Problem occurred while deleting customer. Check your database connection");
             }
@@ -366,33 +312,44 @@ public class CustomerSecondaryController {
     }
 
     @FXML
-    private void updateCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void updateCustomer(ActionEvent event) throws ClassNotFoundException {
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
+        String id = txtID.getText().trim();
 
-            if (checkFields()) {
-                DialogShowInfo("Fields cannot be empty");
-            } else if (!txtID.getText().matches("[0-9]+")) {
-                DialogShowInfo("ID can only contain numbers.");
-            } else {
-                try {
-                    CustomerDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                            txtTelp.getText());
-
-                } catch (SQLException e) {
-                    DialogShowInfo("Problem occurred while updating customer. Check your database connection.");
-                }
-            }
+        if (name.equals("") || address.equals("") || phone.equals("") || pickerDateBirth.getValue() == null ||
+                id.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
+            return;
         }
 
+        try {
+            CustomerDAO.updateEntries(returnID, id, name, pickerDateBirth.getValue().toString().trim(), address,
+                    phone);
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while updating customer");
+        }
+    }
+
     @FXML
-    private void insertCustomer (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void insertCustomer(ActionEvent event) throws ClassNotFoundException {
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
+
+        if (name.equals("") || address.equals("") || phone.equals("") || pickerDateBirth.getValue() == null) {
+            return;
+        }
 
         if (checkFieldsNoID()) {
             DialogShowInfo("Fields cannot be empty");
         } else {
             try {
-                CustomerDAO.insertCus(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                        txtTelp.getText());
-
+                CustomerDAO.insertCus(returnID, name, pickerDateBirth.getValue().toString().trim(), address,
+                        phone);
+                loadAllData();
             } catch (SQLException e) {
                 DialogShowInfo("Problem occurred while inserting customer. Check your database connection.");
             }
@@ -400,10 +357,9 @@ public class CustomerSecondaryController {
     }
 
     @FXML
-    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+    private void selectedRow(MouseEvent me) {
 
-        if(me.getClickCount() > 1)
-        {
+        if (me.getClickCount() > 1) {
             editWithSelectedRow();
         }
     }
@@ -411,7 +367,7 @@ public class CustomerSecondaryController {
     private void editWithSelectedRow() {
 
 
-        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
             Customer customer = tableAll.getSelectionModel().getSelectedItem();
             LocalDate lc = LocalDate.parse(customer.getDateBirth().toString());
 
@@ -430,6 +386,45 @@ public class CustomerSecondaryController {
         pickerDateBirth.setValue(null);
         txtTelp.clear();
         txtAlamat.clear();
+        txtCari.clear();
+
+        loadAllData();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        cusId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        cusName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        cusDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
+        cusAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
+        cusPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+
+        pickerDateBirth.setEditable(true);
+        initializeDatePicker();
+
+        FxDatePickerConverter converter = new FxDatePickerConverter("dd-MM-yyyy");
+
+        pickerDateBirth.setConverter(converter);
+
+        pickerDateBirth.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
+            }
+        });
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        //Get all Customer information
+        ObservableList<Customer> cusData = null;
+        try {
+            cusData = CustomerDAO.searchCustomers();
+            //Populate Customers on TableView
+            populateCustomers(cusData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private void DialogShowInfo(String text) {

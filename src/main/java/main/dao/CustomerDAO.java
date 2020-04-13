@@ -11,20 +11,18 @@ import java.sql.SQLException;
 public class CustomerDAO {
 
     //SELECT a Customer
-    public static Customer searchCustomer(String cusName) throws SQLException, ClassNotFoundException {
+    public static ObservableList<Customer> searchCustomer(String cusName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM customers WHERE name ='" + cusName + "';";
+        String selectStmt = "SELECT * FROM Customers WHERE name LIKE '%" + cusName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         //Execute SELECT Statement
         try {
-
+            ObservableList<Customer> customer = FXCollections.observableArrayList();
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsCus = DBUtil.dbExecuteQuery(selectStmt);
-
-            Customer customer = getCustomersFromResultSet(rsCus);
-
+            customer = getCustomerList(rsCus);
             return customer;
         } catch (SQLException ex) {
             System.out.println("While searching a customer with Id : " + cusName + ", an error occurred: " + ex);
@@ -36,7 +34,7 @@ public class CustomerDAO {
     private static Customer getCustomersFromResultSet(ResultSet rs) throws SQLException {
         Customer cus = null;
 
-        if(rs.next()) {
+        if (rs.next()) {
             cus = new Customer();
             cus.setId(rs.getInt("id"));
             cus.setName(rs.getString("name"));
@@ -49,10 +47,10 @@ public class CustomerDAO {
     }
 
     //SELECT Customers
-    public static ObservableList<Customer> searchCustomers() throws SQLException, ClassNotFoundException {
+    public static ObservableList<Customer> searchCustomers() throws SQLException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM customers";
+        String selectStmt = "SELECT * FROM Customers WHERE deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -60,25 +58,24 @@ public class CustomerDAO {
             ResultSet rsCuss = DBUtil.dbExecuteQuery(selectStmt);
 
             //Send ResultSet to the getCustomerList method and get customer object
-            ObservableList<Customer> cusList = getCustomerList(rsCuss);
 
             //Return Customer Object
-            return cusList;
+            return getCustomerList(rsCuss);
         } catch (SQLException ex) {
             System.out.println("SQL Select Operation has been failed: " + ex);
 
             //Return exception
-            throw ex ;
+            throw ex;
         }
     }
 
     //SELECT * FROM customers operation
-    public static ObservableList<Customer> getCustomerList(ResultSet rs) throws SQLException, ClassNotFoundException {
+    public static ObservableList<Customer> getCustomerList(ResultSet rs) throws SQLException {
 
         //Declare a observable List which comprises of Customer Objects
         ObservableList<Customer> cusList = FXCollections.observableArrayList();
 
-        while(rs.next()) {
+        while (rs.next()) {
             Customer cus = new Customer();
             cus = new Customer();
             cus.setId(rs.getInt("id"));
@@ -96,20 +93,19 @@ public class CustomerDAO {
     }
 
     //Update an customer's entries
-    public static void updateEntries (String Logged, String Id, String name, String dateBirth, String address,
-                                      String phoneNumber)
-            throws SQLException, ClassNotFoundException
-    {
+    public static void updateEntries(String Logged, String Id, String name, String dateBirth, String address,
+                                     String phoneNumber)
+            throws SQLException, ClassNotFoundException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE customers " +
+                "UPDATE Customers " +
                         "SET name = '" + name + "' " +
                         ", address = '" + address + "' " +
                         ", dateBirth = '" + dateBirth + "' " +
                         ", phoneNumber = '" + phoneNumber + "' " +
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                        "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -121,41 +117,38 @@ public class CustomerDAO {
     }
 
     //DELETE a customer
-    public static void deleteCusWithId(String Id) throws SQLException, ClassNotFoundException {
+    public static void deleteCusWithId(String Id) throws SQLException {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM customers " +
+                "DELETE FROM Customers " +
                         "WHERE id = " + Id + ";";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while DELETE Operation: " +ex);
+            System.out.println("Error occurred while DELETE Operation: " + ex);
             throw ex;
         }
     }
 
     //SOFT DELETE a customer
-    public static void softDeleteCusWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+    public static void softDeleteCusWithId(String Logged, String Id) throws SQLException {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE customers " +
-                        "SET name = NULL" +
-                        ", address = NULL" +
-                        ", dateBirth = NULL" +
-                        ", phoneNumber = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy " + Logged +
-                        "WHERE id = '" + Id + "';";
+                "UPDATE Customers " +
+                        "SET " +
+                        "deletedAt = NOW()" +
+                        ", deletedBy = " + Logged +
+                        " WHERE id = " + Id + " AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while SOFT_DELETE Operation: " +ex);
+            System.out.println("Error occurred while SOFT_DELETE Operation: " + ex);
             throw ex;
         }
     }
@@ -163,12 +156,11 @@ public class CustomerDAO {
     //INSERT a Customer
     public static void insertCus(String Logged, String name, String dateBirth, String address,
                                  String phoneNumber)
-            throws SQLException, ClassNotFoundException
-    {
+            throws SQLException, ClassNotFoundException {
 
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO customers " +
+                "INSERT INTO Customers " +
                         "(name, address, dateBirth, phoneNumber, createdAt, createdBy)" +
                         "VALUES " +
                         "('" + name + "','" + address + "','" + dateBirth + "','" + phoneNumber + "', NOW()," +

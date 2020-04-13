@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,11 +19,12 @@ import main.model.Employee;
 import main.model.PetType;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.time.LocalDate;
 
-public class PetTypeController {
-
+public class PetTypeController implements Initializable {
     private static String returnID;
     private static String returnRole;
     private static ActionEvent getEvent;
@@ -46,12 +48,6 @@ public class PetTypeController {
     private TextField txtID;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<PetType> tableAll;
 
     @FXML
@@ -59,9 +55,6 @@ public class PetTypeController {
 
     @FXML
     private TextField txtTipe;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private TableColumn<PetType, String> ptType;
@@ -102,7 +95,7 @@ public class PetTypeController {
     }
 
     @FXML
-    public void handleButtonPetType (MouseEvent me){
+    public void handleButtonPetType(MouseEvent me) {
         if (me.getSource() == btnTipeKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setX(550);
@@ -135,7 +128,7 @@ public class PetTypeController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -154,7 +147,7 @@ public class PetTypeController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -173,7 +166,7 @@ public class PetTypeController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -196,29 +189,16 @@ public class PetTypeController {
 
     //Show All PetTypes
     @FXML
-    private void searchPetTypes (ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        try {
-            //Get all PetType information
-            ObservableList<PetType> ptData = PetTypeDAO.searchPetTypes();
-
-            //Populate PetTypes on TableView
-            populatePetTypes(ptData);
-        } catch (SQLException e) {
-            System.out.println("Error occurred while getting pettype information from DB " + e);
-            throw e;
-        }
+    private void searchPetTypes(ActionEvent event) {
+        loadAllData();
     }
 
     //Search a PetType
     @FXML
-    private void searchPetType (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void searchPetType(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get PetType Information
-            PetType pt = PetTypeDAO.searchPetType(txtCari.getText());
-
-            //Populate PetType on TableView and Display on TextField
-            populateAndShowPetType(pt);
+            populatePetTypes(PetTypeDAO.searchPetType(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -228,17 +208,9 @@ public class PetTypeController {
         }
     }
 
-    @FXML
-    private void initialize () throws SQLException, ClassNotFoundException {
-
-        ptId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        ptType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
-        searchPetTypes(getEvent);
-    }
-
     //Populate PetTypes
     @FXML
-    private void populatePetType (PetType pt) throws ClassNotFoundException {
+    private void populatePetType(PetType pt) throws ClassNotFoundException {
 
         //Declare an ObservableList for TableView
         ObservableList<PetType> ptData = FXCollections.observableArrayList();
@@ -249,7 +221,7 @@ public class PetTypeController {
     }
 
     @FXML
-    private void populateAndShowPetType (PetType pt) throws ClassNotFoundException {
+    private void populateAndShowPetType(PetType pt) throws ClassNotFoundException {
         if (pt != null) {
             populatePetType(pt);
         } else {
@@ -259,83 +231,100 @@ public class PetTypeController {
     }
 
     @FXML
-    private void populatePetTypes (ObservableList < PetType > ptData) throws ClassNotFoundException {
+    private void populatePetTypes(ObservableList<PetType> ptData) throws ClassNotFoundException {
 
         //Set items to the tableAll
         tableAll.setItems(ptData);
     }
 
     @FXML
-    private void deletePetType (ActionEvent event) throws SQLException, ClassNotFoundException {
-        if (txtID.getText().isEmpty()) {
-            DialogShowInfo("Fields cannot be empty");
-        } else if (!txtID.getText().matches("[0-9]+")) {
-            DialogShowInfo("ID can only contain numbers.");
-        } else {
-            try {
-                PetTypeDAO.deletePtWithId(txtID.getText());
-
-            } catch (SQLException e) {
-                DialogShowInfo("Problem occurred while deleting pettype. Check your database connection.");
-            }
+    private void deletePetType(ActionEvent event) throws SQLException, ClassNotFoundException {
+        try {
+            PetTypeDAO.softDeletePtWithId(returnID, txtID.getText());
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while deleting pettype");
         }
     }
 
     @FXML
-    private void updatePetType (ActionEvent event) throws SQLException, ClassNotFoundException {
-        if (txtID.getText().isEmpty() || txtTipe.getText().isEmpty()) {
-            DialogShowInfo("Fields cannot be empty");
-        } else if (!txtID.getText().matches("[0-9]+")) {
-            DialogShowInfo("ID can only contain numbers.");
-        } else {
-            try {
-                PetTypeDAO.updateEntries(returnID, txtID.getText(), txtTipe.getText());
+    private void updatePetType(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String petType = txtTipe.getText().trim();
+        String id = txtID.getText().trim();
 
-            } catch (SQLException e) {
-                DialogShowInfo("Problem occurred while updating pet type. Check your database connection");
-            }
+        if (petType.equals("") || id.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
+            return;
+        }
+
+        try {
+            PetTypeDAO.updateEntries(returnID, id, petType);
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while updating pettype");
         }
     }
 
     @FXML
-    private void insertPetType (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void insertPetType(ActionEvent event) {
+        String petType = txtTipe.getText().trim();
 
-        if (txtID.getText().isEmpty()) {
-            DialogShowInfo("Fields cannot be empty");
+        if (petType.equals("")) {
+            return;
         }
-        else {
-            try {
-                PetTypeDAO.insertPt(returnID, txtTipe.getText());
 
-            } catch (SQLException e) {
-                DialogShowInfo("Problem occurred while inserting pet type. Check your database connection");
-            }
+        try {
+            PetTypeDAO.insertPt(returnID, petType);
+
+            loadAllData();
+
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while inserting pettype");
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ptId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        ptType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        ObservableList<PetType> ptData = null;
+        try {
+            ptData = PetTypeDAO.searchPetTypes();
+            populatePetTypes(ptData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
         }
     }
 
     @FXML
-    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+    public void clearFields() {
+        txtCari.clear();
+        txtID.clear();
+        txtTipe.clear();
 
-        if(me.getClickCount() > 1)
-        {
+        loadAllData();
+    }
+
+    @FXML
+    private void selectedRow(MouseEvent me) {
+
+        if (me.getClickCount() > 1) {
             editWithSelectedRow();
         }
     }
 
     private void editWithSelectedRow() {
-
-        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
             PetType petType = tableAll.getSelectionModel().getSelectedItem();
 
             txtID.setText(Integer.toString(petType.getId()));
             txtTipe.setText(petType.getType());
         }
-    }
-
-    @FXML
-    private void clearFields(ActionEvent ae) {
-        txtID.clear();
-        txtTipe.clear();
     }
 
     private void DialogShowInfo(String text) {

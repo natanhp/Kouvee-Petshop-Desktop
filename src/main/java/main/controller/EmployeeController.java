@@ -1,13 +1,12 @@
 package main.controller;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,19 +20,18 @@ import main.dao.EmployeeDAO;
 import main.model.Employee;
 import main.util.BCryptHash;
 import main.util.FxDatePickerConverter;
+
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-
-public class EmployeeController {
+public class EmployeeController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -49,16 +47,12 @@ public class EmployeeController {
     private DatePicker pickerDateBirth;
     @FXML
     private TextField txtID;
-    @FXML
-    private Button btnCari;
-    @FXML
-    private Button btnBersih;
+
     @FXML
     private TableView<Employee> tableAll;
     @FXML
     private TableColumn<Employee, String> empName;
-    @FXML
-    private Button btnLihat;
+
     @FXML
     private TableColumn<Employee, Date> empDateBirth;
     @FXML
@@ -73,8 +67,7 @@ public class EmployeeController {
     private Button btnTambah;
     @FXML
     private TextField txtPawd;
-    @FXML
-    private ImageView imgLogo;
+
     @FXML
     private Button btnPegawaiKeluar;
     @FXML
@@ -124,12 +117,13 @@ public class EmployeeController {
 
         returnRole = loginRole;
     }
+
     public static void getEvent(ActionEvent ae) {
         getEvent = ae;
     }
 
     public void handleButtonEmployee(MouseEvent me) {
-        if(me.getSource() == btnPegawaiKeluar) {
+        if (me.getSource() == btnPegawaiKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setX(550);
             alert.setY(300);
@@ -143,8 +137,7 @@ public class EmployeeController {
             });
         }
 
-        if(me.getSource() == btnMenuUtama)
-        {
+        if (me.getSource() == btnMenuUtama) {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -162,7 +155,7 @@ public class EmployeeController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -187,7 +180,7 @@ public class EmployeeController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -212,7 +205,7 @@ public class EmployeeController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -245,12 +238,9 @@ public class EmployeeController {
 
         try {
             //Get Employee Information
-            Employee emp = EmployeeDAO.searchEmployee(txtCari.getText());
+            populateEmployees(EmployeeDAO.searchEmployee(txtCari.getText()));
 
-            //Populate Employee on TableView and Display on TextField
-            populateAndShowEmployee(emp);
-
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Employee information from DB" + e);
             DialogShowInfo("Error occurred while getting employee information. Check your database connection");
@@ -259,49 +249,8 @@ public class EmployeeController {
     }
 
     @FXML
-    private void searchEmployees(ActionEvent ae) throws ClassNotFoundException, SQLException {
-
-        try {
-            //Get all Employee information
-            ObservableList<Employee> empData = EmployeeDAO.searchEmployees();
-
-            //Populate Employees on TableView
-            populateEmployees(empData);
-        } catch(SQLException e) {
-            System.out.println("Error occurred while getting employees information from DB " + e);
-            throw e;
-        }
-    }
-
-    @FXML
-    private void initialize() throws SQLException, ClassNotFoundException {
-
-        empId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        empName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        empDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
-        empAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
-        empPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-        empRole.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
-        empUname.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
-
-        pickerDateBirth.setEditable(true);
-        initializeDatePicker();
-
-        FxDatePickerConverter converter = new FxDatePickerConverter();
-
-        pickerDateBirth.setConverter(converter);
-
-        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue){
-                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
-                }
-            }
-        });
-
-        searchEmployees(getEvent);
-
+    private void searchEmployees(ActionEvent ae) {
+        loadAllData();
     }
 
     private void initializeDatePicker() {
@@ -315,13 +264,11 @@ public class EmployeeController {
 
                         // Show Weekends in red color
                         DayOfWeek day = DayOfWeek.from(item);
-                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY)
-                        {
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
                             this.setTextFill(Color.RED);
                         }
                         //Can only select until current date
-                        if (item.isAfter(LocalDate.now()))
-                        {
+                        if (item.isAfter(LocalDate.now())) {
                             this.setDisable(true);
                         }
                     }
@@ -333,7 +280,7 @@ public class EmployeeController {
 
     //Populate Employee
     @FXML
-    private void populateEmployee(Employee emp) throws ClassNotFoundException {
+    private void populateEmployee(Employee emp) {
 
         //Declare an ObservableList for TableView
         ObservableList<Employee> empData = FXCollections.observableArrayList();
@@ -344,8 +291,8 @@ public class EmployeeController {
     }
 
     @FXML
-    private void populateAndShowEmployee(Employee emp) throws ClassNotFoundException {
-        if(emp != null) {
+    private void populateAndShowEmployee(Employee emp) {
+        if (emp != null) {
             populateEmployee(emp);
         } else {
             System.out.println("This employee doesn't exist");
@@ -361,91 +308,114 @@ public class EmployeeController {
     }
 
     @FXML
-    private void updateEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+    private void updateEmployee(ActionEvent ae) {
 
-        String generatedSecuredPasswordHash;
-        String passField = txtPawd.getText();
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
+        String role = txtRole.getText().trim();
+        String userName = txtUname.getText().trim();
+        String password = txtPawd.getText().trim();
+        String id = txtID.getText().trim();
 
-        if (checkFields()) {
+        if (name.equals("") || pickerDateBirth.getValue() == null || address.equals("") || phone.equals("") ||
+                userName.equals("") || password.equals("") || id.equals("")) {
             DialogShowInfo("Fields cannot be empty");
-        } else if (!txtID.getText().matches("[0-9]+")) {
-            DialogShowInfo("ID can only contain numbers.");
-        } else {
-            if (passField.equalsIgnoreCase("No change")) {
-                try {
-                    EmployeeDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                            txtTelp.getText(), txtRole.getText(), txtUname.getText(), txtPawd.getText());
-
-                } catch (SQLException e) {
-                    System.out.println("Problem occurred while updating employee");
-                }
-            } else {
-//            Example Hashing the password
-//            String password = "1234";
-//            String bcryptHashString = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, password.toCharArray());
-//            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
-//            System.out.println("Example result : " + result);
-                // result.verified == true
-
-//            Using 2A Version
-//            generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
-
-//          Using 2Y Version
-                generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, passField.toCharArray());
-                BCrypt.Result result1 = BCrypt.verifyer().verify(passField.toCharArray(), generatedSecuredPasswordHash);
-
-                try {
-                    EmployeeDAO.updateEntries(returnID, txtID.getText(), txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                            txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
-
-                } catch (SQLException e) {
-                    DialogShowInfo("Problem occurred while updating employee");
-                }
-            }
+            return;
         }
-    }
 
-    @FXML
-    private void insertEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
+        Pattern pattern = Pattern.compile("\\d+");
+        if (!pattern.matcher(phone).matches()) {
+            DialogShowInfo("ID can only contain numbers.");
+            return;
+        }
+
+        if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir")) {
+            DialogShowInfo("Hanya boleh Owner, CS, atau Kasir");
+            return;
+        }
 
         String generatedSecuredPasswordHash;
 
-        generatedSecuredPasswordHash = BCryptHash.hashpw(txtPawd.getText(), BCryptHash.gensalt(10));
-
-        if (checkFieldsNoID()) {
-            DialogShowInfo("Fields cannot be empty");
-        } else {
+        if (password.equalsIgnoreCase("No change")) {
             try {
-                EmployeeDAO.insertEmp(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                        txtTelp.getText(), txtRole.getText(), txtUname.getText(), generatedSecuredPasswordHash);
+                EmployeeDAO.updateEntries(returnID, id, name, pickerDateBirth.getValue().toString().trim(), address,
+                        phone, role, userName, password);
 
             } catch (SQLException e) {
-                System.out.println("Problem occurred while inserting employee");
+                System.out.println("Problem occurred while updating employee");
             }
+        } else {
+            generatedSecuredPasswordHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashToString(10, password.toCharArray());
+            BCrypt.Result result1 = BCrypt.verifyer().verify(password.toCharArray(), generatedSecuredPasswordHash);
+
+            try {
+                EmployeeDAO.updateEntries(returnID, id, name, pickerDateBirth.getValue().toString().trim(), address,
+                        phone, role, userName, generatedSecuredPasswordHash);
+
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while updating employee");
+            }
+        }
+
+        loadAllData();
+    }
+
+    @FXML
+    private void insertEmployee(ActionEvent ae) {
+
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().toString().trim();
+        String phone = txtTelp.getText().toString().trim();
+        String role = txtRole.getText().toString().trim();
+        String userName = txtUname.getText().toString().trim();
+        String password = txtPawd.getText().toString().trim();
+
+        if (name.equals("") || pickerDateBirth.getValue() == null || address.equals("") || phone.equals("") ||
+                userName.equals("") || password.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
+            return;
+        }
+
+        Pattern pattern = Pattern.compile("\\d+");
+        if (!pattern.matcher(phone).matches()) {
+            DialogShowInfo("Fields cannot be empty");
+            return;
+        }
+
+        if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir")) {
+            DialogShowInfo("Fields cannot be empty");
+            return;
+        }
+
+        String generatedSecuredPasswordHash;
+
+        generatedSecuredPasswordHash = BCryptHash.hashpw(password, BCryptHash.gensalt(10));
+        try {
+            EmployeeDAO.insertEmp(returnID, name, pickerDateBirth.getValue().toString().trim(), address,
+                    phone, role, userName, generatedSecuredPasswordHash);
+
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while inserting employee");
         }
     }
 
     @FXML
-    private void deleteEmployee (ActionEvent ae) throws ClassNotFoundException, SQLException {
-        if (txtID.getText().isEmpty()) {
-            DialogShowInfo("Fields cannot be empty");
-        } else if (!txtID.getText().matches("[0-9]+")) {
-            DialogShowInfo("ID can only contain numbers.");
-        } else {
-            try {
-                EmployeeDAO.deleteEmpWithId(txtID.getText());
+    private void deleteEmployee(ActionEvent ae) {
+        try {
+            EmployeeDAO.softDeleteEmpWithId(returnID, txtID.getText());
 
-            } catch (SQLException e) {
-                DialogShowInfo("Problem occurred while deleting employee. Check database connection.");
-            }
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while deleting employee");
         }
     }
 
     @FXML
-    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+    private void selectedRow(MouseEvent me) {
 
-        if(me.getClickCount() > 1)
-        {
+        if (me.getClickCount() > 1) {
             editWithSelectedRow();
         }
     }
@@ -453,7 +423,7 @@ public class EmployeeController {
     private void editWithSelectedRow() {
 
 
-        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
             Employee employee = tableAll.getSelectionModel().getSelectedItem();
             LocalDate lc = LocalDate.parse(employee.getDateBirth().toString());
 
@@ -478,6 +448,9 @@ public class EmployeeController {
         txtRole.clear();
         txtUname.clear();
         txtPawd.clear();
+        txtCari.clear();
+
+        loadAllData();
     }
 
     private void DialogShowInfo(String text) {
@@ -493,7 +466,7 @@ public class EmployeeController {
         int counter = 0;
         boolean status = false;
         String[] text = {txtID.getText(), txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString(),
-        txtUname.getText(), txtPawd.getText(), txtRole.getText()};
+                txtUname.getText(), txtPawd.getText(), txtRole.getText()};
 
         while (counter < text.length) {
             if (text[counter].isEmpty()) {
@@ -521,4 +494,40 @@ public class EmployeeController {
         return status;
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        empId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        empName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        empDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
+        empAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
+        empPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+        empRole.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
+        empUname.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
+
+        pickerDateBirth.setEditable(true);
+        initializeDatePicker();
+
+        FxDatePickerConverter converter = new FxDatePickerConverter();
+
+        pickerDateBirth.setConverter(converter);
+
+        pickerDateBirth.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
+            }
+        });
+
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        //Get all Employee information
+        ObservableList<Employee> empData = null;
+        try {
+            empData = EmployeeDAO.searchEmployees();
+            populateEmployees(empData);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

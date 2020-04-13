@@ -69,6 +69,9 @@ public class MainMenuController implements Initializable {
     @FXML
     private Button btnMainKeluar;
 
+    @FXML
+    private Button btnServiceDetail;
+
     public static void getUnameLogin(String uname) {
         returnName = uname;
     }
@@ -146,6 +149,21 @@ public class MainMenuController implements Initializable {
 
                 stage.setScene(scene);
                 stage.show();
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+        if (me.getSource() == btnServiceDetail) {
+            Node node = (Node) me.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceDetailView.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }

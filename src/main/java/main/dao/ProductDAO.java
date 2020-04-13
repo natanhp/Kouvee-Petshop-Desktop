@@ -2,26 +2,18 @@ package main.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.controller.ProductController;
-import main.model.Customer;
-import main.model.Pet;
 import main.model.Product;
-import main.model.ProductImage;
 import main.util.DBUtil;
-import sun.rmi.runtime.Log;
 
-import javax.sql.rowset.serial.SerialBlob;
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 public class ProductDAO {
     //SELECT a Product
-    public static Product searchProduct(String prName) throws SQLException, ClassNotFoundException {
+    public static ObservableList<Product> searchProduct(String prName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM products WHERE productName ='" + prName + "';";
+        String selectStmt = "SELECT * FROM Products WHERE productName LIKE '%" + prName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -29,9 +21,7 @@ public class ProductDAO {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsPr = DBUtil.dbExecuteQuery(selectStmt);
 
-            Product product = getProductsFromResultSet(rsPr);
-
-            return product;
+            return getProductList(rsPr);
         } catch (SQLException ex) {
             System.out.println("While searching a product with Id : " + prName + ", an error occurred: " + ex);
             //Return Exception
@@ -42,8 +32,7 @@ public class ProductDAO {
     private static Product getProductsFromResultSet(ResultSet rs) throws SQLException {
 
         Product pr = null;
-        ProductImage pi = null;
-        if(rs.next()) {
+        if (rs.next()) {
             pr = new Product(null, null);
             pr.setId(rs.getInt("id"));
             pr.setProductName(rs.getString("productName"));
@@ -62,7 +51,7 @@ public class ProductDAO {
     public static ObservableList<Product> searchProducts() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM products";
+        String selectStmt = "SELECT * FROM Products WHERE deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -70,25 +59,24 @@ public class ProductDAO {
             ResultSet rsPrs = DBUtil.dbExecuteQuery(selectStmt);
 
             //Send ResultSet to the getProductList method and get product object
-            ObservableList<Product> prList = getProductList(rsPrs);
 
             //Return Product Object
-            return prList;
+            return getProductList(rsPrs);
         } catch (SQLException ex) {
             System.out.println("SQL Select Operation has been failed: " + ex);
 
             //Return exception
-            throw ex ;
+            throw ex;
         }
     }
 
     //SELECT * FROM products operation
-    public static ObservableList<Product> getProductList(ResultSet rs) throws SQLException, ClassNotFoundException {
+    public static ObservableList<Product> getProductList(ResultSet rs) throws SQLException {
 
         //Declare a observable List which comprises of Customer Objects
         ObservableList<Product> prList = FXCollections.observableArrayList();
 
-        while(rs.next()) {
+        while (rs.next()) {
             Product pr;
             pr = new Product(null, null);
             pr.setId(rs.getInt("id"));
@@ -108,13 +96,12 @@ public class ProductDAO {
     }
 
     //Update an products's entries
-    public static void updateEntries (String Logged, String Id, String name, String meas, String prQty,
-                                      String price, String minQty, String image)
-            throws SQLException, ClassNotFoundException
-    {
+    public static void updateEntries(String Logged, String Id, String name, String meas, String prQty,
+                                     String price, String minQty, String image)
+            throws SQLException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE products " +
+                "UPDATE Products " +
                         "SET productName = '" + name + "' " +
                         ", productQuantity = '" + prQty + "' " +
                         ", meassurement = '" + meas + "' " +
@@ -123,7 +110,7 @@ public class ProductDAO {
                         ", image = ?" +
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                        "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbSpecialExecuteUpdate(updateStmt, image);
@@ -134,44 +121,57 @@ public class ProductDAO {
         }
     }
 
+    public static void updateEntriesNoImage(String Logged, String Id, String name, String meas, String prQty,
+                                            String price, String minQty)
+            throws SQLException {
+        //Declare an UPDATE Statement
+        String updateStmt =
+                "UPDATE Products " +
+                        "SET productName = '" + name + "' " +
+                        ", productQuantity = '" + prQty + "' " +
+                        ", meassurement = '" + meas + "' " +
+                        ", productPrice = '" + price + "' " +
+                        ", minimumQty = '" + minQty + "' " +
+                        ", updatedAt = NOW()" +
+                        ", updatedBy = '" + Logged + "' " +
+                        "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
+
+        DBUtil.dbExecuteUpdate(updateStmt);
+    }
+
     //DELETE a product
-    public static void deletePrWithId(String Id) throws SQLException, ClassNotFoundException {
+    public static void deletePrWithId(String Id) throws SQLException {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM products " +
+                "DELETE FROM Products " +
                         "WHERE id = " + Id + ";";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while DELETE Operation: " +ex);
+            System.out.println("Error occurred while DELETE Operation: " + ex);
             throw ex;
         }
     }
 
     //SOFT DELETE a product
-    public static void softDeletePrWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+    public static void softDeletePrWithId(String Logged, String Id) throws SQLException {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE products " +
-                        "SET productName = NULL" +
-                        ", productQuantity = NULL" +
-                        ", meassurement = NULL" +
-                        ", productPrice = NULL" +
-                        ", minimumQty = NULL" +
-                        ", image = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy " + Logged +
-                        "WHERE id = '" + Id + "';";
+                "UPDATE Products " +
+                        "SET " +
+                        "deletedAt = NOW()" +
+                        ", deletedBy = " + Logged +
+                        " WHERE id = '" + Id + "' AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while SOFT_DELETE Operation: " +ex);
+            System.out.println("Error occurred while SOFT_DELETE Operation: " + ex);
             throw ex;
         }
     }
@@ -179,15 +179,14 @@ public class ProductDAO {
     //INSERT a Customer
     public static void insertPr(String Logged, String name, String prQty, String meas,
                                 String price, String minQty, String image)
-            throws SQLException, ClassNotFoundException
-    {
+            throws SQLException {
 
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO products " +
+                "INSERT INTO Products " +
                         "(image, productName, productQuantity, meassurement, productPrice, minimumQty, createdAt, createdBy)" +
                         "VALUES " +
-                    "(?,'" +
+                        "(?,'" +
                         name + "','" + prQty + "','" + meas +
                         "','" + price + "','" + minQty + "'," + "NOW()" + ",'" + Logged + "');";
 

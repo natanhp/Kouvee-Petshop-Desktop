@@ -16,54 +16,40 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
-import main.dao.CustomerDAO;
-import main.dao.PetDAO;
 import main.dao.PetSizeDAO;
 import main.dao.PetTypeDAO;
-import main.model.Customer;
-import main.model.Pet;
+import main.dao.ServiceDAO;
+import main.dao.ServiceDetailDAO;
 import main.model.PetSize;
 import main.model.PetType;
+import main.model.Service;
+import main.model.ServiceDetail;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-public class PetSecondaryController implements Initializable {
+public class ServiceDetailController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
-    private static ActionEvent getEvent;
 
     @FXML
-    private TableColumn<Pet, Integer> petId;
+    private TableColumn<ServiceDetail, Integer> serviceId;
 
     @FXML
     private Button btnHapus;
 
     @FXML
-    private DatePicker pickerDateBirth;
-
-    @FXML
     private ComboBox<PetType> comboTipe;
 
     @FXML
-    private TableColumn<Pet, String> petType;
+    private TextField txtPrice;
 
     @FXML
-    private TextField txtNama;
-
-    @FXML
-    private TableColumn<Pet, String> petOwner;
-
-    @FXML
-    private TableColumn<Pet, Date> petDateBirth;
+    private TableColumn<ServiceDetail, Double> petDateBirth;
 
     @FXML
     private Button btnPerbarui;
@@ -78,7 +64,7 @@ public class PetSecondaryController implements Initializable {
     private Button btnMenuUtama;
 
     @FXML
-    private TableColumn<Pet, String> petName;
+    private TableColumn<ServiceDetail, String> petName;
 
     @FXML
     private TextField txtID;
@@ -90,19 +76,16 @@ public class PetSecondaryController implements Initializable {
     private Button btnBersih;
 
     @FXML
-    private ComboBox<Customer> comboCustomer;
+    private ComboBox<Service> comboService;
 
     @FXML
-    private TableView<Pet> tableAll;
+    private TableView<ServiceDetail> tableAll;
 
     @FXML
     private ComboBox<PetSize> comboUkuran;
 
     @FXML
     private Button btnLihat;
-
-    @FXML
-    private TableColumn<Pet, String> petSize;
 
     @FXML
     private TextField txtCari;
@@ -125,6 +108,9 @@ public class PetSecondaryController implements Initializable {
     @FXML
     private ImageView editLogo;
 
+    private ObservableList<ServiceDetail> serviceDetails = null;
+
+
     public static void getUserLogin(String loginID) {
 
         returnID = loginID;
@@ -135,16 +121,10 @@ public class PetSecondaryController implements Initializable {
         returnRole = loginRole;
     }
 
-    public static void getEvent(ActionEvent ae) {
-        getEvent = ae;
-    }
-
     @FXML
     void handleButtonPet(MouseEvent me) {
         if (me.getSource() == btnHewanKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setX(550);
-            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -161,7 +141,7 @@ public class PetSecondaryController implements Initializable {
             stage.close();
 
             try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenuSecondary.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenu.fxml")));
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
@@ -178,9 +158,8 @@ public class PetSecondaryController implements Initializable {
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
             txtID.setDisable(true);
-            txtNama.setDisable(false);
-            pickerDateBirth.setDisable(false);
-            comboCustomer.setDisable(false);
+            txtPrice.setDisable(false);
+            comboService.setDisable(false);
             comboUkuran.setDisable(false);
             comboTipe.setDisable(false);
 
@@ -201,9 +180,8 @@ public class PetSecondaryController implements Initializable {
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
             txtID.setDisable(false);
-            txtNama.setDisable(false);
-            pickerDateBirth.setDisable(false);
-            comboCustomer.setDisable(false);
+            txtPrice.setDisable(false);
+            comboService.setDisable(false);
             comboUkuran.setDisable(false);
             comboTipe.setDisable(false);
 
@@ -224,9 +202,8 @@ public class PetSecondaryController implements Initializable {
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
             txtID.setDisable(false);
-            txtNama.setDisable(true);
-            pickerDateBirth.setDisable(true);
-            comboCustomer.setDisable(true);
+            txtPrice.setDisable(true);
+            comboService.setDisable(true);
             comboUkuran.setDisable(true);
             comboTipe.setDisable(true);
 
@@ -244,45 +221,46 @@ public class PetSecondaryController implements Initializable {
     }
 
 
-    //Search a Pet
     @FXML
-    void searchPet(ActionEvent event) throws SQLException, ClassNotFoundException {
-        try {
-            //Get PetType Information
+    void searchServiceDetail(ActionEvent event) {
+        if (serviceDetails != null) {
+            ObservableList<ServiceDetail> serviceDetailsBak = FXCollections.observableArrayList();
+            for (ServiceDetail serviceDetail : serviceDetails) {
+                String serviceDetailName = serviceDetail.getCompleteName().toLowerCase();
+                if (serviceDetailName.contains(txtCari.getText().toLowerCase())) {
+                    serviceDetailsBak.add(serviceDetail);
+                }
+            }
 
-            //Populate PetType on TableView and Display on TextField
-            populatePets(PetDAO.searchPet(txtCari.getText()));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error occurred while getting Pet information from DB" + e);
-            DialogShowInfo("No pet found with name " + txtCari.getText());
-            throw e;
+            try {
+                populatePets(serviceDetailsBak);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
-    //Search all Pets
     @FXML
     void searchPets(ActionEvent event) {
         loadAllData();
     }
 
     @FXML
-    private void populateAndShowPet(Pet p) throws ClassNotFoundException {
+    private void populateAndShowPet(ServiceDetail p) {
         if (p != null) {
             populatePet(p);
         } else {
             System.out.println("This pet doesn't exist");
-            DialogShowInfo("No Pet found with name " + txtCari.getText());
         }
     }
 
     //Populate Pets
     @FXML
-    private void populatePet(Pet p) {
+    private void populatePet(ServiceDetail p) {
 
         //Declare an ObservableList for TableView
-        ObservableList<Pet> pData = FXCollections.observableArrayList();
+        ObservableList<ServiceDetail> pData = FXCollections.observableArrayList();
         //Add pet to the ObservableList
         pData.add(p);
         //Set items to the tableAll
@@ -291,42 +269,16 @@ public class PetSecondaryController implements Initializable {
 
 
     @FXML
-    private void populatePets(ObservableList<Pet> pData) throws ClassNotFoundException {
+    private void populatePets(ObservableList<ServiceDetail> pData) throws ClassNotFoundException {
 
         //Set items to the tableAll
         tableAll.setItems(pData);
     }
 
-    private void initializeDatePicker() {
-        //Create a day cell factory
-        Callback<DatePicker, DateCell> dayCellFactory =
-                (final DatePicker datePicker) -> new DateCell() {
-                    @Override
-                    public void updateItem(LocalDate item, boolean empty) {
-                        //Must call super
-                        super.updateItem(item, empty);
-
-                        // Show Weekends in red color
-                        DayOfWeek day = DayOfWeek.from(item);
-                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
-                            this.setTextFill(Color.RED);
-                        }
-                        //Can only select until current date
-                        if (item.isAfter(LocalDate.now())) {
-                            this.setDisable(true);
-                        }
-                    }
-                };
-
-        //Disable invalid date of births
-        pickerDateBirth.setDayCellFactory(dayCellFactory);
-    }
-
-
     @FXML
-    void deletePet(ActionEvent event) throws ClassNotFoundException {
+    void deleteServiceDetail(ActionEvent event) throws ClassNotFoundException {
         try {
-            PetDAO.softDeletePetWithId(returnID, txtID.getText());
+            ServiceDetailDAO.softDeletePetWithId(txtID.getText());
             loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting pet");
@@ -334,20 +286,36 @@ public class PetSecondaryController implements Initializable {
     }
 
     @FXML
-    void updatePet(ActionEvent event) throws ClassNotFoundException {
-        String petName = txtNama.getText().trim();
-        if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
-                comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
-            DialogShowInfo("Fields cannot be empty");
+    void updateServiceDetail(ActionEvent event) throws ClassNotFoundException {
+        String textPrice = txtPrice.getText().trim();
+        String textId = txtID.getText().trim();
+        if (comboService.getValue() == null ||
+                comboTipe.getValue() == null || comboUkuran.getValue() == null || textPrice.equals("") ||
+                textId.equals("")) {
+            return;
+        }
+
+        double price = Double.parseDouble(txtPrice.getText().trim());
+        int id = Integer.parseInt(textId);
+
+        if (price <= 0) {
             return;
         }
 
         try {
-            String tipe = Integer.toString(comboTipe.getValue().getId());
-            String ukr = Integer.toString(comboUkuran.getValue().getId());
-            String customerId = Integer.toString(comboCustomer.getValue().getId());
+            int tipe = comboTipe.getValue().getId();
+            int ukr = comboUkuran.getValue().getId();
+            int serviceId = comboService.getValue().getId();
+            ;
 
-            PetDAO.updateEntries(returnID, txtID.getText(), petName, pickerDateBirth.getValue().toString(), customerId, tipe, ukr);
+            ServiceDetail serviceDetail = new ServiceDetail();
+            serviceDetail.setId(id);
+            serviceDetail.setPetSizeId(ukr);
+            serviceDetail.setPetTypeId(tipe);
+            serviceDetail.setServiceId(serviceId);
+            serviceDetail.setPrice(price);
+
+            ServiceDetailDAO.updateServiceDetail(returnID, serviceDetail);
             loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating pet");
@@ -355,21 +323,31 @@ public class PetSecondaryController implements Initializable {
     }
 
     @FXML
-    void insertPet(ActionEvent event) {
-        String petName = txtNama.getText().trim();
-        if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
-                comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
-            DialogShowInfo("Fields cannot be empty");
+    void insertServiceDetail(ActionEvent event) {
+        String textPrice = txtPrice.getText().trim();
+        if (comboService.getValue() == null ||
+                comboTipe.getValue() == null || comboUkuran.getValue() == null || textPrice.equals("")) {
+            return;
+        }
+
+        double price = Double.parseDouble(txtPrice.getText().trim());
+
+        if (price <= 0) {
             return;
         }
 
         try {
-            String tipe = Integer.toString(comboTipe.getValue().getId());
-            String ukr = Integer.toString(comboUkuran.getValue().getId());
-            String customerId = Integer.toString(comboCustomer.getValue().getId());
+            int tipe = comboTipe.getValue().getId();
+            int ukr = comboUkuran.getValue().getId();
+            int serviceId = comboService.getValue().getId();
 
-            PetDAO.insertPet(returnID, petName, pickerDateBirth.getValue().toString(), customerId
-                    , tipe, ukr);
+            ServiceDetail serviceDetail = new ServiceDetail();
+            serviceDetail.setPetSizeId(ukr);
+            serviceDetail.setPetTypeId(tipe);
+            serviceDetail.setServiceId(serviceId);
+            serviceDetail.setPrice(price);
+
+            ServiceDetailDAO.insertServiceDetail(returnID, serviceDetail);
             loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting pettype");
@@ -498,39 +476,37 @@ public class PetSecondaryController implements Initializable {
 
     private void editWithSelectedRow() throws SQLException, ClassNotFoundException {
         if (tableAll.getSelectionModel().getSelectedItem() != null) {
-            Pet pet = tableAll.getSelectionModel().getSelectedItem();
+            ServiceDetail serviceDetail = tableAll.getSelectionModel().getSelectedItem();
 
             ObservableList<PetType> typeData = PetTypeDAO.searchPetTypes();
             populatePetTypeComboBox(typeData);
             ObservableList<PetSize> sizeData = PetSizeDAO.searchPetSizes();
             populatePetSizeComboBox(sizeData);
-            ObservableList<Customer> customerData = CustomerDAO.searchCustomers();
+            ObservableList<Service> customerData = ServiceDAO.searchServices();
             populateCustomerComboBox(customerData);
 
-            LocalDate lc = LocalDate.parse(pet.getDateBirth().toString());
 
-            txtID.setText(Integer.toString(pet.getId()));
-            txtNama.setText(pet.getName());
-            pickerDateBirth.setValue(lc);
-            comboCustomer.getItems();
+            txtID.setText(Integer.toString(serviceDetail.getId()));
+            txtPrice.setText(String.valueOf(serviceDetail.getPrice()));
+            comboService.getItems();
             comboTipe.getItems();
             comboUkuran.getItems();
 
             for (PetType petType : comboTipe.getItems()) {
-                if (petType.getType().equals(pet.getPetType_name())) {
+                if (petType.getId() == serviceDetail.getPetTypeId()) {
                     comboTipe.getSelectionModel().select(petType);
                 }
             }
 
             for (PetSize petSize : comboUkuran.getItems()) {
-                if (petSize.getSize().equals(pet.getPetSize_name())) {
+                if (petSize.getId() == serviceDetail.getPetSizeId()) {
                     comboUkuran.getSelectionModel().select(petSize);
                 }
             }
 
-            for (Customer customer : comboCustomer.getItems()) {
-                if (customer.getName().equals(pet.getCustomer_name())) {
-                    comboCustomer.getSelectionModel().select(customer);
+            for (Service service : comboService.getItems()) {
+                if (service.getId() == serviceDetail.getServiceId()) {
+                    comboService.getSelectionModel().select(service);
                 }
             }
         }
@@ -539,89 +515,82 @@ public class PetSecondaryController implements Initializable {
     @FXML
     private void clearFields(ActionEvent ae) {
         txtID.clear();
-        txtNama.clear();
-        pickerDateBirth.setValue(null);
+        txtPrice.clear();
         comboUkuran.setValue(null);
         comboTipe.setValue(null);
-        comboCustomer.setValue(null);
+        comboService.setValue(null);
         txtCari.clear();
 
         loadAllData();
     }
 
+    @FXML
+    void e1d42b(ActionEvent event) {
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        petId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        petName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        petDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
-        petOwner.setCellValueFactory(cellData -> cellData.getValue().customer_nameProperty());
-        petType.setCellValueFactory(cellData -> cellData.getValue().petType_nameProperty());
-        petSize.setCellValueFactory(cellData -> cellData.getValue().petSize_nameProperty());
+        serviceId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        petName.setCellValueFactory(cellData -> cellData.getValue().completeNameProperty());
+        petDateBirth.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
 
         ObservableList typeList = FXCollections.observableArrayList();
         comboUkuran.getItems().clear();
         comboTipe.getItems().clear();
-        comboCustomer.getItems().clear();
-        comboCustomer.setItems(typeList);
+        comboService.getItems().clear();
+        comboService.setItems(typeList);
         comboTipe.setItems(typeList);
         comboUkuran.setItems(typeList);
-
-        initializeDatePicker();
-        pickerDateBirth.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
-            }
-        });
 
         loadAllData();
     }
 
     private void loadAllData() {
         //Get all PetType information
-        ObservableList<Pet> pData = null;
         try {
-            pData = PetDAO.searchPets();
+            serviceDetails = ServiceDetailDAO.getServiceDetails();
             //Populate PetTypes on TableView
-            populatePets(pData);
+            populatePets(serviceDetails);
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
 
     }
 
-    private void populateCustomerComboBox(ObservableList<Customer> typeData) {
+    private void populateCustomerComboBox(ObservableList<Service> typeData) {
 
         //Set items to the comboBox
-        if (comboCustomer == null) {
+        if (comboService == null) {
             return;
         }
 
-        comboCustomer.setItems(typeData);
-        comboCustomer.setConverter(new StringConverter<Customer>() {
+        comboService.setItems(typeData);
+        comboService.setConverter(new StringConverter<Service>() {
 
             @Override
-            public String toString(Customer object) {
+            public String toString(Service object) {
                 if (object != null) {
-                    return object.getName();
+                    return object.getServiceName();
                 }
 
                 return "";
             }
 
-            public int getObjectID(Customer object) {
+            public int getObjectID(Service object) {
                 return object.getId();
             }
 
             @Override
-            public Customer fromString(String string) {
+            public Service fromString(String string) {
                 // TODO Auto-generated method stub
                 return null;
             }
         });
 
-        comboCustomer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Customer>() {
+        comboService.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Service>() {
             @Override
-            public void changed(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue) {
+            public void changed(ObservableValue<? extends Service> observable, Service oldValue, Service newValue) {
 
             }
         });
@@ -630,11 +599,11 @@ public class PetSecondaryController implements Initializable {
 
     @FXML
     void selectCustomer(MouseEvent me) throws SQLException, ClassNotFoundException {
-        comboCustomer.setMaxHeight(20);
+        comboService.setMaxHeight(20);
 
         try {
             //Try getting all the PetTypes and PetSizes information
-            ObservableList<Customer> sizeData = CustomerDAO.searchCustomers();
+            ObservableList<Service> sizeData = ServiceDAO.searchServices();
 
             //Populate PetTypes and PetSizes on ComboBox
             populateCustomerComboBox(sizeData);
@@ -642,14 +611,5 @@ public class PetSecondaryController implements Initializable {
             System.out.println("Error occurred while getting all petsize information from DB " + e);
             throw e;
         }
-    }
-
-    private void DialogShowInfo(String text) {
-        Alert info = new Alert(Alert.AlertType.INFORMATION);
-        info.setX(550);
-        info.setY(300);
-        info.setHeaderText("");
-        info.setContentText(text);
-        info.showAndWait();
     }
 }

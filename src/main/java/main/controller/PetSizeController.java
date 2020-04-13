@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,13 +17,14 @@ import javafx.stage.Stage;
 import main.dao.PetSizeDAO;
 import main.model.Employee;
 import main.model.PetSize;
-import main.model.PetSize;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.time.LocalDate;
 
-public class PetSizeController {
+public class PetSizeController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
@@ -47,22 +49,13 @@ public class PetSizeController {
     private TextField txtID;
 
     @FXML
-    private Button btnCari;
-
-    @FXML
-    private Button btnBersih;
-
-    @FXML
     private TableView<PetSize> tableAll;
 
     @FXML
-    private Button btnUkuranKeluar;
+    private Button btnPetSizeKeluar;
 
     @FXML
     private TextField txtUkuran;
-
-    @FXML
-    private Button btnLihat;
 
     @FXML
     private TableColumn<PetSize, String> psSize;
@@ -103,8 +96,8 @@ public class PetSizeController {
     }
 
     @FXML
-    public void handleButtonPetSize (MouseEvent me){
-        if (me.getSource() == btnUkuranKeluar) {
+    public void handleButtonPetSize(MouseEvent me) {
+        if (me.getSource() == btnPetSizeKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setX(550);
             alert.setY(300);
@@ -136,7 +129,7 @@ public class PetSizeController {
     @FXML
     private void switchOperations(MouseEvent me) {
         addLabel.setTextFill(Color.WHITE);
-        if(me.getSource() == addLabel) {
+        if (me.getSource() == addLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(false);
             btnHapus.setDisable(true);
@@ -155,7 +148,7 @@ public class PetSizeController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == editLabel) {
+        if (me.getSource() == editLabel) {
             btnPerbarui.setDisable(false);
             btnTambah.setDisable(true);
             btnHapus.setDisable(true);
@@ -174,7 +167,7 @@ public class PetSizeController {
             deleteLogo.getImage();
         }
 
-        if(me.getSource() == deleteLabel) {
+        if (me.getSource() == deleteLabel) {
             btnPerbarui.setDisable(true);
             btnTambah.setDisable(true);
             btnHapus.setDisable(false);
@@ -197,7 +190,7 @@ public class PetSizeController {
 
     //Show All PetSizes
     @FXML
-    private void searchPetSizes (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void searchPetSizes(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         try {
             //Get all PetSize information
@@ -213,13 +206,10 @@ public class PetSizeController {
 
     //Search a PetSize
     @FXML
-    private void searchPetSize (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void searchPetSize(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get PetSize Information
-            PetSize ps = PetSizeDAO.searchPetSize(txtCari.getText());
-
-            //Populate PetSize on TableView and Display on TextField
-            populateAndShowPetSize(ps);
+            populatePetSizes(PetSizeDAO.searchPetSize(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -229,17 +219,9 @@ public class PetSizeController {
         }
     }
 
-    @FXML
-    private void initialize () throws SQLException, ClassNotFoundException {
-
-        psId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        psSize.setCellValueFactory(cellData -> cellData.getValue().sizeProperty());
-        searchPetSizes(getEvent);
-    }
-
     //Populate PetSizes
     @FXML
-    private void populatePetSize (PetSize ps) throws ClassNotFoundException {
+    private void populatePetSize(PetSize ps) {
 
         //Declare an ObservableList for TableView
         ObservableList<PetSize> psData = FXCollections.observableArrayList();
@@ -250,7 +232,7 @@ public class PetSizeController {
     }
 
     @FXML
-    private void populateAndShowPetSize (PetSize ps) throws ClassNotFoundException {
+    private void populateAndShowPetSize(PetSize ps) {
         if (ps != null) {
             populatePetSize(ps);
         } else {
@@ -260,86 +242,84 @@ public class PetSizeController {
     }
 
     @FXML
-    private void populatePetSizes (ObservableList < PetSize > psData) throws ClassNotFoundException {
+    private void populatePetSizes() {
+        populatePetSizes();
+    }
+
+    @FXML
+    private void populatePetSizes(ObservableList<PetSize> psData) {
 
         //Set items to the tableAll
         tableAll.setItems(psData);
     }
 
     @FXML
-    private void deletePetSize (ActionEvent event) throws SQLException, ClassNotFoundException {
-        if (txtID.getText().isEmpty()) {
+    private void deletePetSize(ActionEvent event) {
+        try {
+            PetSizeDAO.softDeletePsWithId(returnID, txtID.getText());
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while deleting petsize");
+        }
+    }
+
+    @FXML
+    private void updatePetSize(ActionEvent event) {
+        String petSize = txtUkuran.getText();
+        if (!petSize.equals("Small") && !petSize.equals("Medium") && !petSize.equals("Large") && !petSize.equals("Extra Large")) {
             DialogShowInfo("Fields cannot be empty");
-        } else if (!txtID.getText().matches("[0-9]+")) {
-            DialogShowInfo("ID can only contain numbers.");
-        } else {
-            try {
-                PetSizeDAO.deletePsWithId(txtID.getText());
+            return;
+        }
 
-            } catch (SQLException e) {
-                DialogShowInfo("Problem occurred while deleting petsize. Check your database connection.");
-            }
+        try {
+            PetSizeDAO.updateEntries(returnID, txtID.getText(), petSize);
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while updating petsize");
         }
     }
 
     @FXML
-    private void updatePetSize (ActionEvent event) throws SQLException, ClassNotFoundException {
+    private void insertPetSize(ActionEvent event) {
+        String petSize = txtUkuran.getText();
+        if (!petSize.equals("Small") && !petSize.equals("Medium") && !petSize.equals("Large") && !petSize.equals("Extra Large")) {
+            DialogShowInfo("Hanya Small, Medium, Large, dan Extra Large");
+            return;
+        }
 
-        if (txtID.getText().isEmpty() || txtUkuran.getText().isEmpty()) {
-            DialogShowInfo("Fields cannot be empty");
-        } else if (!txtID.getText().matches("[0-9]+")) {
-            DialogShowInfo("ID can only contain numbers.");
-        } else {
-            try {
-                PetSizeDAO.updateEntries(returnID, txtID.getText(), txtUkuran.getText());
+        try {
+            PetSizeDAO.insertPs(returnID, petSize);
+            loadAllData();
+        } catch (SQLException e) {
+            System.out.println("Problem occurred while inserting petsize");
+        }
+    }
 
-            } catch (SQLException e) {
-                DialogShowInfo("Problem occurred while updating petsize. Check your database connection.");
-            }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        psId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        psSize.setCellValueFactory(cellData -> cellData.getValue().sizeProperty());
+        loadAllData();
+    }
+
+    private void loadAllData() {
+        ObservableList<PetSize> psData = null;
+        try {
+            psData = PetSizeDAO.searchPetSizes();
+            populatePetSizes(psData);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
     @FXML
-    private void insertPetSize (ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        if (txtUkuran.getText().isEmpty()) {
-            DialogShowInfo("Fields cannot be empty");
-        } else {
-            try {
-                PetSizeDAO.insertPs(returnID, txtUkuran.getText());
-
-            } catch (SQLException e) {
-                DialogShowInfo("Problem occurred while inserting petsize. Check your database connection.");
-            }
-        }
-    }
-
-    @FXML
-    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
-
-        if(me.getClickCount() > 1)
-        {
-            editWithSelectedRow();
-        }
-    }
-
-    private void editWithSelectedRow() {
-
-
-        if(tableAll.getSelectionModel().getSelectedItem() != null) {
-            PetSize petSize = tableAll.getSelectionModel().getSelectedItem();
-
-            txtID.setText(Integer.toString(petSize.getId()));
-            txtUkuran.setText(petSize.getSize());
-        }
-    }
-
-    @FXML
-    private void clearFields(ActionEvent ae) {
+    public void clearFields() {
+        txtCari.clear();
         txtID.clear();
         txtUkuran.clear();
-    }
 
+        loadAllData();
+    }
     private void DialogShowInfo(String text) {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.setX(550);

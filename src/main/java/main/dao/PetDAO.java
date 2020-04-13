@@ -4,34 +4,35 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.model.Customer;
 import main.model.Pet;
-import main.model.PetSize;
-import main.model.PetType;
 import main.util.DBUtil;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class PetDAO {
 
     //SELECT a Pet
-    public static Pet searchPet(String petName) throws SQLException, ClassNotFoundException {
+    public static ObservableList<Pet> searchPet(String petName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner', pt.type 'type', ps.size 'size' " +
-                "FROM pets p " +
-                "JOIN customers cs ON cs.id = p.Customers_id " +
-                "JOIN pettypes pt ON pt.id = p.PetTypes_id " +
-                "JOIN petsizes ps ON ps.id = p.PetSizes_id " +
-                "WHERE p.name = '" + petName +"';";
+                "FROM Pets p " +
+                "JOIN Customers cs ON cs.id = p.Customers_id " +
+                "JOIN PetTypes pt ON pt.id = p.PetTypes_id " +
+                "JOIN PetSizes ps ON ps.id = p.PetSizes_id " +
+                "WHERE p.name LIKE '%" + petName + "%' AND (p.deletedAt IS NULL AND cs.deletedAt IS NULL AND ps.deletedAt IS NULL);";
 
         //Execute SELECT Statement
         try {
 
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsPet = DBUtil.dbExecuteQuery(selectStmt);
-
-            Pet pet = getPetFromResultSet(rsPet);
+            ObservableList<Pet> pet = FXCollections.observableArrayList();
+            try {
+                pet = getPetList(rsPet);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
             return pet;
         } catch (SQLException ex) {
@@ -44,7 +45,7 @@ public class PetDAO {
     private static Pet getPetFromResultSet(ResultSet rs) throws SQLException {
         Pet pet = null;
 
-        if(rs.next()) {
+        if (rs.next()) {
             pet = new Pet();
             pet.setId(rs.getInt("id"));
             pet.setName(rs.getString("name"));
@@ -61,10 +62,10 @@ public class PetDAO {
 
         //Declare a SELECT statement
         String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner' , pt.type AS 'type', ps.size AS 'size' " +
-                "FROM pets AS p " +
-                "JOIN customers AS cs ON cs.id = p.Customers_id " +
-                "JOIN pettypes AS pt ON pt.id = p.PetTypes_id " +
-                "JOIN petsizes AS ps ON ps.id = p.PetSizes_id;";
+                "FROM Pets AS p " +
+                "JOIN Customers AS cs ON cs.id = p.Customers_id " +
+                "JOIN PetTypes AS pt ON pt.id = p.PetTypes_id " +
+                "JOIN PetSizes AS ps ON ps.id = p.PetSizes_id WHERE (p.deletedAt IS NULL AND cs.deletedAt IS NULL AND ps.deletedAt IS NULL);";
 
         //Execute SELECT Statement
         try {
@@ -72,15 +73,14 @@ public class PetDAO {
             ResultSet rsPets = DBUtil.dbExecuteQuery(selectStmt);
 
             //Send ResultSet to the getPetList method and get pet object
-            ObservableList<Pet> petList = getPetList(rsPets);
 
             //Return Pet Object
-            return petList;
+            return getPetList(rsPets);
         } catch (SQLException ex) {
             System.out.println("SQL Select Operation has been failed: " + ex);
 
             //Return exception
-            throw ex ;
+            throw ex;
         }
     }
 
@@ -90,7 +90,7 @@ public class PetDAO {
         //Declare a observable List which comprises of Pet Objects
         ObservableList<Pet> petList = FXCollections.observableArrayList();
 
-        while(rs.next()) {
+        while (rs.next()) {
 
             Pet pet = new Pet();
             pet = new Pet();
@@ -111,13 +111,12 @@ public class PetDAO {
     }
 
     //Update an pet's entries
-    public static void updateEntries (String Logged, String Id, String name, String dateBirth, String Customers_id,
-                                      String PetTypes_id, String PetSizes_id)
-            throws SQLException, ClassNotFoundException
-    {
+    public static void updateEntries(String Logged, String Id, String name, String dateBirth, String Customers_id,
+                                     String PetTypes_id, String PetSizes_id)
+            throws SQLException, ClassNotFoundException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE pets " +
+                "UPDATE Pets " +
                         "SET name = '" + name + "' " +
                         ", dateBirth = '" + dateBirth + "' " +
                         ", Customers_id = '" + Customers_id + "' " +
@@ -141,14 +140,14 @@ public class PetDAO {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM pets " +
+                "DELETE FROM Pets " +
                         "WHERE id = " + Id + ";";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while DELETE Operation: " +ex);
+            System.out.println("Error occurred while DELETE Operation: " + ex);
             throw ex;
         }
     }
@@ -158,21 +157,17 @@ public class PetDAO {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE pets " +
-                        "SET name = NULL" +
-                        ", dateBirth = NULL" +
-                        ", Customers_id = NULL" +
-                        ", PetTypes_id = NULL" +
-                        ", PetSizes_id = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                "UPDATE Pets " +
+                        "SET " +
+                        "deletedAt = NOW()" +
+                        ", deletedBy = " + Logged + " " +
+                        "WHERE id = " + Id + ";";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
         } catch (SQLException ex) {
 
-            System.out.println("Error occurred while SOFT_DELETE Operation: " +ex);
+            System.out.println("Error occurred while SOFT_DELETE Operation: " + ex);
             throw ex;
         }
     }
@@ -181,7 +176,7 @@ public class PetDAO {
     public static Customer searchOwner(String Customers_name) throws SQLException, ClassNotFoundException {
 
         //Declare INSERT statement
-        String searchStmt = "SELECT id FROM customers WHERE name = '" + Customers_name + "'";
+        String searchStmt = "SELECT id FROM Customers WHERE name = '" + Customers_name + "'";
 
         //Execute query
         try {
@@ -193,8 +188,8 @@ public class PetDAO {
 
             return customer;
 
-        } catch(SQLException ex) {
-            System.out.println("Error occurred while SELECT operation: "+ex);
+        } catch (SQLException ex) {
+            System.out.println("Error occurred while SELECT operation: " + ex);
 
             //throws exceptions
             throw ex;
@@ -204,7 +199,7 @@ public class PetDAO {
     private static Customer getOwnerFromResultSet(ResultSet rs) throws SQLException {
         Customer cs = null;
 
-        if(rs.next()) {
+        if (rs.next()) {
             cs = new Customer();
             cs.setId(rs.getInt("id"));
         }
@@ -214,11 +209,10 @@ public class PetDAO {
     //INSERT a Pet
     public static void insertPet(String Logged, String name, String dateBirth, String Customers_id,
                                  String PetTypes_id, String PetSizes_id)
-            throws SQLException, ClassNotFoundException
-    {
+            throws SQLException {
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO pets " +
+                "INSERT INTO Pets " +
                         "(name, dateBirth, createdAt, Customers_id, PetTypes_id, PetSizes_id, createdBy)" +
                         "VALUES " +
                         "('" + name + "','" + dateBirth +

@@ -83,6 +83,7 @@
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                            </rowConstraints>
                            <children>
                               <Button fx:id="btnKelLayanan" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="serviceButton" stylesheets="@../styleImageButton.css" text="Layanan" textAlignment="CENTER" textFill="#ffed00" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
@@ -184,6 +185,23 @@
                                  <graphic>
                                     <ImageView fitHeight="75.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" translateX="-80.0" />
                                  </graphic>
+                              </Button>
+                              <Button fx:id="btnServiceDetail" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="serviceButton" stylesheets="@../styleImageButton.css" text="Detail Layanan" textAlignment="CENTER" textFill="#ffed00" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow color="#00000033" height="5.25" offsetY="2.0" radius="0.8125" width="0.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="75.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" translateX="-80.0" />
+                                 </graphic>
+                                 <padding>
+                                    <Insets right="60.0" />
+                                 </padding>
                               </Button>
                               <Button fx:id="btnKelProduk" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" stylesheets="@../styleImageButton.css" text="Produk" textFill="#ffed00" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                                  <GridPane.margin>
