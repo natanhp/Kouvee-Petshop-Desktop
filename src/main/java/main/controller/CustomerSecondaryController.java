@@ -313,11 +313,18 @@ public class CustomerSecondaryController implements Initializable {
 
     @FXML
     private void insertCustomer(ActionEvent event) throws ClassNotFoundException {
+        String name = txtNama.getText().trim();
+        String address = txtAlamat.getText().trim();
+        String phone = txtTelp.getText().trim();
+
+        if (name.equals("") || address.equals("") || phone.equals("") || pickerDateBirth.getValue() == null) {
+            return;
+        }
 
         try {
-            CustomerDAO.insertCus(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), txtAlamat.getText(),
-                    txtTelp.getText());
-
+            CustomerDAO.insertCus(returnID, name, pickerDateBirth.getValue().toString().trim(), address,
+                    phone);
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting customer");
         }
