@@ -353,6 +353,9 @@ public class CustomerSecondaryController implements Initializable {
         pickerDateBirth.setValue(null);
         txtTelp.clear();
         txtAlamat.clear();
+        txtCari.clear();
+
+        loadAllData();
     }
 
     @Override
@@ -370,12 +373,9 @@ public class CustomerSecondaryController implements Initializable {
 
         pickerDateBirth.setConverter(converter);
 
-        pickerDateBirth.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue) {
-                    pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
-                }
+        pickerDateBirth.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                pickerDateBirth.setValue(pickerDateBirth.getConverter().fromString(pickerDateBirth.getEditor().getText()));
             }
         });
 
