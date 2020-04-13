@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.PasswordField?>
 <VBox maxHeight="1080.0" maxWidth="1920.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.EmployeeController">
    <children>
       <HBox maxHeight="1080.0" maxWidth="1920.0" prefHeight="800.0" prefWidth="1920.0" VBox.vgrow="ALWAYS">
@@ -303,7 +304,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </TextField>
-                        <TextField fx:id="txtPawd" layoutX="961.0" layoutY="47.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                        <PasswordField fx:id="txtPawd" layoutX="961.0" layoutY="47.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" GridPane.columnIndex="7" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -313,7 +314,7 @@
                            <effect>
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
-                        </TextField>
+                        </PasswordField>
                         <DatePicker fx:id="pickerDateBirth" prefHeight="30.0" promptText="01/01/1970" style="-fx-background-radius: 8; -fx-border-radius: 8;" GridPane.columnIndex="3">
                            <GridPane.margin>
                               <Insets />

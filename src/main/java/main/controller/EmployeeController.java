@@ -66,7 +66,7 @@ public class EmployeeController implements Initializable {
     @FXML
     private Button btnTambah;
     @FXML
-    private TextField txtPawd;
+    private PasswordField txtPawd;
 
     @FXML
     private Button btnPegawaiKeluar;
