@@ -105,21 +105,17 @@ public class ServiceDetailDAO {
         return serviceDetails;
     }
 
-    //Update an pet's entries
-    public static void updateEntries(String Logged, String Id, String name, String dateBirth, String Customers_id,
-                                     String PetTypes_id, String PetSizes_id)
-            throws SQLException, ClassNotFoundException {
+    public static void updateServiceDetail(String employeeId, ServiceDetail serviceDetail)
+            throws SQLException {
         //Declare an UPDATE Statement
-        String updateStmt =
-                "UPDATE Pets " +
-                        "SET name = '" + name + "' " +
-                        ", dateBirth = '" + dateBirth + "' " +
-                        ", Customers_id = '" + Customers_id + "' " +
-                        ", PetTypes_id = '" + PetTypes_id + "' " +
-                        ", PetSizes_id = '" + PetSizes_id + "' " +
-                        ", updatedAt = NOW()" +
-                        ", updatedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+        String updateStmt = "UPDATE ServiceDetails SET " +
+                "price = " + serviceDetail.getPrice() + ", " +
+                "updatedAt = NOW(), " +
+                "PetTypes_id = " + serviceDetail.getPetTypeId() + ", " +
+                "PetSizes_id = " + serviceDetail.getPetSizeId() + ", " +
+                "Services_id = " + serviceDetail.getServiceId() + ", " +
+                "updatedBy = " + employeeId +
+                " WHERE id = " + serviceDetail.getId() + " AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -167,41 +163,6 @@ public class ServiceDetailDAO {
         }
     }
 
-    //Search the Owner of the pet
-    public static Customer searchOwner(String Customers_name) throws SQLException, ClassNotFoundException {
-
-        //Declare INSERT statement
-        String searchStmt = "SELECT id FROM Customers WHERE name = '" + Customers_name + "'";
-
-        //Execute query
-        try {
-
-            //Get ResultSet from dbExecuteQuery method
-            ResultSet rsSearch = DBUtil.dbExecuteQuery(searchStmt);
-
-            Customer customer = getOwnerFromResultSet(rsSearch);
-
-            return customer;
-
-        } catch (SQLException ex) {
-            System.out.println("Error occurred while SELECT operation: " + ex);
-
-            //throws exceptions
-            throw ex;
-        }
-    }
-
-    private static Customer getOwnerFromResultSet(ResultSet rs) throws SQLException {
-        Customer cs = null;
-
-        if (rs.next()) {
-            cs = new Customer();
-            cs.setId(rs.getInt("id"));
-        }
-        return cs;
-    }
-
-    //INSERT a Pet
     public static void insertServiceDetail(String employeeId, ServiceDetail serviceDetail) throws SQLException {
         //Declare an INSERT Statement
         String updateStmt =
