@@ -14,14 +14,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.PetTypeDAO;
+import main.model.Employee;
 import main.model.PetType;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class PetTypeController {
+
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnHapus;
@@ -91,6 +95,10 @@ public class PetTypeController {
     public static void getRoleLogin(String loginRole) {
 
         returnRole = loginRole;
+    }
+
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
     }
 
     @FXML
@@ -218,10 +226,11 @@ public class PetTypeController {
     }
 
     @FXML
-    private void initialize () {
+    private void initialize () throws SQLException, ClassNotFoundException {
 
         ptId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         ptType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+        searchPetTypes(getEvent);
     }
 
     //Populate PetTypes
@@ -281,5 +290,30 @@ public class PetTypeController {
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting pettype");
         }
+    }
+
+    @FXML
+    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+
+        if(me.getClickCount() > 1)
+        {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+
+        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+            PetType petType = tableAll.getSelectionModel().getSelectedItem();
+
+            txtID.setText(Integer.toString(petType.getId()));
+            txtTipe.setText(petType.getType());
+        }
+    }
+
+    @FXML
+    private void clearFields(ActionEvent ae) {
+        txtID.clear();
+        txtTipe.clear();
     }
 }

@@ -14,16 +14,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.PetSizeDAO;
+import main.model.Employee;
 import main.model.PetSize;
 import main.model.PetSize;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class PetSizeController {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnHapus;
@@ -93,6 +96,10 @@ public class PetSizeController {
     public static void getRoleLogin(String loginRole) {
 
         returnRole = loginRole;
+    }
+
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
     }
 
     @FXML
@@ -220,10 +227,11 @@ public class PetSizeController {
     }
 
     @FXML
-    private void initialize () {
+    private void initialize () throws SQLException, ClassNotFoundException {
 
         psId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         psSize.setCellValueFactory(cellData -> cellData.getValue().sizeProperty());
+        searchPetSizes(getEvent);
     }
 
     //Populate PetSizes
@@ -283,5 +291,31 @@ public class PetSizeController {
         } catch (SQLException e) {
             System.out.println("Problem occurred while inserting petsize");
         }
+    }
+
+    @FXML
+    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+
+        if(me.getClickCount() > 1)
+        {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+
+
+        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+            PetSize petSize = tableAll.getSelectionModel().getSelectedItem();
+
+            txtID.setText(Integer.toString(petSize.getId()));
+            txtUkuran.setText(petSize.getSize());
+        }
+    }
+
+    @FXML
+    private void clearFields(ActionEvent ae) {
+        txtID.clear();
+        txtUkuran.clear();
     }
 }

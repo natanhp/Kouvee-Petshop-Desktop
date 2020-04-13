@@ -12,10 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import main.dao.CustomerDAO;
-import main.dao.EmployeeDAO;
 import main.dao.SupplierDAO;
-import main.model.Employee;
 import main.model.Supplier;
 
 import javafx.scene.input.MouseEvent;
@@ -26,6 +23,7 @@ public class SupplierController {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnHapus;
@@ -107,6 +105,10 @@ public class SupplierController {
     public static void getRoleLogin(String loginRole) {
 
         returnRole = loginRole;
+    }
+
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
     }
 
     @FXML
@@ -241,12 +243,14 @@ public class SupplierController {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
 
         sprId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         sprName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         sprAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         sprPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+
+        searchSuppliers(getEvent);
     }
 
     //Populate Supplier
@@ -315,4 +319,33 @@ public class SupplierController {
 
     }
 
+    @FXML
+    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
+
+        if(me.getClickCount() > 1)
+        {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+
+
+        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+            Supplier supplier = tableAll.getSelectionModel().getSelectedItem();
+
+            txtID.setText(Integer.toString(supplier.getId()));
+            txtNama.setText(supplier.getName());
+            txtTelp.setText(supplier.getPhoneNumber());
+            txtAlamat.setText(supplier.getAddress());
+        }
+    }
+
+    @FXML
+    private void clearFields(ActionEvent ae) {
+        txtID.clear();
+        txtNama.clear();
+        txtTelp.clear();
+        txtAlamat.clear();
+    }
 }

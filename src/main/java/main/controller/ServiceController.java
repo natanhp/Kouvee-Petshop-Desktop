@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import main.dao.PetSizeDAO;
 import main.dao.ServiceDAO;
 import main.model.PetSize;
+import main.model.PetType;
 import main.model.Service;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class ServiceController {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnLayananKeluar;
@@ -95,6 +97,10 @@ public class ServiceController {
     public static void getRoleLogin(String loginRole) {
 
         returnRole = loginRole;
+    }
+
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
     }
 
     @FXML
@@ -223,10 +229,11 @@ public class ServiceController {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
 
         sId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         sService.setCellValueFactory(cellData -> cellData.getValue().serviceNameProperty());
+        searchServices(getEvent);
     }
 
     //Populate services
@@ -292,8 +299,28 @@ public class ServiceController {
     }
 
     @FXML
-    void e1d42b(ActionEvent event) {
+    private void selectedRow (MouseEvent me) throws ClassNotFoundException, SQLException {
 
+        if(me.getClickCount() > 1)
+        {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+
+        if(tableAll.getSelectionModel().getSelectedItem() != null) {
+            Service service = tableAll.getSelectionModel().getSelectedItem();
+
+            txtID.setText(Integer.toString(service.getId()));
+            txtLayanan.setText(service.getServiceName());
+        }
+    }
+
+    @FXML
+    private void clearFields(ActionEvent ae) {
+        txtID.clear();
+        txtLayanan.clear();
     }
 
 }

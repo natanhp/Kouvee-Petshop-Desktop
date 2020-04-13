@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -48,6 +47,6 @@ public class Main extends Application {
 
     public void showMainPanelView(){
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("EmployeeView.fxml"));
+        loader.setLocation(Main.class.getResource("MainMenu.fxml"));
     }
 }

@@ -165,7 +165,7 @@
                                     <ImageView fitHeight="75.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" translateX="-40.0" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="btnKelSupplier" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="supplierButton" stylesheets="@../styleImageButton.css" text="Supplier" textFill="#ffed00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                              <Button fx:id="btnKelSupplier" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#triggerEvent" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="supplierButton" stylesheets="@../styleImageButton.css" text="Supplier" textFill="#ffed00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                                  <GridPane.margin>
                                     <Insets bottom="10.0" />
                                  </GridPane.margin>

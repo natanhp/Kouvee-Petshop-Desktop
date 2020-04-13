@@ -37,6 +37,7 @@ public class EmployeeController {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private TableColumn<Employee, Integer> empId;
@@ -122,6 +123,9 @@ public class EmployeeController {
     public static void getRoleLogin(String loginRole) {
 
         returnRole = loginRole;
+    }
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
     }
 
     public void handleButtonEmployee(MouseEvent me) {
@@ -267,7 +271,7 @@ public class EmployeeController {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
 
         empId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         empName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -292,6 +296,9 @@ public class EmployeeController {
                 }
             }
         });
+
+        searchEmployees(getEvent);
+
     }
 
     private void initializeDatePicker() {
@@ -445,7 +452,7 @@ public class EmployeeController {
     private void clearFields(ActionEvent ae) {
         txtID.clear();
         txtNama.clear();
-        pickerDateBirth.setValue(null);
+        pickerDateBirth.getEditor().clear();
         txtTelp.clear();
         txtAlamat.clear();
         txtRole.clear();

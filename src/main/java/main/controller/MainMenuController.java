@@ -1,5 +1,6 @@
 package main.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,12 +16,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
 public class MainMenuController implements Initializable {
 
     private static String returnName;
+    private ActionEvent getEvent;
     @FXML
     private Label nameLogged;
 
@@ -81,7 +84,10 @@ public class MainMenuController implements Initializable {
         nameLogged.getText();
     }
 
-    public void handleMainButtonAction(MouseEvent me) {
+    public void handleMainButtonAction(MouseEvent me) throws SQLException, ClassNotFoundException {
+
+        Scene scene = null;
+
         if (me.getSource() == btnMainKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
@@ -93,149 +99,67 @@ public class MainMenuController implements Initializable {
                 }
             });
         }
-
-        if (me.getSource() == btnMainLogout) {
+        else if (me.getSource() != btnMainKeluar)
+        {
             Node node = (Node) me.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
 
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/Main.fxml")));
+            try
+            {
+                triggerEvent();
+
+                if(me.getSource() == btnMainLogout)
+                {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/Main.fxml")));
+                }
+                else if(me.getSource() == btnKelPegawai)
+                {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/EmployeeView.fxml")));
+                }
+
+                else if(me.getSource() == btnKelSupplier)
+                {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/SupplierView.fxml")));
+                }
+
+                else if(me.getSource() == btnKelUkrHewan)
+                {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetSizeView.fxml")));
+                }
+
+                else if(me.getSource() == btnKelJnsHewan)
+                {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetTypeView.fxml")));
+                }
+                else if(me.getSource() == btnKelLayanan)
+                {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceView.fxml")));
+                }
+
+                else if(me.getSource() == btnKelProduk)
+                {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ProductView.fxml")));
+                }
+
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
-        }
-
-        if (me.getSource() == btnKelPegawai) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/EmployeeView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if (me.getSource() == btnKelCustomer) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/CustomerView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if (me.getSource() == btnKelUkrHewan) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetSizeView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if (me.getSource() == btnKelJnsHewan) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetTypeView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if (me.getSource() == btnKelSupplier) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/SupplierView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if (me.getSource() == btnKelHewan) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if (me.getSource() == btnKelLayanan) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
-        }
-
-        if (me.getSource() == btnKelProduk) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ProductView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-
         }
     }
 
+    public ActionEvent getGetEvent() {
+        return getEvent;
+    }
 
+    public void triggerEvent() throws SQLException, ClassNotFoundException {
+        EmployeeController.getEvent(getGetEvent());
+        SupplierController.getEvent(getGetEvent());
+        PetSizeController.getEvent(getGetEvent());
+        PetTypeController.getEvent(getGetEvent());
+        ServiceController.getEvent(getGetEvent());
+        ProductController.getEvent(getGetEvent());
+    }
 }

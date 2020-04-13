@@ -1,6 +1,7 @@
 package main.controller;
 
 import com.mysql.cj.jdbc.exceptions.MySQLQueryInterruptedException;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,6 +35,7 @@ public class PetSecondaryController {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private TableColumn<Pet, Integer> petId;
@@ -127,6 +129,10 @@ public class PetSecondaryController {
     public static void getRoleLogin(String loginRole) {
 
         returnRole = loginRole;
+    }
+
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
     }
 
     @FXML
@@ -295,7 +301,7 @@ public class PetSecondaryController {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
 
         petId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         petName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -320,6 +326,8 @@ public class PetSecondaryController {
                 }
             }
         });
+
+        searchPets(getEvent);
     }
 
     private void initializeDatePicker() {
@@ -384,16 +392,16 @@ public class PetSecondaryController {
             String ukr = Integer.toString(comboUkuran.getValue().getId());
 
             Customer owner = PetDAO.searchOwner(txtOwner.getText());
-            String Customers_id = Integer.toString(owner.getId());
+            int Customers_id = owner.getId();
 
             System.out.println("Customers ID : "+Customers_id);
 
-            PetDAO.insertPet(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), Customers_id
+            PetDAO.insertPet(returnID, txtNama.getText(), pickerDateBirth.getValue().toString(), Integer.toString(Customers_id)
                     ,tipe, ukr);
 
 
         } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting pettype");
+            System.out.println("Problem occurred while inserting pet");
         }
     }
 
@@ -533,9 +541,9 @@ public class PetSecondaryController {
             }
 
             for(PetSize petSize : comboUkuran.getItems()) {
-                if(petSize.getSize().equals(pet.getPetType_name())) {
+                if(petSize.getSize().equals(pet.getPetSize_name())) {
                     idUkuran = petSize.getId();
-                    idUkuran --;
+                    idUkuran--;
                 }
             }
 

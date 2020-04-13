@@ -33,6 +33,7 @@ public class CustomerSecondaryController {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private TableColumn<Customer, Integer> cusId;
@@ -120,6 +121,10 @@ public class CustomerSecondaryController {
     public static void getRoleLogin(String loginRole) {
 
         returnRole = loginRole;
+    }
+
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
     }
 
     public void handleButtonCustomer (MouseEvent me){
@@ -257,7 +262,7 @@ public class CustomerSecondaryController {
     }
 
     @FXML
-    private void initialize () {
+    private void initialize () throws SQLException, ClassNotFoundException {
 
         cusId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         cusName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -280,6 +285,8 @@ public class CustomerSecondaryController {
                 }
             }
         });
+
+        searchCustomers(getEvent);
     }
 
     private void initializeDatePicker() {

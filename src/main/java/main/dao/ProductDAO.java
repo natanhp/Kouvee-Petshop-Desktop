@@ -114,7 +114,7 @@ public class ProductDAO {
     {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE customers " +
+                "UPDATE products " +
                         "SET productName = '" + name + "' " +
                         ", productQuantity = '" + prQty + "' " +
                         ", meassurement = '" + meas + "' " +

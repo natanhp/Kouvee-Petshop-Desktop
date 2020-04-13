@@ -33,6 +33,7 @@ public class ProductController {
     private static String returnID;
     private static String returnRole;
     private static String filePath;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnHapus;
@@ -141,6 +142,10 @@ public class ProductController {
     public static void getRoleLogin(String loginRole) {
 
         returnRole = loginRole;
+    }
+
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
     }
 
     @FXML
@@ -421,7 +426,7 @@ public class ProductController {
 //    }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
 
         int qty = 1;
         int minQty = 1;
@@ -464,6 +469,9 @@ public class ProductController {
         prSatuan.setCellValueFactory(cellData -> cellData.getValue().meassurementProperty());
         prPrice.setCellValueFactory(cellData -> cellData.getValue().productPriceProperty().asObject());
         prMinQty.setCellValueFactory(cellData -> cellData.getValue().minimumQuantityProperty().asObject());
+
+        searchProducts(getEvent);
+        labelImageError.setText("Click cell twice to see the image");
     }
 
     @FXML
@@ -506,11 +514,12 @@ public class ProductController {
             imagePreviewDB.setImage(null);
 
             try {
+                labelImageError.setText(null);
                 bais = new ByteArrayInputStream(product.getImage());
                 bais.close();
 
                 // read till the end of the stream
-                while(bais.available() >0) {
+                while(bais.available() > 0) {
 
                     // convert byte to character
 //                    char c = (char)bais.read();
@@ -541,6 +550,18 @@ public class ProductController {
 
 
         }
+    }
+
+    @FXML
+    private void clearFields(ActionEvent ae) {
+        txtID.clear();
+        txtNamaProduk.clear();
+        txtSatuan.clear();
+        imagePreview.setImage(null);
+        spinJumlah.getEditor().clear();
+        spinHarga.getEditor().clear();
+        spinMin.getEditor().clear();
+
     }
 
 }
