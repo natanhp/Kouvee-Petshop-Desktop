@@ -141,7 +141,7 @@ public class ServiceDetailController implements Initializable {
             stage.close();
 
             try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenuSecondary.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenu.fxml")));
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
