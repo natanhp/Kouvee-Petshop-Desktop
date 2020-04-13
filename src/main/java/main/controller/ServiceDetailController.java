@@ -74,7 +74,7 @@ public class ServiceDetailController implements Initializable {
     private Button btnBersih;
 
     @FXML
-    private ComboBox<Service> comboCustomer;
+    private ComboBox<Service> comboService;
 
     @FXML
     private TableView<ServiceDetail> tableAll;
@@ -154,7 +154,7 @@ public class ServiceDetailController implements Initializable {
             btnHapus.setDisable(true);
             txtID.setDisable(true);
             txtPrice.setDisable(false);
-            comboCustomer.setDisable(false);
+            comboService.setDisable(false);
             comboUkuran.setDisable(false);
             comboTipe.setDisable(false);
 
@@ -176,7 +176,7 @@ public class ServiceDetailController implements Initializable {
             btnHapus.setDisable(true);
             txtID.setDisable(false);
             txtPrice.setDisable(false);
-            comboCustomer.setDisable(false);
+            comboService.setDisable(false);
             comboUkuran.setDisable(false);
             comboTipe.setDisable(false);
 
@@ -198,7 +198,7 @@ public class ServiceDetailController implements Initializable {
             btnHapus.setDisable(false);
             txtID.setDisable(false);
             txtPrice.setDisable(true);
-            comboCustomer.setDisable(true);
+            comboService.setDisable(true);
             comboUkuran.setDisable(true);
             comboTipe.setDisable(true);
 
@@ -279,19 +279,35 @@ public class ServiceDetailController implements Initializable {
     }
 
     @FXML
-    void updatePet(ActionEvent event) throws ClassNotFoundException {
-        String petName = txtPrice.getText().trim();
-        if (comboCustomer.getValue() == null ||
-                comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
+    void updateServiceDetail(ActionEvent event) throws ClassNotFoundException {
+        String textPrice = txtPrice.getText().trim();
+        String textId = txtID.getText().trim();
+        if (comboService.getValue() == null ||
+                comboTipe.getValue() == null || comboUkuran.getValue() == null || textPrice.equals("") ||
+        textId.equals("")) {
+            return;
+        }
+
+        double price = Double.parseDouble(txtPrice.getText().trim());
+        int id = Integer.parseInt(textId);
+
+        if (price <=0) {
             return;
         }
 
         try {
-            String tipe = Integer.toString(comboTipe.getValue().getId());
-            String ukr = Integer.toString(comboUkuran.getValue().getId());
-            String customerId = Integer.toString(comboCustomer.getValue().getId());
+            int tipe = comboTipe.getValue().getId();
+            int ukr = comboUkuran.getValue().getId();
+            int serviceId = comboService.getValue().getId();;
 
-            PetDAO.updateEntries(returnID, txtID.getText(), petName, "asd", customerId, tipe, ukr);
+            ServiceDetail serviceDetail = new ServiceDetail();
+            serviceDetail.setId(id);
+            serviceDetail.setPetSizeId(ukr);
+            serviceDetail.setPetTypeId(tipe);
+            serviceDetail.setServiceId(serviceId);
+            serviceDetail.setPrice(price);
+
+            ServiceDetailDAO.updateServiceDetail(returnID, serviceDetail);
             loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while updating pet");
@@ -301,7 +317,7 @@ public class ServiceDetailController implements Initializable {
     @FXML
     void insertServiceDetail(ActionEvent event) {
         String textPrice = txtPrice.getText().trim();
-        if (comboCustomer.getValue() == null ||
+        if (comboService.getValue() == null ||
                 comboTipe.getValue() == null || comboUkuran.getValue() == null || textPrice.equals("")) {
             return;
         }
@@ -315,7 +331,7 @@ public class ServiceDetailController implements Initializable {
         try {
             int tipe = comboTipe.getValue().getId();
             int ukr = comboUkuran.getValue().getId();
-            int serviceId = comboCustomer.getValue().getId();
+            int serviceId = comboService.getValue().getId();
 
             ServiceDetail serviceDetail = new ServiceDetail();
             serviceDetail.setPetSizeId(ukr);
@@ -452,7 +468,7 @@ public class ServiceDetailController implements Initializable {
 
     private void editWithSelectedRow() throws SQLException, ClassNotFoundException {
         if (tableAll.getSelectionModel().getSelectedItem() != null) {
-            ServiceDetail pet = tableAll.getSelectionModel().getSelectedItem();
+            ServiceDetail serviceDetail = tableAll.getSelectionModel().getSelectedItem();
 
             ObservableList<PetType> typeData = PetTypeDAO.searchPetTypes();
             populatePetTypeComboBox(typeData);
@@ -462,27 +478,27 @@ public class ServiceDetailController implements Initializable {
             populateCustomerComboBox(customerData);
 
 
-            txtID.setText(Integer.toString(pet.getId()));
-            txtPrice.setText(pet.getCompleteName());
-            comboCustomer.getItems();
+            txtID.setText(Integer.toString(serviceDetail.getId()));
+            txtPrice.setText(String.valueOf(serviceDetail.getPrice()));
+            comboService.getItems();
             comboTipe.getItems();
             comboUkuran.getItems();
 
             for (PetType petType : comboTipe.getItems()) {
-                if (petType.getId() == pet.getPetTypeId()) {
+                if (petType.getId() == serviceDetail.getPetTypeId()) {
                     comboTipe.getSelectionModel().select(petType);
                 }
             }
 
             for (PetSize petSize : comboUkuran.getItems()) {
-                if (petSize.getId() == pet.getPetSizeId()) {
+                if (petSize.getId() == serviceDetail.getPetSizeId()) {
                     comboUkuran.getSelectionModel().select(petSize);
                 }
             }
 
-            for (Service customer : comboCustomer.getItems()) {
-                if (customer.getId() == pet.getServiceId()) {
-                    comboCustomer.getSelectionModel().select(customer);
+            for (Service service : comboService.getItems()) {
+                if (service.getId() == serviceDetail.getServiceId()) {
+                    comboService.getSelectionModel().select(service);
                 }
             }
         }
@@ -494,7 +510,7 @@ public class ServiceDetailController implements Initializable {
         txtPrice.clear();
         comboUkuran.setValue(null);
         comboTipe.setValue(null);
-        comboCustomer.setValue(null);
+        comboService.setValue(null);
         txtCari.clear();
 
         loadAllData();
@@ -514,8 +530,8 @@ public class ServiceDetailController implements Initializable {
         ObservableList typeList = FXCollections.observableArrayList();
         comboUkuran.getItems().clear();
         comboTipe.getItems().clear();
-        comboCustomer.getItems().clear();
-        comboCustomer.setItems(typeList);
+        comboService.getItems().clear();
+        comboService.setItems(typeList);
         comboTipe.setItems(typeList);
         comboUkuran.setItems(typeList);
 
@@ -538,12 +554,12 @@ public class ServiceDetailController implements Initializable {
     private void populateCustomerComboBox(ObservableList<Service> typeData) {
 
         //Set items to the comboBox
-        if (comboCustomer == null) {
+        if (comboService == null) {
             return;
         }
 
-        comboCustomer.setItems(typeData);
-        comboCustomer.setConverter(new StringConverter<Service>() {
+        comboService.setItems(typeData);
+        comboService.setConverter(new StringConverter<Service>() {
 
             @Override
             public String toString(Service object) {
@@ -565,7 +581,7 @@ public class ServiceDetailController implements Initializable {
             }
         });
 
-        comboCustomer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Service>() {
+        comboService.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Service>() {
             @Override
             public void changed(ObservableValue<? extends Service> observable, Service oldValue, Service newValue) {
 
@@ -576,7 +592,7 @@ public class ServiceDetailController implements Initializable {
 
     @FXML
     void selectCustomer(MouseEvent me) throws SQLException, ClassNotFoundException {
-        comboCustomer.setMaxHeight(20);
+        comboService.setMaxHeight(20);
 
         try {
             //Try getting all the PetTypes and PetSizes information
