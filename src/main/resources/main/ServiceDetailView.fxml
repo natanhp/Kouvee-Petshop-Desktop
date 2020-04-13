@@ -156,7 +156,7 @@
                                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                                     </effect>
                                 </TextField>
-                                <Button fx:id="btnCari" mnemonicParsing="false" onAction="#searchPet" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Cari" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                <Button fx:id="btnCari" mnemonicParsing="false" onAction="#searchServiceDetail" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Cari" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                     <GridPane.margin>
                                         <Insets left="50.0" />
                                     </GridPane.margin>
