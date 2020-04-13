@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class CustomerDAO {
 
     //SELECT a Customer
-    public static Customer searchCustomer(String cusName) throws SQLException, ClassNotFoundException {
+    public static Customer searchCustomer(String cusName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT * FROM Customers WHERE name LIKE '%" + cusName + "%' AND deletedAt IS NULL;";
@@ -99,14 +99,14 @@ public class CustomerDAO {
             throws SQLException, ClassNotFoundException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE customers " +
+                "UPDATE Customers " +
                         "SET name = '" + name + "' " +
                         ", address = '" + address + "' " +
                         ", dateBirth = '" + dateBirth + "' " +
                         ", phoneNumber = '" + phoneNumber + "' " +
                         ", updatedAt = NOW()" +
                         ", updatedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                        "WHERE id = '" + Id + "' AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -118,11 +118,11 @@ public class CustomerDAO {
     }
 
     //DELETE a customer
-    public static void deleteCusWithId(String Id) throws SQLException, ClassNotFoundException {
+    public static void deleteCusWithId(String Id) throws SQLException {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM customers " +
+                "DELETE FROM Customers " +
                         "WHERE id = " + Id + ";";
 
         try {
@@ -135,18 +135,15 @@ public class CustomerDAO {
     }
 
     //SOFT DELETE a customer
-    public static void softDeleteCusWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+    public static void softDeleteCusWithId(String Logged, String Id) throws SQLException {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE customers " +
-                        "SET name = NULL" +
-                        ", address = NULL" +
-                        ", dateBirth = NULL" +
-                        ", phoneNumber = NULL" +
-                        ", deletedAt = NOW()" +
-                        ", deletedBy " + Logged +
-                        "WHERE id = '" + Id + "';";
+                "UPDATE Customers " +
+                        "SET " +
+                        "deletedAt = NOW()" +
+                        ", deletedBy = " + Logged +
+                        " WHERE id = " + Id + " AND deletedAt IS NULL;";
 
         try {
             DBUtil.dbExecuteUpdate(deleteStmt);
@@ -164,7 +161,7 @@ public class CustomerDAO {
 
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO customers " +
+                "INSERT INTO Customers " +
                         "(name, address, dateBirth, phoneNumber, createdAt, createdBy)" +
                         "VALUES " +
                         "('" + name + "','" + address + "','" + dateBirth + "','" + phoneNumber + "', NOW()," +
