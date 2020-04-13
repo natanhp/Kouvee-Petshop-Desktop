@@ -269,9 +269,9 @@ public class ServiceDetailController implements Initializable {
     }
 
     @FXML
-    void deletePet(ActionEvent event) throws ClassNotFoundException {
+    void deleteServiceDetail(ActionEvent event) throws ClassNotFoundException {
         try {
-            PetDAO.softDeletePetWithId(returnID, txtID.getText());
+            ServiceDetailDAO.softDeletePetWithId(txtID.getText());
             loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting pet");
