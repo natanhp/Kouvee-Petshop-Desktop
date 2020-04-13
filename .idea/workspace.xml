@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="baf6ca64-8172-47ab-83d2-70f280c4e256" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/Employee-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/Employee-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/ExitLogo-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/ExitLogo-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/PetSize-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/PetSize-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/PetType-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/PetType-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/Product-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/Product-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/Service-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/Service-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/Supplier-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/Supplier-white.png" afterDir="false" />
+    <list default="true" id="baf6ca64-8172-47ab-83d2-70f280c4e256" name="Default Changelist" comment="Remove the useless throw execption">
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" afterDir="false" />
@@ -25,25 +11,47 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerSecondaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerSecondaryController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$2.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/CustomerSecondaryView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/CustomerSecondaryView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/MainMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/MainMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSizeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSizeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetTypeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetTypeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/ProductController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/ServiceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/ServiceController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/SupplierController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/controller/SupplierController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/CustomerDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/CustomerDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/EmployeeDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/EmployeeDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetSizeDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetSizeDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetTypeDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetTypeDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/ProductDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/ProductDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/ServiceDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/ServiceDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/SupplierDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/main/dao/SupplierDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/main/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/MainMenuSecondary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/MainMenuSecondary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/styleImageButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/styleImageButton.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/CustomerSecondaryView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/CustomerSecondaryView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/Main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/MainMenuSecondary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/MainMenuSecondary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/styleImageButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styleImageButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetSecondaryView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/PetSecondaryView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetSizeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/PetSizeView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetTypeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/PetTypeView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/ProductView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/ProductView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/ServiceView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/ServiceView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/main/SupplierView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/main/SupplierView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/CustomerController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,21 +94,20 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Natan Hari Pamungkas &lt;natanhp@protonmail.com&gt;" />
+        <option value="Tidy up the code" />
         <option value="L4rry_Toru4n &lt;38039092+l4rrytoru4n@users.noreply.github.com&gt;" />
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="42440e59-1811-4e6b-b58c-684642b25cbb" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
@@ -108,15 +115,18 @@
   <component name="ProjectId" id="1ZCtId9WywDZMlXMZEOn1f1ypuk" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="findjar.last.used.dir" value="$PROJECT_DIR$/gradle/wrapper" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/icons" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.30229884" />
@@ -183,149 +193,385 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584354824712</updated>
+      <workItem from="1586700756564" duration="38597000" />
+      <workItem from="1586749093006" duration="11248000" />
     </task>
-    <task id="LOCAL-00001" summary="New code, using JavaFX with Gradle.">
-      <created>1584617770722</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00055" summary="Add validation and auto reload in insert">
+      <created>1586717834244</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
       <option name="project" value="LOCAL" />
-      <updated>1584617770722</updated>
+      <updated>1586717834244</updated>
     </task>
-    <task id="LOCAL-00002" summary="New code, using JavaFX with Gradle.">
-      <created>1584617868518</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
+    <task id="LOCAL-00056" summary="Fix typo LINE">
+      <created>1586718043077</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
       <option name="project" value="LOCAL" />
-      <updated>1584617868518</updated>
+      <updated>1586718043077</updated>
     </task>
-    <task id="LOCAL-00003" summary="Employee now can be tested. Login still need a few tweaks.">
-      <created>1584920019225</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
+    <task id="LOCAL-00057" summary="Implement clear all fields and auto reload">
+      <created>1586718066686</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
       <option name="project" value="LOCAL" />
-      <updated>1584920019225</updated>
+      <updated>1586718066686</updated>
     </task>
-    <task id="LOCAL-00004" summary="Adding a new view. Main menu is available. Login still need a few tweaks.">
-      <created>1584930896185</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
+    <task id="LOCAL-00058" summary="Implements click table row for edit">
+      <created>1586718235022</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
       <option name="project" value="LOCAL" />
-      <updated>1584930896185</updated>
+      <updated>1586718235022</updated>
     </task>
-    <task id="LOCAL-00005" summary="Adding a new view. EmployeeView is renewed. Login still need a few tweaks.">
-      <created>1584935039115</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
+    <task id="LOCAL-00059" summary="Implement auto reload and validation in update data">
+      <created>1586718363771</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
       <option name="project" value="LOCAL" />
-      <updated>1584935039115</updated>
+      <updated>1586718363771</updated>
     </task>
-    <task id="LOCAL-00006" summary="Added more controllers and views. Customer operations can be tested&#10;Note : auto populate table upon clicking not yet implemented">
-      <created>1585100228718</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
+    <task id="LOCAL-00060" summary="Implement soft delete and auto reload data">
+      <created>1586718473563</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
       <option name="project" value="LOCAL" />
-      <updated>1585100228718</updated>
+      <updated>1586718473563</updated>
     </task>
-    <task id="LOCAL-00007" summary="Added more controllers and views. Pet, services and products are in-progress.&#10;Note : auto populate table upon clicking not yet implemented">
-      <created>1585273152201</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
+    <task id="LOCAL-00061" summary="Implement auto load data at start up">
+      <created>1586719697429</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
       <option name="project" value="LOCAL" />
-      <updated>1585273152201</updated>
+      <updated>1586719697429</updated>
     </task>
-    <task id="LOCAL-00008" summary="Pet in progress, comboBox works.">
-      <created>1585399811420</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
+    <task id="LOCAL-00062" summary="Exclude the soft deleted data from query">
+      <created>1586719718059</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
       <option name="project" value="LOCAL" />
-      <updated>1585399811420</updated>
+      <updated>1586719718059</updated>
     </task>
-    <task id="LOCAL-00009" summary="Pet can now be tested.">
-      <created>1585445501316</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
+    <task id="LOCAL-00063" summary="Implement clear all fields and reload data">
+      <created>1586720441906</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
       <option name="project" value="LOCAL" />
-      <updated>1585445501316</updated>
+      <updated>1586720441906</updated>
     </task>
-    <task id="LOCAL-00010" summary="Product in progress, still figuring out how to upload the image">
-      <created>1585542035471</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
+    <task id="LOCAL-00064" summary="Fix insert product&#10;1. Create validation&#10;2. Implement autoreload&#10;3. Change init dir path to current folder because not every system has C:\\ path">
+      <created>1586721138918</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
       <option name="project" value="LOCAL" />
-      <updated>1585542035471</updated>
+      <updated>1586721138918</updated>
     </task>
-    <task id="LOCAL-00011" summary="Products can now be tested. &#10;Note : Showing image from db not yet implemented">
-      <created>1585570907013</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
+    <task id="LOCAL-00065" summary="Fix update with or without image">
+      <created>1586722202333</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
       <option name="project" value="LOCAL" />
-      <updated>1585570907013</updated>
+      <updated>1586722202334</updated>
     </task>
-    <task id="LOCAL-00012" summary="Login is now hashed.">
-      <created>1585794056962</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
+    <task id="LOCAL-00066" summary="Implement soft delete and auto reload">
+      <created>1586722264171</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
       <option name="project" value="LOCAL" />
-      <updated>1585794056962</updated>
+      <updated>1586722264171</updated>
     </task>
-    <task id="LOCAL-00013" summary="Enrcyption still use 2a version. Login View and Main Menu View are given more style.">
-      <created>1585883468330</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
+    <task id="LOCAL-00067" summary="Fix LINE typo (again)">
+      <created>1586722333093</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
       <option name="project" value="LOCAL" />
-      <updated>1585883468330</updated>
+      <updated>1586722333093</updated>
     </task>
-    <task id="LOCAL-00014" summary="Most Views are polished and given a better look.">
-      <created>1586194021484</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
+    <task id="LOCAL-00068" summary="Implement loading data at start up">
+      <created>1586725697692</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
       <option name="project" value="LOCAL" />
-      <updated>1586194021484</updated>
+      <updated>1586725697692</updated>
     </task>
-    <task id="LOCAL-00015" summary="Most Views are polished and given a better look.&#10;Owner and Customer Service view now available.">
-      <created>1586194063618</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
+    <task id="LOCAL-00069" summary="Exclude soft deleted data from query">
+      <created>1586725730086</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
       <option name="project" value="LOCAL" />
-      <updated>1586194063618</updated>
+      <updated>1586725730086</updated>
     </task>
-    <task id="LOCAL-00016" summary="Fixing most views, Login statements not yet removed, showing images inside a tabke column not yet implemented.">
-      <created>1586567590829</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
+    <task id="LOCAL-00070" summary="Checking for null instead of empty string">
+      <created>1586731576623</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
       <option name="project" value="LOCAL" />
-      <updated>1586567590829</updated>
+      <updated>1586731576623</updated>
     </task>
-    <task id="LOCAL-00017" summary="Showing image from database has been implemented. Now fixing views and adding more popups">
-      <created>1586656633025</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
+    <task id="LOCAL-00071" summary="Change to the correct controller">
+      <created>1586731615260</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
       <option name="project" value="LOCAL" />
-      <updated>1586656633025</updated>
+      <updated>1586731615260</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00072" summary="Fix the insert&#10;Add validation, change customer to combo box, and add auto reload">
+      <created>1586731654829</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1586731654829</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Fix the table name and exclude the soft deleted data from query">
+      <created>1586731685659</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1586731685659</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Turn cusomer into combo box">
+      <created>1586731708619</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1586731708619</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Fix the logical fallacy when selecting row">
+      <created>1586734088536</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1586734088537</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Implement soft delete and auto reload">
+      <created>1586734495069</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1586734495069</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Fix the error query">
+      <created>1586734525094</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1586734525094</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Tidy up the code">
+      <created>1586734710489</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1586734710489</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Implement loading data at start">
+      <created>1586738594342</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1586738594343</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Exclude soft deleted data from query and change table name">
+      <created>1586738656733</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1586738656733</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Implement auto reload in clear field">
+      <created>1586738855427</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1586738855428</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Create validation and auto reload in insert data">
+      <created>1586739016874</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1586739016874</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Create validation and auto reload on update data">
+      <created>1586739161153</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1586739161153</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Implement soft delete on data">
+      <created>1586739208148</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1586739208148</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Register service detail controller for employee id and role">
+      <created>1586753780598</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1586753780599</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Add service detail menu">
+      <created>1586753815852</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1586753815852</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Add service detail controller">
+      <created>1586753844838</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1586753844838</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Add service detail dao">
+      <created>1586753868335</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1586753868335</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Add service detail model">
+      <created>1586753890747</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1586753890748</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Add service detail view">
+      <created>1586753910713</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1586753910713</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Create function for updating service detail">
+      <created>1586755644830</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1586755644830</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Create query for updating service detail">
+      <created>1586755666774</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1586755666774</updated>
+    </task>
+    <task id="LOCAL-00093" summary="Rename some ids and actions">
+      <created>1586755690944</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1586755690945</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Implement soft delete">
+      <created>1586755870369</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1586755870369</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Create query for soft delete service detail">
+      <created>1586755894600</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1586755894600</updated>
+    </task>
+    <task id="LOCAL-00096" summary="Rename action">
+      <created>1586755911400</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1586755911400</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Create search for service detail">
+      <created>1586756629080</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1586756629081</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Delete the unused code">
+      <created>1586756652101</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1586756652101</updated>
+    </task>
+    <task id="LOCAL-00099" summary="Change action name">
+      <created>1586756670323</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1586756670323</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Fix wrong routing">
+      <created>1586757216997</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1586757216997</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Change price from spinner to textfield">
+      <created>1586757268961</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1586757268961</updated>
+    </task>
+    <task id="LOCAL-00102" summary="Fix the search so it can return multiple results">
+      <created>1586758087693</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1586758087693</updated>
+    </task>
+    <task id="LOCAL-00103" summary="Make the search function return multiple results">
+      <created>1586762812779</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1586762812779</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="New code, using JavaFX with Gradle." />
-    <MESSAGE value="Employee now can be tested. Login still need a few tweaks." />
-    <MESSAGE value="Adding a new view. Main menu is available. Login still need a few tweaks." />
-    <MESSAGE value="Adding a new view. EmployeeView is renewed. Login still need a few tweaks." />
-    <MESSAGE value="Added more controllers and views. Customer operations can be tested&#10;Note : auto populate table upon clicking not yet implemented" />
-    <MESSAGE value="Added more controllers and views. Pet, services and products are in-progress.&#10;Note : auto populate table upon clicking not yet implemented" />
-    <MESSAGE value="Pet in progress, comboBox works." />
-    <MESSAGE value="Pet can now be tested." />
-    <MESSAGE value="Product in progress, still figuring out how to upload the image" />
-    <MESSAGE value="Products can now be tested. &#10;Note : Showing image from db not yet implemented" />
-    <MESSAGE value="Login is now hashed." />
-    <MESSAGE value="Enrcyption still use 2a version. Login View and Main Menu View are given more style." />
-    <MESSAGE value="Most Views are polished and given a better look." />
-    <MESSAGE value="Most Views are polished and given a better look.&#10;Owner and Customer Service view now available." />
-    <MESSAGE value="Fixing most views, Login statements not yet removed, showing images inside a tabke column not yet implemented." />
-    <MESSAGE value="Showing image from database has been implemented.  Nox fixing views and adding more popups" />
-    <MESSAGE value="Showing image from database has been implemented. Now fixing views and adding more popups" />
-    <MESSAGE value="Encryption now use 2Y version." />
-    <option name="LAST_COMMIT_MESSAGE" value="Encryption now use 2Y version." />
+    <MESSAGE value="Exclude soft deleted data from query and change table name" />
+    <MESSAGE value="Implement auto reload in clear field" />
+    <MESSAGE value="Create validation and auto reload in insert data" />
+    <MESSAGE value="Create validation and auto reload on update data" />
+    <MESSAGE value="Implement soft delete on data" />
+    <MESSAGE value="Register service detail controller for employee id and role" />
+    <MESSAGE value="Add service detail menu" />
+    <MESSAGE value="Add service detail controller" />
+    <MESSAGE value="Add service detail dao" />
+    <MESSAGE value="Add service detail model" />
+    <MESSAGE value="Add service detail view" />
+    <MESSAGE value="Remove the useless throw execption" />
+    <MESSAGE value="Create function for updating service detail" />
+    <MESSAGE value="Create query for updating service detail" />
+    <MESSAGE value="Rename some ids and actions" />
+    <MESSAGE value="Implement soft delete" />
+    <MESSAGE value="Create query for soft delete service detail" />
+    <MESSAGE value="Rename action" />
+    <MESSAGE value="Create search for service detail" />
+    <MESSAGE value="Delete the unused code" />
+    <MESSAGE value="Change action name" />
+    <MESSAGE value="Fix wrong routing" />
+    <MESSAGE value="Change price from spinner to textfield" />
+    <MESSAGE value="Fix the search so it can return multiple results" />
+    <MESSAGE value="Make the search function return multiple results" />
+    <option name="LAST_COMMIT_MESSAGE" value="Make the search function return multiple results" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Project_Structure" timestamp="1584355206894">
@@ -344,10 +590,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="517" y="248" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1536.824@0.0.1536.824" timestamp="1585330465517" />
-    <state x="190" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1586623884767">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="238" y="168" key="#com.intellij.ide.util.MemberChooser" timestamp="1586750939854">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="190" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1586623884767" />
+    <state x="238" y="168" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586750939854" />
     <state x="183" y="273" width="403" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1584355837717">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -368,10 +615,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="469" y="249" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1586619840752" />
-    <state x="424" y="0" key="CommitChangelistDialog2" timestamp="1586670261440">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="530" y="0" key="CommitChangelistDialog2" timestamp="1586762807483">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="424" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586670261440" />
+    <state x="530" y="0" key="CommitChangelistDialog2/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586762807483" />
     <state x="503" y="174" key="EnvironmentVariablesDialog" timestamp="1586587775965">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -380,38 +628,46 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="732" y="113" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586524695691" />
-    <state width="1493" height="152" key="GridCell.Tab.0.bottom" timestamp="1586670025689">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1768" height="227" key="GridCell.Tab.0.bottom" timestamp="1586758036258">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1493" height="152" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586670025689" />
-    <state width="1493" height="152" key="GridCell.Tab.0.center" timestamp="1586670025688">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1768" height="227" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586758036258" />
+    <state width="1768" height="227" key="GridCell.Tab.0.center" timestamp="1586758036258">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1493" height="152" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586670025688" />
-    <state width="1493" height="152" key="GridCell.Tab.0.left" timestamp="1586670025688">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1768" height="227" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586758036258" />
+    <state width="1768" height="227" key="GridCell.Tab.0.left" timestamp="1586758036258">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1493" height="152" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586670025688" />
-    <state width="1493" height="152" key="GridCell.Tab.0.right" timestamp="1586670025688">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1768" height="227" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586758036258" />
+    <state width="1768" height="227" key="GridCell.Tab.0.right" timestamp="1586758036258">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1493" height="152" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586670025688" />
-    <state width="1493" height="168" key="GridCell.Tab.1.bottom" timestamp="1586099304959">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1768" height="227" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586758036258" />
+    <state width="1768" height="324" key="GridCell.Tab.1.bottom" timestamp="1586755411269">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1493" height="168" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586099304959" />
-    <state width="1493" height="168" key="GridCell.Tab.1.center" timestamp="1586099304959">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1768" height="324" key="GridCell.Tab.1.bottom/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586755411269" />
+    <state width="1768" height="324" key="GridCell.Tab.1.center" timestamp="1586755411269">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1493" height="168" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1586099304959" />
-    <state width="1493" height="168" key="GridCell.Tab.1.left" timestamp="1586099304959">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1768" height="324" key="GridCell.Tab.1.center/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586755411269" />
+    <state width="1768" height="324" key="GridCell.Tab.1.left" timestamp="1586755411269">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1493" height="168" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1586099304959" />
-    <state width="1493" height="168" key="GridCell.Tab.1.right" timestamp="1586099304959">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1768" height="324" key="GridCell.Tab.1.left/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586755411269" />
+    <state width="1768" height="324" key="GridCell.Tab.1.right" timestamp="1586755411269">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1493" height="168" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1586099304959" />
+    <state width="1768" height="324" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586755411269" />
     <state x="349" y="155" key="IDE.errors.dialog" timestamp="1584617906919">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -420,10 +676,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="308" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1586667934483" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1586567641168">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="451" y="190" key="Vcs.Push.Dialog.v2" timestamp="1586762817272">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1586567641168" />
+    <state x="451" y="190" key="Vcs.Push.Dialog.v2/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586762817272" />
     <state x="199" y="196" key="chooseDestDirectoryDialog" timestamp="1584355837582">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -440,14 +697,23 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="475" y="31" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1585210602840" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1586606416273">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="622" y="508" key="run.anything.popup" timestamp="1586715747349">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1586606416273" />
-    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1586421757763">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="622" y="508" key="run.anything.popup/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586715747349" />
+    <state x="1018" y="190" width="840" height="889" key="search.everywhere.popup" timestamp="1586726785120">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="814" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1586421757763" />
     <state x="1018" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585092915363" />
+    <state x="1018" y="190" width="840" height="889" key="search.everywhere.popup/0.0.1920.1080/1920.0.1600.900@0.0.1920.1080" timestamp="1586726785120" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Remote">
+        <watch expression="returnID" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

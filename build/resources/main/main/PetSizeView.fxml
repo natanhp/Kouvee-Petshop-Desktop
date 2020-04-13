@@ -197,7 +197,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnBersih" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Bersihkan Entri" textFill="#ffea00" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnBersih" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onAction="#clearFields" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Bersihkan Entri" textFill="#ffea00" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>

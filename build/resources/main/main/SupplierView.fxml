@@ -23,7 +23,7 @@
          <children>
             <VBox prefHeight="384.0" prefWidth="1042.0" style="-fx-background-color: BLACK;" HBox.hgrow="ALWAYS">
                <children>
-                  <TableView fx:id="tableAll" accessibleRole="BUTTON" editable="true" stylesheets="@../styleTable.css">
+                  <TableView fx:id="tableAll" accessibleRole="BUTTON" editable="true" onMouseClicked="#selectedRow" stylesheets="@../styleTable.css">
                      <columns>
                         <TableColumn fx:id="sprId" maxWidth="1.7976931348623157E308" prefWidth="52.79995805025101" text="ID" />
                         <TableColumn fx:id="sprName" maxWidth="1.7976931348623157E308" prefWidth="210.0" text="NAMA" />
@@ -218,7 +218,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnBersih" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Bersihkan Entri" textFill="#ffea00" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnBersih" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onAction="#clearFields" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Bersihkan Entri" textFill="#ffea00" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
