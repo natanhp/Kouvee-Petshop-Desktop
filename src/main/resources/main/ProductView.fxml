@@ -194,11 +194,11 @@
                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                      </effect>
                   </Spinner>
-                  <Spinner fx:id="spinHarga" editable="true" layoutX="1116.0" layoutY="122.0" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <TextField fx:id="txtPrice" editable="true" layoutX="1116.0" layoutY="122.0" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <effect>
                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                      </effect>
-                  </Spinner>
+                  </TextField>
                   <TextField fx:id="txtSatuan" style="-fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
