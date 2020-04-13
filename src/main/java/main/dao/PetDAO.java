@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class PetDAO {
 
     //SELECT a Pet
-    public static Pet searchPet(String petName) throws SQLException {
+    public static ObservableList<Pet> searchPet(String petName) throws SQLException {
 
         //Declare a SELECT Statement
         String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner', pt.type 'type', ps.size 'size' " +
@@ -27,8 +27,12 @@ public class PetDAO {
 
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsPet = DBUtil.dbExecuteQuery(selectStmt);
-
-            Pet pet = getPetFromResultSet(rsPet);
+            ObservableList<Pet> pet = FXCollections.observableArrayList();
+            try {
+                pet = getPetList(rsPet);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
             return pet;
         } catch (SQLException ex) {

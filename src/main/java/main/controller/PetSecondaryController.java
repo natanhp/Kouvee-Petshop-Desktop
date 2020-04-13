@@ -242,10 +242,9 @@ public class PetSecondaryController implements Initializable {
     void searchPet(ActionEvent event) throws SQLException, ClassNotFoundException {
         try {
             //Get PetType Information
-            Pet p = PetDAO.searchPet(txtCari.getText());
 
             //Populate PetType on TableView and Display on TextField
-            populateAndShowPet(p);
+            populatePets(PetDAO.searchPet(txtCari.getText()));
 
         } catch (SQLException e) {
             e.printStackTrace();
