@@ -126,32 +126,13 @@ public class ServiceDetailDAO {
         }
     }
 
-    //DELETE an pet
-    public static void deletePetWithId(String Id) throws SQLException, ClassNotFoundException {
-
-        //Declare a DELETE Statement
-        String updateStmt =
-                "DELETE FROM Pets " +
-                        "WHERE id = " + Id + ";";
-
-        try {
-            DBUtil.dbExecuteUpdate(updateStmt);
-        } catch (SQLException ex) {
-
-            System.out.println("Error occurred while DELETE Operation: " + ex);
-            throw ex;
-        }
-    }
-
-    //SOFT DELETE an pet
-    public static void softDeletePetWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+    public static void softDeletePetWithId(String Id) throws SQLException {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE Pets " +
+                "UPDATE ServiceDetails " +
                         "SET " +
                         "deletedAt = NOW()" +
-                        ", deletedBy = " + Logged + " " +
                         "WHERE id = " + Id + ";";
 
         try {
