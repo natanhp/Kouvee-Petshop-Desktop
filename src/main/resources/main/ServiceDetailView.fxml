@@ -209,7 +209,7 @@
                                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                                     </effect>
                                 </Button>
-                                <Button fx:id="btnPerbarui" disable="true" mnemonicParsing="false" onAction="#updatePet" prefHeight="39.0" prefWidth="146.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Perbarui Data" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                <Button fx:id="btnPerbarui" disable="true" mnemonicParsing="false" onAction="#updateServiceDetail" prefHeight="39.0" prefWidth="146.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Perbarui Data" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="14.0" />
                                     </font>
@@ -259,7 +259,7 @@
                                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                                     </effect>
                                 </TextField>
-                                <ComboBox fx:id="comboCustomer" onMouseClicked="#selectCustomer" prefWidth="180.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                <ComboBox fx:id="comboService" onMouseClicked="#selectCustomer" prefWidth="180.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                     <GridPane.margin>
                                         <Insets left="150.0" right="30.0" />
                                     </GridPane.margin>
