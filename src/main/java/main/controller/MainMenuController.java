@@ -147,23 +147,13 @@ public class MainMenuController implements Initializable {
                     scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ProductView.fxml")));
                 }
 
+                else if(me.getSource() == btnServiceDetail)
+                {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceDetailView.fxml")));
+                }
+
                 stage.setScene(scene);
                 stage.show();
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-
-        if (me.getSource() == btnServiceDetail) {
-            Node node = (Node) me.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceDetailView.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
