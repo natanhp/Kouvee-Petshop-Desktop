@@ -16,17 +16,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
-import main.dao.*;
-import main.model.*;
+import main.dao.PetSizeDAO;
+import main.dao.PetTypeDAO;
+import main.dao.ServiceDAO;
+import main.dao.ServiceDetailDAO;
+import main.model.PetSize;
+import main.model.PetType;
+import main.model.Service;
+import main.model.ServiceDetail;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ServiceDetailController implements Initializable {
@@ -105,6 +107,9 @@ public class ServiceDetailController implements Initializable {
 
     @FXML
     private ImageView editLogo;
+
+    private ObservableList<ServiceDetail> serviceDetails = null;
+
 
     public static void getUserLogin(String loginID) {
 
@@ -216,31 +221,33 @@ public class ServiceDetailController implements Initializable {
     }
 
 
-    //Search a Pet
     @FXML
-    void searchPet(ActionEvent event) throws SQLException, ClassNotFoundException {
-//        try {
-//            //Get PetType Information
-//            ServiceDetail p = ServiceDetailDAO.getServiceDetails()
-//
-//            //Populate PetType on TableView and Display on TextField
-//            populateAndShowPet(p);
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            System.out.println("Error occurred while getting Pet information from DB" + e);
-//            throw e;
-//        }
+    void searchServiceDetail(ActionEvent event) {
+        if (serviceDetails != null) {
+            ObservableList<ServiceDetail> serviceDetailsBak = FXCollections.observableArrayList();
+            for (ServiceDetail serviceDetail : serviceDetails) {
+                String serviceDetailName = serviceDetail.getCompleteName().toLowerCase();
+                if (serviceDetailName.contains(txtCari.getText().toLowerCase())) {
+                    serviceDetailsBak.add(serviceDetail);
+                }
+            }
+
+            try {
+                populatePets(serviceDetailsBak);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
-    //Search all Pets
     @FXML
     void searchPets(ActionEvent event) {
         loadAllData();
     }
 
     @FXML
-    private void populateAndShowPet(ServiceDetail p) throws ClassNotFoundException {
+    private void populateAndShowPet(ServiceDetail p) {
         if (p != null) {
             populatePet(p);
         } else {
@@ -284,21 +291,22 @@ public class ServiceDetailController implements Initializable {
         String textId = txtID.getText().trim();
         if (comboService.getValue() == null ||
                 comboTipe.getValue() == null || comboUkuran.getValue() == null || textPrice.equals("") ||
-        textId.equals("")) {
+                textId.equals("")) {
             return;
         }
 
         double price = Double.parseDouble(txtPrice.getText().trim());
         int id = Integer.parseInt(textId);
 
-        if (price <=0) {
+        if (price <= 0) {
             return;
         }
 
         try {
             int tipe = comboTipe.getValue().getId();
             int ukr = comboUkuran.getValue().getId();
-            int serviceId = comboService.getValue().getId();;
+            int serviceId = comboService.getValue().getId();
+            ;
 
             ServiceDetail serviceDetail = new ServiceDetail();
             serviceDetail.setId(id);
@@ -324,7 +332,7 @@ public class ServiceDetailController implements Initializable {
 
         double price = Double.parseDouble(txtPrice.getText().trim());
 
-        if (price <=0) {
+        if (price <= 0) {
             return;
         }
 
@@ -540,11 +548,10 @@ public class ServiceDetailController implements Initializable {
 
     private void loadAllData() {
         //Get all PetType information
-        ObservableList<ServiceDetail> pData = null;
         try {
-            pData = ServiceDetailDAO.getServiceDetails();
+            serviceDetails = ServiceDetailDAO.getServiceDetails();
             //Populate PetTypes on TableView
-            populatePets(pData);
+            populatePets(serviceDetails);
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
