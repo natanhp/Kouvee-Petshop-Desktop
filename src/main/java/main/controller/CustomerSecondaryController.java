@@ -293,8 +293,8 @@ public class CustomerSecondaryController implements Initializable {
     @FXML
     private void deleteCustomer(ActionEvent event) throws ClassNotFoundException {
         try {
-            CustomerDAO.deleteCusWithId(txtID.getText());
-
+            CustomerDAO.softDeleteCusWithId(returnID, txtID.getText());
+            loadAllData();
         } catch (SQLException e) {
             System.out.println("Problem occurred while deleting customer");
         }
