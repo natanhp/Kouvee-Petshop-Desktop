@@ -54,12 +54,17 @@ public class LoginController implements Initializable {
 
 
     public void handleButtonAction(MouseEvent me) {
+
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+
         if (me.getSource() == btnExit) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Exit Kouvee PetShop");
-            alert.setHeaderText("");
-            alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
-            alert.showAndWait().ifPresent((btnType) -> {
+            confirmation.setX(550);
+            confirmation.setY(300);
+            confirmation.setTitle("Exit Kouvee PetShop");
+            confirmation.setHeaderText("");
+            confirmation.setContentText("Are you sure you want to exit Kouvee PetShop ?");
+            confirmation.showAndWait().ifPresent((btnType) -> {
                 if (btnType == ButtonType.OK) {
                     System.exit(0);
                 }
@@ -92,6 +97,14 @@ public class LoginController implements Initializable {
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
                 }
+            } else if(loginAction().equals("Empty")) {
+                info.setHeaderText("");
+                info.setContentText("Empty Credentials");
+                info.showAndWait();
+            } else {
+                info.setHeaderText("");
+                info.setContentText("Username/Password doesn't exist. Try again");
+                info.showAndWait();
             }
 
         }
@@ -102,10 +115,10 @@ public class LoginController implements Initializable {
 
         if (conn == null) {
             lblErrors.setTextFill(Color.TOMATO);
-            lblErrors.setText("Server Error : Restart the application");
+            lblErrors.setText("Server Error. Please Restart the application");
         } else {
             lblErrors.setTextFill(Color.GREEN);
-            lblErrors.setText("Server is Up : Good to go");
+            lblErrors.setText("Server is Up. Ready to go");
         }
     }
 
@@ -119,8 +132,7 @@ public class LoginController implements Initializable {
         String password = txtPawd.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            setLblError(Color.TOMATO, "Empty credentials");
-            status = "Error";
+            status = "Empty";
         } else {
             Employee employee = employeeDAO.login(username, password);
             if (employee != null) {
@@ -132,7 +144,6 @@ public class LoginController implements Initializable {
                 setLblError(Color.GREEN, "Login Successful");
                 status = loginRole;
             } else {
-                setLblError(Color.TOMATO, "Username/password doesn't exist. Try again.");
                 status = "Error";
             }
         }

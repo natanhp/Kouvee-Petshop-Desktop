@@ -27,6 +27,7 @@ public class SupplierController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnHapus;
@@ -101,12 +102,18 @@ public class SupplierController implements Initializable {
         returnRole = loginRole;
     }
 
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
+    }
+
     @FXML
     public void handleButtonSupplier(MouseEvent me) {
 
         if (me.getSource() == btnSupplierKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Kouvee PetShop");
+            alert.setX(550);
+            alert.setY(300);
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
             alert.showAndWait().ifPresent((btnType) -> {
@@ -209,6 +216,7 @@ public class SupplierController implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Supplier information from DB" + e);
+            DialogShowInfo("Error occurred while getting supplier information. Check your database connection");
             throw e;
         }
     }
@@ -236,6 +244,7 @@ public class SupplierController implements Initializable {
             populateSupplier(spr);
         } else {
             System.out.println("This supplier doesn't exist");
+            DialogShowInfo("Supplie not found with name " + txtCari.getText());
         }
     }
 
@@ -264,11 +273,13 @@ public class SupplierController implements Initializable {
         String id = txtID.getText().trim();
 
         if (name.equals("") || address.equals("") || phone.equals("") || id.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
         Pattern pattern = Pattern.compile("\\d+");
         if (!pattern.matcher(phone).matches()) {
+            DialogShowInfo("Nomor telepon hanya boleh angka");
             return;
         }
         try {
@@ -360,5 +371,14 @@ public class SupplierController implements Initializable {
             txtTelp.setText(supplier.getPhoneNumber());
             txtAlamat.setText(supplier.getAddress());
         }
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
     }
 }

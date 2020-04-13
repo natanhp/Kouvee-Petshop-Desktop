@@ -6,7 +6,7 @@ plugins {
 
 javafx {
     version = "13"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.base' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.base', 'javafx.swing' ]
 }
 
 group 'org.example'
@@ -26,8 +26,13 @@ dependencies {
 
 }
 
+mainClassName = "main.Main"
 jar {
     enabled = true
-}
 
-mainClassName = "main.Main"
+    manifest {
+        attributes(
+                'Main-Class': mainClassName
+        )
+    }
+}

@@ -17,6 +17,7 @@ public class CustomerDAO {
         String selectStmt = "SELECT * FROM Customers WHERE name LIKE '%" + cusName + "%' AND deletedAt IS NULL;";
 
         //Execute SELECT Statement
+        //Execute SELECT Statement
         try {
             ObservableList<Customer> customer = FXCollections.observableArrayList();
             //Get ResultSet from dbExecuteQuery method

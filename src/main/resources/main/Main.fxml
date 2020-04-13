@@ -97,10 +97,13 @@
                         <DropShadow color="#00000033" height="17.0" offsetY="2.0" radius="9.0" />
                      </effect>
                   </Label>
-                  <Label fx:id="lblErrors" alignment="BOTTOM_RIGHT" focusTraversable="false" maxHeight="18.0" maxWidth="233.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+                  <Label fx:id="lblErrors" alignment="BOTTOM_RIGHT" focusTraversable="false" maxHeight="18.0" translateX="-20.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
                   </Label>
                </children>
                <opaqueInsets>

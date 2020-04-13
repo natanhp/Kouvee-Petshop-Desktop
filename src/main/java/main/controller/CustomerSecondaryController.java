@@ -31,6 +31,7 @@ public class CustomerSecondaryController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private TableColumn<Customer, Integer> cusId;
@@ -111,9 +112,15 @@ public class CustomerSecondaryController implements Initializable {
         returnRole = loginRole;
     }
 
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
+    }
+
     public void handleButtonCustomer(MouseEvent me) {
         if (me.getSource() == btnPelangganKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -276,6 +283,7 @@ public class CustomerSecondaryController implements Initializable {
             populateCustomer(cus);
         } else {
             System.out.println("This customer doesn't exist");
+            DialogShowInfo("No Customer found with name " + txtCari.getText());
         }
     }
 
@@ -288,11 +296,18 @@ public class CustomerSecondaryController implements Initializable {
 
     @FXML
     private void deleteCustomer(ActionEvent event) throws ClassNotFoundException {
-        try {
-            CustomerDAO.softDeleteCusWithId(returnID, txtID.getText());
-            loadAllData();
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while deleting customer");
+
+        if (txtID.getText().isEmpty()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else if (!txtID.getText().matches("[0-9]+")) {
+            DialogShowInfo("ID can only contain numbers.");
+        } else {
+            try {
+                CustomerDAO.softDeleteCusWithId(returnID, txtID.getText());
+                loadAllData();
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while deleting customer. Check your database connection");
+            }
         }
     }
 
@@ -305,6 +320,7 @@ public class CustomerSecondaryController implements Initializable {
 
         if (name.equals("") || address.equals("") || phone.equals("") || pickerDateBirth.getValue() == null ||
                 id.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
@@ -327,12 +343,16 @@ public class CustomerSecondaryController implements Initializable {
             return;
         }
 
-        try {
-            CustomerDAO.insertCus(returnID, name, pickerDateBirth.getValue().toString().trim(), address,
-                    phone);
-            loadAllData();
-        } catch (SQLException e) {
-            System.out.println("Problem occurred while inserting customer");
+        if (checkFieldsNoID()) {
+            DialogShowInfo("Fields cannot be empty");
+        } else {
+            try {
+                CustomerDAO.insertCus(returnID, name, pickerDateBirth.getValue().toString().trim(), address,
+                        phone);
+                loadAllData();
+            } catch (SQLException e) {
+                DialogShowInfo("Problem occurred while inserting customer. Check your database connection.");
+            }
         }
     }
 
@@ -405,6 +425,46 @@ public class CustomerSecondaryController implements Initializable {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-
     }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
+    }
+
+    private boolean checkFields() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtID.getText(), txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
+    private boolean checkFieldsNoID() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
+
 }

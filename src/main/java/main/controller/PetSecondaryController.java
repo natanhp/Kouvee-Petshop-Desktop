@@ -39,6 +39,7 @@ public class PetSecondaryController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private TableColumn<Pet, Integer> petId;
@@ -134,10 +135,16 @@ public class PetSecondaryController implements Initializable {
         returnRole = loginRole;
     }
 
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
+    }
+
     @FXML
     void handleButtonPet(MouseEvent me) {
         if (me.getSource() == btnHewanKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -249,6 +256,7 @@ public class PetSecondaryController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Pet information from DB" + e);
+            DialogShowInfo("No pet found with name " + txtCari.getText());
             throw e;
         }
     }
@@ -265,6 +273,7 @@ public class PetSecondaryController implements Initializable {
             populatePet(p);
         } else {
             System.out.println("This pet doesn't exist");
+            DialogShowInfo("No Pet found with name " + txtCari.getText());
         }
     }
 
@@ -329,6 +338,7 @@ public class PetSecondaryController implements Initializable {
         String petName = txtNama.getText().trim();
         if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
                 comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
@@ -349,6 +359,7 @@ public class PetSecondaryController implements Initializable {
         String petName = txtNama.getText().trim();
         if (pickerDateBirth.getValue() == null || comboCustomer.getValue() == null ||
                 comboTipe.getValue() == null || comboUkuran.getValue() == null || petName.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
@@ -538,11 +549,6 @@ public class PetSecondaryController implements Initializable {
         loadAllData();
     }
 
-    @FXML
-    void e1d42b(ActionEvent event) {
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         petId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
@@ -636,5 +642,14 @@ public class PetSecondaryController implements Initializable {
             System.out.println("Error occurred while getting all petsize information from DB " + e);
             throw e;
         }
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
     }
 }

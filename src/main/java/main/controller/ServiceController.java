@@ -27,6 +27,7 @@ public class ServiceController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnLayananKeluar;
@@ -89,11 +90,17 @@ public class ServiceController implements Initializable {
         returnRole = loginRole;
     }
 
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
+    }
+
     @FXML
     void handleButtonService(MouseEvent me) {
 
         if (me.getSource() == btnLayananKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -219,6 +226,7 @@ public class ServiceController implements Initializable {
             populateService(s);
         } else {
             System.out.println("This service doesn't exists");
+            DialogShowInfo("Service not found with service name " + txtCari.getText());
         }
     }
 
@@ -246,6 +254,7 @@ public class ServiceController implements Initializable {
         String id = txtID.getText().trim();
 
         if (serviceName.equals("") || id.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
@@ -263,6 +272,7 @@ public class ServiceController implements Initializable {
         String serviceName = txtLayanan.getText().trim();
 
         if (serviceName.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
@@ -329,4 +339,14 @@ public class ServiceController implements Initializable {
             txtLayanan.setText(service.getServiceName());
         }
     }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
+    }
+
 }

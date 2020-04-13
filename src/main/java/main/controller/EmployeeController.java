@@ -35,6 +35,7 @@ public class EmployeeController implements Initializable {
 
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private TableColumn<Employee, Integer> empId;
@@ -117,9 +118,15 @@ public class EmployeeController implements Initializable {
         returnRole = loginRole;
     }
 
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
+    }
+
     public void handleButtonEmployee(MouseEvent me) {
         if (me.getSource() == btnPegawaiKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -236,6 +243,7 @@ public class EmployeeController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Employee information from DB" + e);
+            DialogShowInfo("Error occurred while getting employee information. Check your database connection");
             throw e;
         }
     }
@@ -288,6 +296,7 @@ public class EmployeeController implements Initializable {
             populateEmployee(emp);
         } else {
             System.out.println("This employee doesn't exist");
+            DialogShowInfo("Employe not found with name " + txtCari.getText());
         }
     }
 
@@ -311,15 +320,18 @@ public class EmployeeController implements Initializable {
 
         if (name.equals("") || pickerDateBirth.getValue() == null || address.equals("") || phone.equals("") ||
                 userName.equals("") || password.equals("") || id.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
         Pattern pattern = Pattern.compile("\\d+");
         if (!pattern.matcher(phone).matches()) {
+            DialogShowInfo("ID can only contain numbers.");
             return;
         }
 
         if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir")) {
+            DialogShowInfo("Hanya boleh Owner, CS, atau Kasir");
             return;
         }
 
@@ -342,7 +354,7 @@ public class EmployeeController implements Initializable {
                         phone, role, userName, generatedSecuredPasswordHash);
 
             } catch (SQLException e) {
-                System.out.println("Problem occurred while updating employee");
+                DialogShowInfo("Problem occurred while updating employee");
             }
         }
 
@@ -361,15 +373,18 @@ public class EmployeeController implements Initializable {
 
         if (name.equals("") || pickerDateBirth.getValue() == null || address.equals("") || phone.equals("") ||
                 userName.equals("") || password.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
         Pattern pattern = Pattern.compile("\\d+");
         if (!pattern.matcher(phone).matches()) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
         if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
@@ -427,7 +442,7 @@ public class EmployeeController implements Initializable {
     private void clearFields(ActionEvent ae) {
         txtID.clear();
         txtNama.clear();
-        pickerDateBirth.setValue(null);
+        pickerDateBirth.getEditor().clear();
         txtTelp.clear();
         txtAlamat.clear();
         txtRole.clear();
@@ -436,6 +451,47 @@ public class EmployeeController implements Initializable {
         txtCari.clear();
 
         loadAllData();
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
+    }
+
+    private boolean checkFields() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtID.getText(), txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString(),
+                txtUname.getText(), txtPawd.getText(), txtRole.getText()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
+    }
+
+    private boolean checkFieldsNoID() {
+        int counter = 0;
+        boolean status = false;
+        String[] text = {txtNama.getText(), txtAlamat.getText(), txtTelp.getText(), pickerDateBirth.getValue().toString(),
+                txtUname.getText(), txtPawd.getText(), txtRole.getText()};
+
+        while (counter < text.length) {
+            if (text[counter].isEmpty()) {
+                status = true;
+            }
+            counter++;
+        }
+
+        return status;
     }
 
     @Override

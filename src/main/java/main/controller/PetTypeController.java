@@ -15,16 +15,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.PetTypeDAO;
+import main.model.Employee;
 import main.model.PetType;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.time.LocalDate;
 
 public class PetTypeController implements Initializable {
     private static String returnID;
     private static String returnRole;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnHapus;
@@ -87,10 +90,16 @@ public class PetTypeController implements Initializable {
         returnRole = loginRole;
     }
 
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
+    }
+
     @FXML
     public void handleButtonPetType(MouseEvent me) {
         if (me.getSource() == btnTipeKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -194,6 +203,7 @@ public class PetTypeController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting PetType information from DB" + e);
+            DialogShowInfo("Error occurred while getting pet type information. Check your database.");
             throw e;
         }
     }
@@ -216,6 +226,7 @@ public class PetTypeController implements Initializable {
             populatePetType(pt);
         } else {
             System.out.println("This pettype doesn't exist");
+            DialogShowInfo("No type with name " + txtCari.getText());
         }
     }
 
@@ -242,6 +253,7 @@ public class PetTypeController implements Initializable {
         String id = txtID.getText().trim();
 
         if (petType.equals("") || id.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
@@ -313,5 +325,14 @@ public class PetTypeController implements Initializable {
             txtID.setText(Integer.toString(petType.getId()));
             txtTipe.setText(petType.getType());
         }
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
     }
 }

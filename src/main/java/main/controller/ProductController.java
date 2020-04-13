@@ -32,6 +32,7 @@ public class ProductController implements Initializable {
     private static String returnID;
     private static String returnRole;
     private static String filePath;
+    private static ActionEvent getEvent;
 
     @FXML
     private Button btnHapus;
@@ -130,10 +131,16 @@ public class ProductController implements Initializable {
         returnRole = loginRole;
     }
 
+    public static void getEvent(ActionEvent ae) {
+        getEvent = ae;
+    }
+
     @FXML
     void handleButtonProduct(MouseEvent me) {
         if (me.getSource() == btnProdukKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setX(550);
+            alert.setY(300);
             alert.setTitle("Exit Kouvee PetShop");
             alert.setHeaderText("");
             alert.setContentText("Are you sure you want to exit Kouvee PetShop ?");
@@ -243,6 +250,7 @@ public class ProductController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred while getting Product information from DB" + e);
+            DialogShowInfo("Error occurred while getting product information from database. Check your database connection");
             throw e;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -305,12 +313,14 @@ public class ProductController implements Initializable {
 
 
         if (productName.equals("") || metric.equals("") || priceText.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
         double priceValue = Double.parseDouble(priceText);
 
         if (quantity <= 0 || minQty <= 0 || priceValue <= 0) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
@@ -342,12 +352,14 @@ public class ProductController implements Initializable {
 
 
         if (productName.equals("") || metric.equals("") || priceText.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
 
         double priceValue = Double.parseDouble(priceText);
 
         if (quantity <= 0 || minQty <= 0 || priceValue <= 0) {
+            DialogShowInfo("Fields cannot be empty");
             return;
         }
         String qty = Integer.toString(quantity);
@@ -514,5 +526,14 @@ public class ProductController implements Initializable {
         spinMin.setValueFactory(minimumQtySpinnerFactory);
 
         loadAllData();
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
     }
 }
