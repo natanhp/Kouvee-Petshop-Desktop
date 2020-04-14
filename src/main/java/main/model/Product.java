@@ -1,13 +1,9 @@
 package main.model;
 
-import javafx.beans.property.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import sun.awt.image.ByteArrayImageSource;
-
-import javax.swing.*;
-import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Product {
 
@@ -19,10 +15,6 @@ public class Product {
     private IntegerProperty minimumQuantity;
     private String imagePath;
     private byte[] image;
-
-    public Image getImagePreview() {
-        return new Image(String.valueOf(image));
-    }
 
     public Product(String imagePath, byte[] image) {
 
