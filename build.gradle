@@ -6,7 +6,7 @@ plugins {
 
 javafx {
     version = "13"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.base' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.base', 'javafx.swing' ]
 }
 
 group 'org.example'
@@ -21,10 +21,18 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
-}
+    // https://mvnrepository.com/artifact/at.favre.lib/bcrypt
+    compile group: 'at.favre.lib', name: 'bcrypt', version: '0.9.0'
 
-jar {
-    enabled = true
 }
 
 mainClassName = "main.Main"
+jar {
+    enabled = true
+
+    manifest {
+        attributes(
+                'Main-Class': mainClassName
+        )
+    }
+}
