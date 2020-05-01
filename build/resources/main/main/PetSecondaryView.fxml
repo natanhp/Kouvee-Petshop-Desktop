@@ -106,13 +106,16 @@
                         <TableColumn fx:id="petOwner" minWidth="150.0" prefWidth="275.0" text="PEMILIK" />
                         <TableColumn fx:id="petType" minWidth="150.0" prefWidth="275.0" text="TIPE" />
                         <TableColumn fx:id="petSize" minWidth="150.0" prefWidth="275.0" text="UKURAN" />
+                        <TableColumn fx:id="petCreatedAt" minWidth="100.0" prefWidth="200.0" text="CREATED AT" />
+                        <TableColumn fx:id="petUpdatedAt" minWidth="100.0" prefWidth="200.0" text="UPDATED AT" />
+                        <TableColumn fx:id="petDeletedAt" minWidth="100.0" prefWidth="200.0" text="DELETED AT" />
+                        <TableColumn fx:id="petCreatedBy" minWidth="100.0" prefWidth="200.0" text="CREATED BY" />
+                        <TableColumn fx:id="petUpdatedBy" minWidth="100.0" prefWidth="200.0" text="UPDATED BY" />
+                        <TableColumn fx:id="petDeletedBy" minWidth="100.0" prefWidth="200.0" text="DELETED BY" />
                      </columns>
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -271,7 +274,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </DatePicker>
-                        <ComboBox fx:id="comboCustomer" onMouseClicked="#selectCustomer" prefWidth="180.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                        <ComboBox fx:id="comboCustomer" maxWidth="1.7976931348623157E308" onMouseClicked="#selectCustomer" prefWidth="180.0" style="-fx-background-color: WHITE; -fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="150.0" right="30.0" />
                            </GridPane.margin>

@@ -30,6 +30,7 @@ import main.model.PetType;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Date;
@@ -124,6 +125,24 @@ public class PetSecondaryController implements Initializable {
 
     @FXML
     private ImageView editLogo;
+
+    @FXML
+    private TableColumn<Pet, Timestamp> petCreatedAt;
+
+    @FXML
+    private TableColumn<Pet, Timestamp> petUpdatedAt;
+
+    @FXML
+    private TableColumn<Pet, Timestamp> petDeletedAt;
+
+    @FXML
+    private TableColumn<Pet, String> petCreatedBy;
+
+    @FXML
+    private TableColumn<Pet, String> petUpdatedBy;
+
+    @FXML
+    private TableColumn<Pet, String> petDeletedBy;
 
     public static void getUserLogin(String loginID) {
 
@@ -557,6 +576,14 @@ public class PetSecondaryController implements Initializable {
         petOwner.setCellValueFactory(cellData -> cellData.getValue().customer_nameProperty());
         petType.setCellValueFactory(cellData -> cellData.getValue().petType_nameProperty());
         petSize.setCellValueFactory(cellData -> cellData.getValue().petSize_nameProperty());
+        petCreatedAt.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+        petUpdatedAt.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
+        petDeletedAt.setCellValueFactory(cellData -> cellData.getValue().deletedAtProperty());
+        petCreatedBy.setCellValueFactory(cellData -> cellData.getValue().createdByProperty());
+        petUpdatedBy.setCellValueFactory(cellData -> cellData.getValue().updatedByProperty());
+        petDeletedBy.setCellValueFactory(cellData -> cellData.getValue().deletedByProperty());
+
+        pickerDateBirth.setEditable(true);
 
         ObservableList typeList = FXCollections.observableArrayList();
         comboUkuran.getItems().clear();

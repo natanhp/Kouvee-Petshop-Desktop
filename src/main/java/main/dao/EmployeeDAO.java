@@ -18,7 +18,17 @@ public class EmployeeDAO {
     public static ObservableList<Employee> searchEmployee(String empName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM Employees WHERE name LIKE '%" + empName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT e.id AS 'id', e.name AS 'Employee Name', e.address, e.dateBirth, e.phoneNumber, " +
+                "e.role, e.username, e. password, e.createdAt, e.updatedAt, e.deletedAt, " +
+                "m.name AS 'Name Created', p.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM employees AS e " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = e.createdBy " +
+                "LEFT JOIN employees AS p ON " +
+                "p.id = e.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = e.deletedBy " +
+                "WHERE e.name LIKE '%" + empName + "%' AND e.deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -59,13 +69,19 @@ public class EmployeeDAO {
         if (rs.next()) {
             emp = new Employee();
             emp.setId(rs.getInt("id"));
-            emp.setName(rs.getString("name"));
+            emp.setName(rs.getString("Employee Name"));
             emp.setDateBirth(rs.getDate("dateBirth"));
             emp.setPhoneNumber(rs.getString("phoneNumber"));
             emp.setAddress(rs.getString("address"));
             emp.setRole(rs.getString("role"));
             emp.setUsername(rs.getString("username"));
             emp.setPassword(rs.getString("password"));
+            emp.setCreatedAt(rs.getTimestamp("createdAt"));
+            emp.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            emp.setDeletedAt(rs.getTimestamp("deletedAt"));
+            emp.setCreatedBy(rs.getString("Name Created"));
+            emp.setUpdatedBy(rs.getString("Name Updated"));
+            emp.setDeletedBy(rs.getString("Name Deleted"));
         }
 
         return emp;
@@ -75,7 +91,17 @@ public class EmployeeDAO {
     public static ObservableList<Employee> searchEmployees() throws SQLException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM Employees WHERE deletedAt IS NULL";
+        String selectStmt = "SELECT e.id AS 'id', e.name AS 'Employee Name', e.address, e.dateBirth, e.phoneNumber, e.role, e.username, e. password, " +
+                "e.createdAt, e.updatedAt, e.deletedAt, " +
+                "m.name AS 'Name Created', p.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM employees AS e " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = e.createdBy " +
+                "LEFT JOIN employees AS p ON " +
+                "p.id = e.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = e.deletedBy " +
+                "WHERE e.deletedAt IS NUll";
 
         //Execute SELECT Statement
         try {
@@ -104,13 +130,19 @@ public class EmployeeDAO {
             Employee emp;
             emp = new Employee();
             emp.setId(rs.getInt("id"));
-            emp.setName(rs.getString("name"));
+            emp.setName(rs.getString("Employee Name"));
             emp.setDateBirth(rs.getDate("dateBirth"));
             emp.setPhoneNumber(rs.getString("phoneNumber"));
             emp.setAddress(rs.getString("address"));
             emp.setRole(rs.getString("role"));
             emp.setUsername(rs.getString("username"));
             emp.setPassword(rs.getString("password"));
+            emp.setCreatedAt(rs.getTimestamp("createdAt"));
+            emp.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            emp.setDeletedAt(rs.getTimestamp("deletedAt"));
+            emp.setCreatedBy(rs.getString("Name Created"));
+            emp.setUpdatedBy(rs.getString("Name Updated"));
+            emp.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add employee to the ObservableList
             empList.add(emp);

@@ -13,7 +13,17 @@ public class ProductDAO {
     public static ObservableList<Product> searchProduct(String prName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM Products WHERE productName LIKE '%" + prName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT pr.id, pr.productName, pr.productQuantity, pr.productPrice, pr.meassurement, " +
+                "pr.image, pr.minimumQty, pr.createdAt, pr.updatedAt, pr.deletedAt," +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM products AS pr " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = pr.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = pr.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = pr.deletedBy " +
+                "WHERE pr.productName LIKE '%" + prName + "%' AND pr.deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -40,6 +50,12 @@ public class ProductDAO {
             pr.setMeassurement(rs.getString("meassurement"));
             pr.setProductPrice(rs.getInt("productPrice"));
             pr.setMinimumQuantity(rs.getInt("minimumQty"));
+            pr.setCreatedAt(rs.getTimestamp("createdAt"));
+            pr.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            pr.setDeletedAt(rs.getTimestamp("deletedAt"));
+            pr.setCreatedBy(rs.getString("Name Created"));
+            pr.setUpdatedBy(rs.getString("Name Updated"));
+            pr.setDeletedBy(rs.getString("Name Deleted"));
 //            pi = rs.getBytes("image");
             pr.setImage(rs.getBytes("image"));
         }
@@ -51,7 +67,17 @@ public class ProductDAO {
     public static ObservableList<Product> searchProducts() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM Products WHERE deletedAt IS NULL";
+        String selectStmt = "SELECT pr.id, pr.productName, pr.productQuantity, pr.productPrice, pr.meassurement, " +
+                "pr.image, pr.minimumQty, pr.createdAt, pr.updatedAt, pr.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM products AS pr " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = pr.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = pr.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = pr.deletedBy " +
+                "WHERE pr.deletedAt IS NUll";
 
         //Execute SELECT Statement
         try {
@@ -86,6 +112,12 @@ public class ProductDAO {
             pr.setProductPrice(rs.getInt("productPrice"));
             pr.setMinimumQuantity(rs.getInt("minimumQty"));
             pr.setImage(rs.getBytes("image"));
+            pr.setCreatedAt(rs.getTimestamp("createdAt"));
+            pr.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            pr.setDeletedAt(rs.getTimestamp("deletedAt"));
+            pr.setCreatedBy(rs.getString("Name Created"));
+            pr.setUpdatedBy(rs.getString("Name Updated"));
+            pr.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add product to the ObservableList
             prList.add(pr);
@@ -180,19 +212,35 @@ public class ProductDAO {
     public static void insertPr(String Logged, String name, String prQty, String meas,
                                 String price, String minQty, String image)
             throws SQLException {
-
+        String updateStmt = null;
         //Declare an INSERT Statement
-        String updateStmt =
-                "INSERT INTO Products " +
-                        "(image, productName, productQuantity, meassurement, productPrice, minimumQty, createdAt, createdBy)" +
-                        "VALUES " +
-                        "(?,'" +
-                        name + "','" + prQty + "','" + meas +
-                        "','" + price + "','" + minQty + "'," + "NOW()" + ",'" + Logged + "');";
+        if(image != null) {
 
+
+            updateStmt =
+                    "INSERT INTO Products " +
+                            "(image, productName, productQuantity, meassurement, productPrice, minimumQty, createdAt, createdBy)" +
+                            "VALUES " +
+                            "(?,'" +
+                            name + "','" + prQty + "','" + meas +
+                            "','" + price + "','" + minQty + "'," + "NOW()" + ",'" + Logged + "');";
+            DBUtil.dbSpecialExecuteUpdate(updateStmt, image);
+
+        } else {
+
+            updateStmt =
+                    "INSERT INTO Products " +
+                            "(productName, productQuantity, meassurement, productPrice, minimumQty, createdAt, createdBy)" +
+                            "VALUES " +
+                            "('" +
+                            name + "','" + prQty + "','" + meas +
+                            "','" + price + "','" + minQty + "'," + "NOW()" + ",'" + Logged + "');";
+
+        }
         try {
             System.out.println(image);
-            DBUtil.dbSpecialExecuteUpdate(updateStmt, image);
+            DBUtil.dbExecuteUpdate(updateStmt);
+
         } catch (SQLException ex) {
 
             System.out.println("Error occurred while INSERT operation: " + ex);

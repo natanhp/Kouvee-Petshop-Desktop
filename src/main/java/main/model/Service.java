@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Service {
+public class Service extends Logs{
 
     private IntegerProperty Id;
     private StringProperty serviceName;

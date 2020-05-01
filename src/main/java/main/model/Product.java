@@ -1,15 +1,12 @@
 package main.model;
 
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import sun.awt.image.ByteArrayImageSource;
 
-import javax.swing.*;
-import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
-
-public class Product {
+public class Product extends Logs{
 
     private IntegerProperty Id;
     private StringProperty productName;

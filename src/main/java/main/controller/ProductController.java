@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -121,6 +122,28 @@ public class ProductController implements Initializable {
     @FXML
     private Label labelImageError;
 
+    @FXML
+    private Spinner<Double> spinHarga;
+
+    @FXML
+    private TableColumn<Product, Timestamp> prCreatedAt;
+
+    @FXML
+    private TableColumn<Product, Timestamp> prUpdatedAt;
+
+    @FXML
+    private TableColumn<Product, Timestamp> prDeletedAt;
+
+    @FXML
+    private TableColumn<Product, String> prCreatedBy;
+
+    @FXML
+    private TableColumn<Product, String> prUpdatedBy;
+
+    @FXML
+    private TableColumn<Product, String> prDeletedBy;
+
+
     public static void getUserLogin(String loginID) {
 
         returnID = loginID;
@@ -177,7 +200,7 @@ public class ProductController implements Initializable {
             txtNamaProduk.setDisable(false);
             txtSatuan.setDisable(false);
             spinJumlah.setDisable(false);
-            txtPrice.setDisable(false);
+            spinHarga.setDisable(false);
             spinMin.setDisable(false);
 
             addLabel.setTextFill(Color.WHITE);
@@ -200,7 +223,7 @@ public class ProductController implements Initializable {
             txtNamaProduk.setDisable(false);
             txtSatuan.setDisable(false);
             spinJumlah.setDisable(false);
-            txtPrice.setDisable(false);
+            spinHarga.setDisable(false);
             spinMin.setDisable(false);
 
             addLabel.setTextFill(Color.BLACK);
@@ -307,7 +330,7 @@ public class ProductController implements Initializable {
     void updateProduct(ActionEvent event) {
         int quantity = spinJumlah.getValue();
         int minQty = spinMin.getValue();
-        String priceText = txtPrice.getText().trim();
+        String priceText = spinHarga.getValue().toString();
         String productName = txtNamaProduk.getText().trim();
         String metric = txtSatuan.getText().trim();
 
@@ -326,14 +349,13 @@ public class ProductController implements Initializable {
 
         String qty = Integer.toString(quantity);
         String min = Integer.toString(minQty);
-        String price = Double.toString(priceValue);
 
         try {
 
             if (filePath == null) {
-                ProductDAO.updateEntriesNoImage(returnID, txtID.getText(), productName, metric, qty, price, min);
+                ProductDAO.updateEntriesNoImage(returnID, txtID.getText(), productName, metric, qty, priceText, min);
             } else {
-                ProductDAO.updateEntries(returnID, txtID.getText(), productName, metric, qty, price, min, filePath);
+                ProductDAO.updateEntries(returnID, txtID.getText(), productName, metric, qty, priceText, min, filePath);
             }
 
             loadAllData();
@@ -346,25 +368,25 @@ public class ProductController implements Initializable {
     void insertProduct(ActionEvent event) {
         int quantity = spinJumlah.getValue();
         int minQty = spinMin.getValue();
-        String priceText = txtPrice.getText().trim();
+        double priceText = spinHarga.getValue();
         String productName = txtNamaProduk.getText().trim();
         String metric = txtSatuan.getText().trim();
 
 
-        if (productName.equals("") || metric.equals("") || priceText.equals("")) {
+        if (productName.equals("") || metric.equals("")) {
             DialogShowInfo("Fields cannot be empty");
             return;
         }
 
-        double priceValue = Double.parseDouble(priceText);
-
-        if (quantity <= 0 || minQty <= 0 || priceValue <= 0) {
+        if (quantity <= 0 || minQty <= 0 || priceText <= 0) {
             DialogShowInfo("Fields cannot be empty");
             return;
         }
+
+
         String qty = Integer.toString(quantity);
         String min = Integer.toString(minQty);
-        String price = Double.toString(priceValue);
+        String price = Double.toString(priceText);
 
         try {
             ProductDAO.insertPr(returnID, productName, qty, metric, price, min, filePath);
@@ -426,14 +448,16 @@ public class ProductController implements Initializable {
 
             SpinnerValueFactory<Integer> spinnerQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, product.getProductQuantity());
             SpinnerValueFactory<Integer> spinnerMinQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, product.getMinimumQuantity());
+            SpinnerValueFactory<Double> spinnerPrice = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 999999999, product.getProductPrice());
 
             txtID.setText(Integer.toString(product.getId()));
             txtNamaProduk.setText(product.getProductName());
             txtSatuan.setText(product.getMeassurement());
             spinMin.setValueFactory(spinnerMinQuantity);
             spinJumlah.setValueFactory(spinnerQuantity);
-            txtPrice.setText(Double.toString(product.getProductPrice()));
+            spinHarga.setValueFactory(spinnerPrice);
             imagePreviewDB.setImage(null);
+            labelImageError.setText("");
 
             try {
                 bais = new ByteArrayInputStream(product.getImage());
@@ -470,6 +494,7 @@ public class ProductController implements Initializable {
 
         SpinnerValueFactory<Integer> spinnerQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, qty);
         SpinnerValueFactory<Integer> spinnerMinQuantity = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999, minQty);
+        SpinnerValueFactory<Double> spinnerPrice = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 9999999, price);
 
         spinJumlah.setValueFactory(spinnerQuantity);
         spinJumlah.setEditable(true);
@@ -487,12 +512,26 @@ public class ProductController implements Initializable {
             }
         });
 
+        spinHarga.setValueFactory(spinnerPrice);
+        spinHarga.setEditable(true);
+        spinHarga.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                spinMin.increment(0); // won't change value, but will commit editor
+            }
+        });
+
         prId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         prName.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         prQty.setCellValueFactory(cellData -> cellData.getValue().productQuantityProperty().asObject());
         prSatuan.setCellValueFactory(cellData -> cellData.getValue().meassurementProperty());
         prPrice.setCellValueFactory(cellData -> cellData.getValue().productPriceProperty().asObject());
         prMinQty.setCellValueFactory(cellData -> cellData.getValue().minimumQuantityProperty().asObject());
+        prCreatedAt.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+        prUpdatedAt.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
+        prDeletedAt.setCellValueFactory(cellData -> cellData.getValue().deletedAtProperty());
+        prCreatedBy.setCellValueFactory(cellData -> cellData.getValue().createdByProperty());
+        prUpdatedBy.setCellValueFactory(cellData -> cellData.getValue().updatedByProperty());
+        prDeletedBy.setCellValueFactory(cellData -> cellData.getValue().deletedByProperty());
 
         loadAllData();
     }
@@ -524,6 +563,9 @@ public class ProductController implements Initializable {
 
         SpinnerValueFactory<Integer> minimumQtySpinnerFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 999999999, 0);
         spinMin.setValueFactory(minimumQtySpinnerFactory);
+
+        SpinnerValueFactory<Double> priceSpinnerFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 999999999, 0);
+        spinHarga.setValueFactory(priceSpinnerFactory);
 
         loadAllData();
     }

@@ -20,11 +20,13 @@ import main.dao.EmployeeDAO;
 import main.model.Employee;
 import main.util.BCryptHash;
 import main.util.FxDatePickerConverter;
+import main.util.LimitedTextField;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -58,7 +60,7 @@ public class EmployeeController implements Initializable {
     @FXML
     private Button btnHapus;
     @FXML
-    private TextField txtTelp;
+    private LimitedTextField txtTelp;
     @FXML
     private TextField txtRole;
     @FXML
@@ -66,7 +68,7 @@ public class EmployeeController implements Initializable {
     @FXML
     private Button btnTambah;
     @FXML
-    private TextField txtPawd;
+    private PasswordField txtPawd;
 
     @FXML
     private Button btnPegawaiKeluar;
@@ -102,6 +104,23 @@ public class EmployeeController implements Initializable {
     @FXML
     private ImageView editLogo;
 
+    @FXML
+    private TableColumn<Employee, Timestamp> empCreatedAt;
+
+    @FXML
+    private TableColumn<Employee, Timestamp> empUpdatedAt;
+
+    @FXML
+    private TableColumn<Employee, Timestamp> empDeletedAt;
+
+    @FXML
+    private TableColumn<Employee, String> empCreatedBy;
+
+    @FXML
+    private TableColumn<Employee, String> empUpdatedBy;
+
+    @FXML
+    private TableColumn<Employee, String> empDeletedBy;
 
     @FXML
     void c4c4c4cb(ActionEvent event) {
@@ -325,12 +344,12 @@ public class EmployeeController implements Initializable {
         }
 
         Pattern pattern = Pattern.compile("\\d+");
-        if (!pattern.matcher(phone).matches()) {
+        if (!pattern.matcher(id).matches()) {
             DialogShowInfo("ID can only contain numbers.");
             return;
         }
 
-        if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir")) {
+        if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir") && !role.equals("Admin") && !role.equals("Cashier")) {
             DialogShowInfo("Hanya boleh Owner, CS, atau Kasir");
             return;
         }
@@ -374,17 +393,16 @@ public class EmployeeController implements Initializable {
         if (name.equals("") || pickerDateBirth.getValue() == null || address.equals("") || phone.equals("") ||
                 userName.equals("") || password.equals("")) {
             DialogShowInfo("Fields cannot be empty");
-            return;
         }
 
         Pattern pattern = Pattern.compile("\\d+");
-        if (!pattern.matcher(phone).matches()) {
-            DialogShowInfo("Fields cannot be empty");
+        if (pattern.matcher(phone).matches()) {
+            DialogShowInfo("Phone number must be numeric");
             return;
         }
 
         if (!role.equals("Owner") && !role.equals("CS") && !role.equals("Kasir")) {
-            DialogShowInfo("Fields cannot be empty");
+            DialogShowInfo("Only Owner/CS/Kasir");
             return;
         }
 
@@ -496,6 +514,10 @@ public class EmployeeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        txtTelp.setPhoneNumberField();
+        txtTelp.setMaxLength(13);
+
         empId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         empName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         empDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
@@ -503,6 +525,12 @@ public class EmployeeController implements Initializable {
         empPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
         empRole.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
         empUname.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
+        empCreatedAt.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+        empUpdatedAt.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
+        empDeletedAt.setCellValueFactory(cellData -> cellData.getValue().deletedAtProperty());
+        empCreatedBy.setCellValueFactory(cellData -> cellData.getValue().createdByProperty());
+        empUpdatedBy.setCellValueFactory(cellData -> cellData.getValue().updatedByProperty());
+        empDeletedBy.setCellValueFactory(cellData -> cellData.getValue().deletedByProperty());
 
         pickerDateBirth.setEditable(true);
         initializeDatePicker();

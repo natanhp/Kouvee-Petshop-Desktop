@@ -17,10 +17,12 @@ import javafx.stage.Stage;
 import main.dao.PetSizeDAO;
 import main.model.Employee;
 import main.model.PetSize;
+import main.model.PetType;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.time.LocalDate;
 
@@ -52,7 +54,7 @@ public class PetSizeController implements Initializable {
     private TableView<PetSize> tableAll;
 
     @FXML
-    private Button btnPetSizeKeluar;
+    private Button btnUkuranKeluar;
 
     @FXML
     private TextField txtUkuran;
@@ -81,6 +83,24 @@ public class PetSizeController implements Initializable {
     @FXML
     private ImageView deleteLogo;
 
+    @FXML
+    private TableColumn<PetSize, Timestamp> psCreatedAt;
+
+    @FXML
+    private TableColumn<PetSize, Timestamp> psUpdatedAt;
+
+    @FXML
+    private TableColumn<PetSize, Timestamp> psDeletedAt;
+
+    @FXML
+    private TableColumn<PetSize, String> psCreatedBy;
+
+    @FXML
+    private TableColumn<PetSize, String> psUpdatedBy;
+
+    @FXML
+    private TableColumn<PetSize, String> psDeletedBy;
+
     public static void getUserLogin(String loginID) {
 
         returnID = loginID;
@@ -97,7 +117,7 @@ public class PetSizeController implements Initializable {
 
     @FXML
     public void handleButtonPetSize(MouseEvent me) {
-        if (me.getSource() == btnPetSizeKeluar) {
+        if (me.getSource() == btnUkuranKeluar) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setX(550);
             alert.setY(300);
@@ -263,6 +283,8 @@ public class PetSizeController implements Initializable {
         }
     }
 
+
+
     @FXML
     private void updatePetSize(ActionEvent event) {
         String petSize = txtUkuran.getText();
@@ -299,7 +321,30 @@ public class PetSizeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         psId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         psSize.setCellValueFactory(cellData -> cellData.getValue().sizeProperty());
+        psCreatedAt.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+        psUpdatedAt.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
+        psDeletedAt.setCellValueFactory(cellData -> cellData.getValue().deletedAtProperty());
+        psCreatedBy.setCellValueFactory(cellData -> cellData.getValue().createdByProperty());
+        psUpdatedBy.setCellValueFactory(cellData -> cellData.getValue().updatedByProperty());
+        psDeletedBy.setCellValueFactory(cellData -> cellData.getValue().deletedByProperty());
         loadAllData();
+    }
+
+    @FXML
+    private void selectedRow(MouseEvent me) {
+
+        if (me.getClickCount() > 1) {
+            editWithSelectedRow();
+        }
+    }
+
+    private void editWithSelectedRow() {
+        if (tableAll.getSelectionModel().getSelectedItem() != null) {
+            PetSize petSize = tableAll.getSelectionModel().getSelectedItem();
+
+            txtID.setText(Integer.toString(petSize.getId()));
+            txtUkuran.setText(petSize.getSize());
+        }
     }
 
     private void loadAllData() {

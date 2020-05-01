@@ -20,6 +20,7 @@ import main.model.Service;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 
@@ -79,6 +80,24 @@ public class ServiceController implements Initializable {
 
     @FXML
     private ImageView editLogo;
+
+    @FXML
+    private TableColumn<Service, Timestamp> sCreatedAt;
+
+    @FXML
+    private TableColumn<Service, Timestamp> sUpdatedAt;
+
+    @FXML
+    private TableColumn<Service, Timestamp> sDeletedAt;
+
+    @FXML
+    private TableColumn<Service, String> sCreatedBy;
+
+    @FXML
+    private TableColumn<Service, String> sUpdatedBy;
+
+    @FXML
+    private TableColumn<Service, String> sDeletedBy;
 
     public static void getUserLogin(String loginID) {
 
@@ -294,6 +313,12 @@ public class ServiceController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         sId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         sService.setCellValueFactory(cellData -> cellData.getValue().serviceNameProperty());
+        sCreatedAt.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+        sUpdatedAt.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
+        sDeletedAt.setCellValueFactory(cellData -> cellData.getValue().deletedAtProperty());
+        sCreatedBy.setCellValueFactory(cellData -> cellData.getValue().createdByProperty());
+        sUpdatedBy.setCellValueFactory(cellData -> cellData.getValue().updatedByProperty());
+        sDeletedBy.setCellValueFactory(cellData -> cellData.getValue().deletedByProperty());
 
         loadAllData();
     }

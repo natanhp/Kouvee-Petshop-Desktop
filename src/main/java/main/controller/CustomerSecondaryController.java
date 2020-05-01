@@ -18,10 +18,12 @@ import javafx.util.Callback;
 import main.dao.CustomerDAO;
 import main.model.Customer;
 import main.util.FxDatePickerConverter;
+import main.util.LimitedTextField;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Date;
@@ -40,7 +42,7 @@ public class CustomerSecondaryController implements Initializable {
     private Button btnHapus;
 
     @FXML
-    private TextField txtTelp;
+    private LimitedTextField txtTelp;
 
     @FXML
     private TextField txtNama;
@@ -101,6 +103,24 @@ public class CustomerSecondaryController implements Initializable {
 
     @FXML
     private TextField txtCari;
+
+    @FXML
+    private TableColumn<Customer, Timestamp> cusCreatedAt;
+
+    @FXML
+    private TableColumn<Customer, Timestamp> cusUpdatedAt;
+
+    @FXML
+    private TableColumn<Customer, Timestamp> cusDeletedAt;
+
+    @FXML
+    private TableColumn<Customer, String> cusCreatedBy;
+
+    @FXML
+    private TableColumn<Customer, String> cusUpdatedBy;
+
+    @FXML
+    private TableColumn<Customer, String> cusDeletedBy;
 
     public static void getUserLogin(String loginID) {
 
@@ -393,11 +413,21 @@ public class CustomerSecondaryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        txtTelp.setPhoneNumberField();
+        txtTelp.setMaxLength(13);
+
         cusId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         cusName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         cusDateBirth.setCellValueFactory(cellData -> cellData.getValue().dateBirthProperty());
         cusAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         cusPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+        cusCreatedAt.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+        cusUpdatedAt.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
+        cusDeletedAt.setCellValueFactory(cellData -> cellData.getValue().deletedAtProperty());
+        cusCreatedBy.setCellValueFactory(cellData -> cellData.getValue().createdByProperty());
+        cusUpdatedBy.setCellValueFactory(cellData -> cellData.getValue().updatedByProperty());
+        cusDeletedBy.setCellValueFactory(cellData -> cellData.getValue().deletedByProperty());
 
         pickerDateBirth.setEditable(true);
         initializeDatePicker();

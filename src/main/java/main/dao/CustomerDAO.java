@@ -14,7 +14,16 @@ public class CustomerDAO {
     public static ObservableList<Customer> searchCustomer(String cusName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM Customers WHERE name LIKE '%" + cusName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT c.id, c.name AS 'Customer Name', c.address, c.dateBirth, c.phoneNumber, c.createdAt," +
+                " c.updatedAt, c.deletedAt ,e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM customers AS c " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = c.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = c.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = c.deletedBy " +
+                "WHERE c.name LIKE '%" + cusName + "%' AND c.deletedAt IS NULL";
 
         //Execute SELECT Statement
         //Execute SELECT Statement
@@ -50,7 +59,16 @@ public class CustomerDAO {
     public static ObservableList<Customer> searchCustomers() throws SQLException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM Customers WHERE deletedAt IS NULL";
+        String selectStmt = "SELECT c.id, c.name AS 'Customer Name', c.address, c.dateBirth, c.phoneNumber, c.createdAt," +
+                " c.updatedAt, c.deletedAt ,e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM customers AS c " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = c.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = c.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = c.deletedBy " +
+                "WHERE c.deletedAt IS NUll";
 
         //Execute SELECT Statement
         try {
@@ -79,10 +97,16 @@ public class CustomerDAO {
             Customer cus = new Customer();
             cus = new Customer();
             cus.setId(rs.getInt("id"));
-            cus.setName(rs.getString("name"));
+            cus.setName(rs.getString("Customer Name"));
             cus.setDateBirth(rs.getDate("dateBirth"));
             cus.setAddress(rs.getString("address"));
             cus.setPhoneNumber(rs.getString("phoneNumber"));
+            cus.setCreatedAt(rs.getTimestamp("createdAt"));
+            cus.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            cus.setDeletedAt(rs.getTimestamp("deletedAt"));
+            cus.setCreatedBy(rs.getString("Name Created"));
+            cus.setUpdatedBy(rs.getString("Name Updated"));
+            cus.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add customer to the ObservableList
             cusList.add(cus);

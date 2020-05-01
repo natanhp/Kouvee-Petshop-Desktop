@@ -16,11 +16,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.PetTypeDAO;
 import main.model.Employee;
+import main.model.PetSize;
 import main.model.PetType;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.time.LocalDate;
 
@@ -79,6 +81,24 @@ public class PetTypeController implements Initializable {
 
     @FXML
     private TextField txtCari;
+
+    @FXML
+    private TableColumn<PetType, Timestamp> ptCreatedAt;
+
+    @FXML
+    private TableColumn<PetType, Timestamp> ptUpdatedAt;
+
+    @FXML
+    private TableColumn<PetType, Timestamp> ptDeletedAt;
+
+    @FXML
+    private TableColumn<PetType, String> ptCreatedBy;
+
+    @FXML
+    private TableColumn<PetType, String> ptUpdatedBy;
+
+    @FXML
+    private TableColumn<PetType, String> ptDeletedBy;
 
     public static void getUserLogin(String loginID) {
 
@@ -287,6 +307,12 @@ public class PetTypeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ptId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         ptType.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+        ptCreatedAt.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+        ptUpdatedAt.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
+        ptDeletedAt.setCellValueFactory(cellData -> cellData.getValue().deletedAtProperty());
+        ptCreatedBy.setCellValueFactory(cellData -> cellData.getValue().createdByProperty());
+        ptUpdatedBy.setCellValueFactory(cellData -> cellData.getValue().updatedByProperty());
+        ptDeletedBy.setCellValueFactory(cellData -> cellData.getValue().deletedByProperty());
 
         loadAllData();
     }

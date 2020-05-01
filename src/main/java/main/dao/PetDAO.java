@@ -15,11 +15,20 @@ public class PetDAO {
     public static ObservableList<Pet> searchPet(String petName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner', pt.type 'type', ps.size 'size' " +
-                "FROM Pets p " +
-                "JOIN Customers cs ON cs.id = p.Customers_id " +
-                "JOIN PetTypes pt ON pt.id = p.PetTypes_id " +
-                "JOIN PetSizes ps ON ps.id = p.PetSizes_id " +
+        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', " +
+                "cs.name AS 'owner' , pt.type AS 'type', ps.size AS 'size', " +
+                "p.createdAt, p.updatedAt, p.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted'  " +
+                "FROM pets AS p " +
+                "JOIN Customers AS cs ON cs.id = p.Customers_id " +
+                "JOIN PetTypes AS pt ON pt.id = p.PetTypes_id " +
+                "JOIN PetSizes AS ps ON ps.id = p.PetSizes_id " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = p.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = p.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = p.deletedBy " +
                 "WHERE p.name LIKE '%" + petName + "%' AND (p.deletedAt IS NULL AND cs.deletedAt IS NULL AND ps.deletedAt IS NULL);";
 
         //Execute SELECT Statement
@@ -61,11 +70,21 @@ public class PetDAO {
     public static ObservableList<Pet> searchPets() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', cs.name AS 'owner' , pt.type AS 'type', ps.size AS 'size' " +
-                "FROM Pets AS p " +
+        String selectStmt = "SELECT p.id AS 'id', p.name AS 'name', p.dateBirth AS 'dateBirth', " +
+                "cs.name AS 'owner' , pt.type AS 'type', ps.size AS 'size', " +
+                "p.createdAt, p.updatedAt, p.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted'  " +
+                "FROM pets AS p " +
                 "JOIN Customers AS cs ON cs.id = p.Customers_id " +
                 "JOIN PetTypes AS pt ON pt.id = p.PetTypes_id " +
-                "JOIN PetSizes AS ps ON ps.id = p.PetSizes_id WHERE (p.deletedAt IS NULL AND cs.deletedAt IS NULL AND ps.deletedAt IS NULL);";
+                "JOIN PetSizes AS ps ON ps.id = p.PetSizes_id " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = p.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = p.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = p.deletedBy " +
+                "WHERE (p.deletedAt IS NULL AND cs.deletedAt IS NULL AND ps.deletedAt IS NULL);";
 
         //Execute SELECT Statement
         try {
@@ -100,6 +119,12 @@ public class PetDAO {
             pet.setCustomer_name(rs.getString("owner"));
             pet.setPetType_name(rs.getString("type"));
             pet.setPetSize_name(rs.getString("size"));
+            pet.setCreatedAt(rs.getTimestamp("createdAt"));
+            pet.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            pet.setDeletedAt(rs.getTimestamp("deletedAt"));
+            pet.setCreatedBy(rs.getString("Name Created"));
+            pet.setUpdatedBy(rs.getString("Name Updated"));
+            pet.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add pet to the ObservableList
             petList.add(pet);

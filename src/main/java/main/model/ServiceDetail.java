@@ -2,7 +2,7 @@ package main.model;
 
 import javafx.beans.property.*;
 
-public class ServiceDetail {
+public class ServiceDetail extends Logs{
     private IntegerProperty id;
     private IntegerProperty serviceId;
     private IntegerProperty petTypeId;

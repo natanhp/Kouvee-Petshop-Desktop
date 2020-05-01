@@ -2,7 +2,7 @@ package main.model;
 
 import javafx.beans.property.*;
 
-public class PetSize {
+public class PetSize extends Logs {
 
     private IntegerProperty Id;
     private StringProperty size;

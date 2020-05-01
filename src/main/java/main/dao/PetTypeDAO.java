@@ -14,7 +14,16 @@ public class PetTypeDAO {
     public static ObservableList<PetType> searchPetType(String ptName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  PetTypes WHERE type LIKE '%" + ptName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT pt.id AS 'id', pt.type AS 'type', pt.createdAt, pt.updatedAt, pt.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM PetTypes pt " +
+                "LEFT JOIN employees e ON " +
+                "e.id = pt.createdBy " +
+                "LEFT JOIN employees m ON " +
+                "m.id = pt.updatedBy " +
+                "LEFT JOIN employees l ON " +
+                "l.id = pt.deletedBy " +
+                "WHERE pt.type LIKE '%" + ptName + "%' AND pt.deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -46,7 +55,16 @@ public class PetTypeDAO {
     public static ObservableList<PetType> searchPetTypes() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM PetTypes WHERE deletedAt IS NULL";
+        String selectStmt = "SELECT pt.id AS 'id', pt.type AS 'type', pt.createdAt, pt.updatedAt, pt.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM PetTypes pt " +
+                "LEFT JOIN employees e ON " +
+                "e.id = pt.createdBy " +
+                "LEFT JOIN employees m ON " +
+                "m.id = pt.updatedBy " +
+                "LEFT JOIN employees l ON " +
+                "l.id = pt.deletedBy " +
+                "WHERE pt.deletedAt IS NUll";
 
         //Execute SELECT Statement
         try {
@@ -77,6 +95,12 @@ public class PetTypeDAO {
             pt = new PetType();
             pt.setId(rs.getInt("id"));
             pt.setType(rs.getString("type"));
+            pt.setCreatedAt(rs.getTimestamp("createdAt"));
+            pt.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            pt.setDeletedAt(rs.getTimestamp("deletedAt"));
+            pt.setCreatedBy(rs.getString("Name Created"));
+            pt.setUpdatedBy(rs.getString("Name Updated"));
+            pt.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add pettype to the ObservableList
             ptList.add(pt);

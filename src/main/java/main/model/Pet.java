@@ -4,7 +4,7 @@ import javafx.beans.property.*;
 
 import java.util.Date;
 
-public class Pet {
+public class Pet extends Logs {
 
     private IntegerProperty Id;
     private StringProperty Customer_name;

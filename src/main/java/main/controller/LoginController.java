@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import main.dao.EmployeeDAO;
 import main.model.Employee;
 import main.util.DBUtil;
+import main.util.LimitedTextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +37,7 @@ public class LoginController implements Initializable {
     private Button btnLogin;
 
     @FXML
-    private TextField txtUname;
+    private LimitedTextField txtUname;
 
     @FXML
     private TextField txtPawd;
@@ -112,6 +113,8 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        txtUname.setEmailField();
 
         if (conn == null) {
             lblErrors.setTextFill(Color.TOMATO);

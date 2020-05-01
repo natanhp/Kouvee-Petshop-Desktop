@@ -14,7 +14,18 @@ public class SupplierDAO {
     public static ObservableList<Supplier> searchSupplier(String sprName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM Suppliers WHERE name LIKE '%" + sprName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT spr.idSupplier, spr.name AS 'Supplier Name', spr.address, spr.phoneNumber, " +
+                "spr.createdAt, spr.updatedAt, spr.deletedAt, e.name AS 'Name Created', m.name AS 'Name Updated', " +
+                "l.name AS 'Name Deleted' " +
+                "FROM suppliers AS spr " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = spr.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = spr.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = spr.deletedBy " +
+                "WHERE spr.name LIKE '%" + sprName + "%' " +
+                "AND spr.deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -39,6 +50,12 @@ public class SupplierDAO {
             spr.setName(rs.getString("name"));
             spr.setPhoneNumber(rs.getString("phoneNumber"));
             spr.setAddress(rs.getString("address"));
+            spr.setCreatedAt(rs.getTimestamp("createdAt"));
+            spr.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            spr.setDeletedAt(rs.getTimestamp("deletedAt"));
+            spr.setCreatedBy(rs.getString("Name Created"));
+            spr.setUpdatedBy(rs.getString("Name Updated"));
+            spr.setDeletedBy(rs.getString("Name Deleted"));
         }
 
         return spr;
@@ -48,7 +65,17 @@ public class SupplierDAO {
     public static ObservableList<Supplier> searchSuppliers() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM Suppliers WHERE deletedAt IS NULL";
+        String selectStmt = "SELECT spr.idSupplier, spr.name AS 'Supplier Name', spr.address, spr.phoneNumber, " +
+                "spr.createdAt, spr.updatedAt, spr.deletedAt, e.name AS 'Name Created', m.name AS 'Name Updated', " +
+                "l.name AS 'Name Deleted' " +
+                "FROM suppliers AS spr " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = spr.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = spr.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = spr.deletedBy " +
+                "WHERE spr.deletedAt IS NUll";
 
         //Execute SELECT Statement
         try {
@@ -77,9 +104,15 @@ public class SupplierDAO {
             Supplier spr = new Supplier();
             spr = new Supplier();
             spr.setId(rs.getInt("idSupplier"));
-            spr.setName(rs.getString("name"));
+            spr.setName(rs.getString("Supplier Name"));
             spr.setPhoneNumber(rs.getString("phoneNumber"));
             spr.setAddress(rs.getString("address"));
+            spr.setCreatedAt(rs.getTimestamp("createdAt"));
+            spr.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            spr.setDeletedAt(rs.getTimestamp("deletedAt"));
+            spr.setCreatedBy(rs.getString("Name Created"));
+            spr.setUpdatedBy(rs.getString("Name Updated"));
+            spr.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add supplier to the ObservableList
             sprList.add(spr);

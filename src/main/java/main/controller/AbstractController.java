@@ -2,10 +2,10 @@ package main.controller;
 
 public abstract class AbstractController {
     protected LoginController loginController;
-    protected CustomerController customerController;
+    protected CustomerSecondaryController customerController;
     protected EmployeeController employeeController;
     protected MainMenuController mainMenuController;
-    protected PetController petController;
+    protected PetSecondaryController petController;
     protected PetSizeController petSizeController;
     protected ProductController ProductController;
     protected ServiceController serviceController;

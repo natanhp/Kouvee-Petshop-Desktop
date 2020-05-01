@@ -97,13 +97,17 @@
                               <TableColumn fx:id="prQty" editable="false" minWidth="80.0" prefWidth="150.0" text="JUMLAH" />
                               <TableColumn fx:id="prMinQty" editable="false" minWidth="100.0" prefWidth="200.0" text="JUMLAH MINIMAL" />
                               <TableColumn fx:id="prPrice" editable="false" minWidth="80.0" prefWidth="100.0" text="HARGA" />
+                              <TableColumn fx:id="prCreatedAt" minWidth="100.0" prefWidth="200.0" text="CREATED AT" />
+                              <TableColumn fx:id="prUpdatedAt" minWidth="100.0" prefWidth="200.0" text="UPDATED AT" />
+                              <TableColumn fx:id="prDeletedAt" minWidth="100.0" prefWidth="200.0" text="DELETED AT" />
+                              <TableColumn fx:id="prCreatedBy" minWidth="100.0" prefWidth="200.0" text="CREATED BY" />
+                              <TableColumn fx:id="prUpdatedBy" minWidth="100.0" prefWidth="200.0" text="UPDATED BY" />
+                              <TableColumn fx:id="prDeletedBy" minWidth="100.0" prefWidth="200.0" text="DELETED BY" />
+
                            </columns>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
                         </TableView>
                         <GridPane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                            <columnConstraints>
@@ -338,7 +342,7 @@
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>
                         </Spinner>
-                        <Spinner fx:id="spinHarga" maxWidth="1.7976931348623157E308" prefHeight="30.0" style="-fx-background-color: WHITE;" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                        <Spinner fx:id="spinHarga" editable="true" maxWidth="1.7976931348623157E308" prefHeight="30.0" style="-fx-background-color: WHITE;" GridPane.columnIndex="5" GridPane.rowIndex="1">
                            <effect>
                               <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                            </effect>

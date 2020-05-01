@@ -14,7 +14,16 @@ public class ServiceDAO {
     public static ObservableList<Service> searchService(String sName) throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  Services WHERE serviceName LIKE '%" + sName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT s.id AS 'id', s.serviceName, s.createdAt, s.updatedAt, s.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM Services AS s " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = s.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = s.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = s.deletedBy " +
+                "WHERE s.serviceName LIKE '%" + sName + "%' AND s.deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -46,7 +55,16 @@ public class ServiceDAO {
     public static ObservableList<Service> searchServices() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM Services WHERE deletedAt IS NULL";
+        String selectStmt = "SELECT s.id AS 'id', s.serviceName, s.createdAt, s.updatedAt, s.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM Services AS s " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = s.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = s.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = s.deletedBy " +
+                "WHERE s.deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -77,6 +95,12 @@ public class ServiceDAO {
             s = new Service();
             s.setId(rs.getInt("id"));
             s.setServiceName(rs.getString("serviceName"));
+            s.setCreatedAt(rs.getTimestamp("createdAt"));
+            s.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            s.setDeletedAt(rs.getTimestamp("deletedAt"));
+            s.setCreatedBy(rs.getString("Name Created"));
+            s.setUpdatedBy(rs.getString("Name Updated"));
+            s.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add service to the ObservableList
             sList.add(s);

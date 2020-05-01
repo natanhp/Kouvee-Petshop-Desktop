@@ -16,10 +16,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.dao.SupplierDAO;
 import main.model.Supplier;
+import main.util.LimitedTextField;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -33,7 +35,7 @@ public class SupplierController implements Initializable {
     private Button btnHapus;
 
     @FXML
-    private TextField txtTelp;
+    private LimitedTextField txtTelp;
 
     @FXML
     private TextField txtNama;
@@ -91,6 +93,24 @@ public class SupplierController implements Initializable {
 
     @FXML
     private ImageView editLogo;
+
+    @FXML
+    private TableColumn<Supplier, Timestamp> sprCreatedAt;
+
+    @FXML
+    private TableColumn<Supplier, Timestamp> sprUpdatedAt;
+
+    @FXML
+    private TableColumn<Supplier, Timestamp> sprDeletedAt;
+
+    @FXML
+    private TableColumn<Supplier, String> sprCreatedBy;
+
+    @FXML
+    private TableColumn<Supplier, String> sprUpdatedBy;
+
+    @FXML
+    private TableColumn<Supplier, String> sprDeletedBy;
 
     public static void getUserLogin(String loginID) {
 
@@ -293,17 +313,12 @@ public class SupplierController implements Initializable {
 
     @FXML
     void insertSupplier(ActionEvent event) throws ClassNotFoundException {
-        String name = txtNama.getText().trim();
-        String address = txtAlamat.getText().trim();
-        String phone = txtTelp.getText().trim();
+        String name = txtNama.getText();
+        String address = txtAlamat.getText();
+        String phone = txtTelp.getText();
 
         if (name.equals("") || address.equals("") || phone.equals("")) {
-            return;
-        }
-
-        Pattern pattern = Pattern.compile("\\d+");
-        if (!pattern.matcher(phone).matches()) {
-            return;
+            DialogShowInfo("Field should not be empty");
         }
 
         try {
@@ -322,10 +337,20 @@ public class SupplierController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        txtTelp.setPhoneNumberField();
+        txtTelp.setMaxLength(13);
+
         sprId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         sprName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         sprAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         sprPhoneNumber.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+        sprCreatedAt.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+        sprUpdatedAt.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
+        sprDeletedAt.setCellValueFactory(cellData -> cellData.getValue().deletedAtProperty());
+        sprCreatedBy.setCellValueFactory(cellData -> cellData.getValue().createdByProperty());
+        sprUpdatedBy.setCellValueFactory(cellData -> cellData.getValue().updatedByProperty());
+        sprDeletedBy.setCellValueFactory(cellData -> cellData.getValue().deletedByProperty());
 
         loadAllData();
     }

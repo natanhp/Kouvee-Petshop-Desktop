@@ -14,7 +14,16 @@ public class PetSizeDAO {
     public static ObservableList<PetSize> searchPetSize(String psName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT * FROM  PetSizes WHERE size LIKE '%" + psName + "%' AND deletedAt IS NULL;";
+        String selectStmt = "SELECT ps.id AS 'id', ps.size AS 'size', ps.createdAt, ps.updatedAt, ps.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM Petsizes AS ps " +
+                "LEFT JOIN employees AS e ON " +
+                "e.id = ps.createdBy " +
+                "LEFT JOIN employees AS m ON " +
+                "m.id = ps.updatedBy " +
+                "LEFT JOIN employees AS l ON " +
+                "l.id = ps.deletedBy " +
+                "WHERE ps.size LIKE '%" + psName + "%' AND ps.deletedAt IS NULL;";
 
         //Execute SELECT Statement
         try {
@@ -46,7 +55,16 @@ public class PetSizeDAO {
     public static ObservableList<PetSize> searchPetSizes() throws SQLException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM PetSizes WHERE deletedAt IS NULL";
+        String selectStmt = "SELECT ps.id AS 'id', ps.size AS 'size', ps.createdAt, ps.updatedAt, ps.deletedAt, " +
+                "e.name AS 'Name Created', m.name AS 'Name Updated', l.name AS 'Name Deleted' " +
+                "FROM Petsizes ps " +
+                "LEFT JOIN employees e ON " +
+                "e.id = ps.createdBy " +
+                "LEFT JOIN employees m ON " +
+                "m.id = ps.updatedBy " +
+                "LEFT JOIN employees l ON " +
+                "l.id = ps.deletedBy " +
+                "WHERE ps.deletedAt IS NUll";
 
         //Execute SELECT Statement
         try {
@@ -76,6 +94,12 @@ public class PetSizeDAO {
             ps = new PetSize();
             ps.setId(rs.getInt("id"));
             ps.setSize(rs.getString("size"));
+            ps.setCreatedAt(rs.getTimestamp("createdAt"));
+            ps.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            ps.setDeletedAt(rs.getTimestamp("deletedAt"));
+            ps.setCreatedBy(rs.getString("Name Created"));
+            ps.setUpdatedBy(rs.getString("Name Updated"));
+            ps.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add petsize to the ObservableList
             psList.add(ps);

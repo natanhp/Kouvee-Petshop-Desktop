@@ -2,7 +2,7 @@ package main.model;
 
 import javafx.scene.image.ImageView;
 
-public class ProductImage {
+public class ProductImage extends Logs{
 
     private ImageView imageView;
 
