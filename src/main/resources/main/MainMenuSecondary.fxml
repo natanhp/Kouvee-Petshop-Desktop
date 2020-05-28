@@ -78,7 +78,8 @@
                               <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="0.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints maxHeight="175.7332275390625" minHeight="10.0" prefHeight="120.0" vgrow="ALWAYS" />
+                              <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="ALWAYS" />
+                              <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="ALWAYS" />
                            </rowConstraints>
                            <children>
                               <Button fx:id="btnKelHewan" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="140.0" prefWidth="440.0" style="-fx-background-radius: 25;" stylesheets="@../styleImageButton.css" text="Hewan Peliharaan" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -121,6 +122,45 @@
                                  <styleClass>
                                     <String fx:value="menuImageButton" />
                                     <String fx:value="customerButton" />
+                                 </styleClass>
+                                 <graphic>
+                                    <ImageView fitHeight="107.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnPesanLayanan" alignment="CENTER" graphicTextGap="0.0" layoutX="243.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="140.0" prefWidth="440.0" style="-fx-background-radius: 25;" stylesheets="@../styleImageButton.css" text="Layanan" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow color="#00000033" height="5.25" offsetY="2.0" radius="0.8125" width="0.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <styleClass>
+                                    <String fx:value="menuImageButton" />
+                                    <String fx:value="orderServiceButton" />
+                                 </styleClass>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <graphic>
+                                    <ImageView fitHeight="105.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnPesanProduk" alignment="CENTER" graphicTextGap="0.0" layoutX="655.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="140.0" prefWidth="440.0" style="-fx-background-radius: 25;" stylesheets="@../styleImageButton.css" text="Produk" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow color="#00000033" height="5.25" offsetY="2.0" radius="0.8125" width="0.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <styleClass>
+                                    <String fx:value="menuImageButton" />
+                                    <String fx:value="orderProductButton" />
                                  </styleClass>
                                  <graphic>
                                     <ImageView fitHeight="107.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />

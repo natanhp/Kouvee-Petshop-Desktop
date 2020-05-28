@@ -396,7 +396,7 @@ public class EmployeeController implements Initializable {
         }
 
         Pattern pattern = Pattern.compile("\\d+");
-        if (pattern.matcher(phone).matches()) {
+        if (!pattern.matcher(phone).matches()) {
             DialogShowInfo("Phone number must be numeric");
             return;
         }

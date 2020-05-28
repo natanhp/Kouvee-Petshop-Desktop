@@ -91,7 +91,7 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets />
                                  </GridPane.margin>
                                  <effect>
                                     <DropShadow color="#00000033" height="5.25" offsetY="2.0" radius="0.8125" width="0.0" />
@@ -111,7 +111,7 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets />
                                  </GridPane.margin>
                                  <effect>
                                     <DropShadow color="#00000033" height="5.25" offsetY="2.0" radius="0.8125" width="0.0" />
@@ -126,9 +126,9 @@
                                     <ImageView fitHeight="75.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" translateX="-80.0" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="btnKelUkrHewan" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="petSizeButton" stylesheets="@../styleImageButton.css" text="Ukuran Hewan" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+                              <Button fx:id="btnKelUkrHewan" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="petSizeButton" stylesheets="@../styleImageButton.css" text="Ukuran Hewan" textAlignment="CENTER" textFill="#ffed00" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                                  <GridPane.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
@@ -151,7 +151,7 @@
                                     <Font size="18.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets />
                                  </GridPane.margin>
                                  <effect>
                                     <DropShadow color="#00000033" height="5.25" offsetY="2.0" radius="0.8125" width="0.0" />
@@ -168,7 +168,7 @@
                               </Button>
                               <Button fx:id="btnKelSupplier" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#triggerEvent" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="supplierButton" stylesheets="@../styleImageButton.css" text="Supplier" textFill="#ffed00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                                  <GridPane.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
@@ -186,7 +186,7 @@
                                     <ImageView fitHeight="75.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" translateX="-80.0" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="btnServiceDetail" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="serviceButton" stylesheets="@../styleImageButton.css" text="Detail Layanan" textAlignment="CENTER" textFill="#ffed00" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <Button fx:id="btnServiceDetail" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="serviceButton" stylesheets="@../styleImageButton.css" text="Detail Layanan" textAlignment="CENTER" textFill="#ffed00" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -205,7 +205,7 @@
                               </Button>
                               <Button fx:id="btnKelProduk" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" stylesheets="@../styleImageButton.css" text="Produk" textFill="#ffed00" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                                  <GridPane.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="18.0" />
@@ -226,6 +226,23 @@
                                     <String fx:value="productButton" />
                                     <String fx:value="productButton" />
                                  </styleClass>
+                              </Button>
+                              <Button alignment="CENTER_RIGHT" layoutX="427.0" layoutY="134.0" mnemonicParsing="false" onAction="#triggerEvent" onMouseClicked="#handleMainButtonAction" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 25;" styleClass="reportButton" stylesheets="@../styleImageButton.css" text="Laporan" textFill="#ffed00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow color="#00000033" height="5.25" offsetY="2.0" radius="0.8125" width="0.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <padding>
+                                    <Insets right="60.0" />
+                                 </padding>
+                                 <graphic>
+                                    <ImageView fitHeight="75.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" translateX="-80.0" />
+                                 </graphic>
                               </Button>
                            </children>
                            <HBox.margin>

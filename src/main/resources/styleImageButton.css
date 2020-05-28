@@ -57,6 +57,50 @@
    -fx-background-position: 15%;
 }
 
+.orderProductButton {
+    -fx-background-color : BLACK;
+    -fx-border-radius: 25;
+    -fx-text-fill: #FFE300;
+    -fx-background-image: url("icons/Product-white.png");
+    -fx-background-size: 200px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 15%;
+ }
+
+ .orderProductButton:hover {
+    -fx-background-color : #CB7A00;
+    -fx-border-color: WHITE;
+    -fx-border-radius: 25;
+    -fx-border-width: 2;
+    -fx-text-fill: WHITE;
+    -fx-background-image: url("icons/Product-black.png");
+    -fx-background-size: 200px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 15%;
+ }
+
+ .orderServiceButton {
+     -fx-background-color : BLACK;
+     -fx-border-radius: 25;
+     -fx-text-fill: #FFE300;
+     -fx-background-image: url("icons/Service-white.png");
+     -fx-background-size: 200px;
+     -fx-background-repeat: no-repeat;
+     -fx-background-position: 15%;
+  }
+
+  .orderServiceButton:hover {
+     -fx-background-color : #CB7A00;
+     -fx-border-color: WHITE;
+     -fx-border-radius: 25;
+     -fx-border-width: 2;
+     -fx-text-fill: WHITE;
+     -fx-background-image: url("icons/Service-black.png");
+     -fx-background-size: 200px;
+     -fx-background-repeat: no-repeat;
+     -fx-background-position: 15%;
+  }
+
 /*
 For Owner Main Menu
 */
@@ -205,4 +249,26 @@ For Owner Main Menu
    -fx-background-size: 130px;
    -fx-background-repeat: no-repeat;
    -fx-background-position: 20%;
+}
+
+.reportButton {
+   -fx-background-color : BLACK;
+   -fx-border-radius: 25;
+   -fx-text-fill: #FFE300;
+   -fx-background-image: url("icons/report-white.png");
+   -fx-background-size: 85px;
+   -fx-background-repeat: no-repeat;
+   -fx-background-position: 25%;
+}
+
+.reportButton:hover {
+   -fx-background-color : #CB7A00;
+   -fx-border-color: WHITE;
+   -fx-border-radius: 25;
+   -fx-border-width: 2;
+   -fx-text-fill: WHITE;
+   -fx-background-image: url("icons/report-black.png");
+   -fx-background-size: 85px;
+   -fx-background-repeat: no-repeat;
+   -fx-background-position: 25%;
 }

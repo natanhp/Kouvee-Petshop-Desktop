@@ -6,7 +6,7 @@ plugins {
 
 javafx {
     version = "13"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.base', 'javafx.swing' ]
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base', 'javafx.swing']
 }
 
 group 'org.example'
@@ -23,14 +23,16 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
     // https://mvnrepository.com/artifact/at.favre.lib/bcrypt
     compile group: 'at.favre.lib', name: 'bcrypt', version: '0.9.0'
-
+    // https://mvnrepository.com/artifact/com.lowagie/itext
+    compile group: 'com.lowagie', name: 'itext', version: '2.1.7'
+// https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports
+    compile group: 'net.sf.jasperreports', name: 'jasperreports', version: '6.10.0'
 }
-
 mainClassName = "main.Main"
 jar {
     enabled = true
 
-    manifest {
+manifest {
         attributes(
                 'Main-Class': mainClassName
         )
