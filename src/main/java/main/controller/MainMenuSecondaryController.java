@@ -70,6 +70,12 @@ public class MainMenuSecondaryController implements Initializable {
     @FXML
     private Button btnMainKeluar;
 
+    @FXML
+    private Button btnPesanLayanan;
+
+    @FXML
+    private Button btnPesanProduk;
+
     public static void getUnameLogin (String uname) {
         returnName = uname;
     }
@@ -124,6 +130,12 @@ public class MainMenuSecondaryController implements Initializable {
                 }
                 else if(me.getSource() == btnKelHewan) {
                     scene = new Scene(FXMLLoader.load(getClass().getResource("/main/PetSecondaryView.fxml")));
+                }
+                else if(me.getSource() == btnPesanLayanan) {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceOrderTableView.fxml")));
+                }
+                else if(me.getSource() == btnPesanProduk) {
+                    scene = new Scene(FXMLLoader.load(getClass().getResource("/main/OrderProductView.fxml")));
                 }
                 
                 stage.setScene(scene);

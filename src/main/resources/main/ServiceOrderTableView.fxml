@@ -87,7 +87,7 @@
                                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                                     </effect>
                                 </Button>
-                        <Button fx:id="btnPemesanan" alignment="CENTER" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonService" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" styleClass="toMenuButton" stylesheets="@../styleButtonSecondary.css" text="Pemesanan Layanan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3">
+                        <Button fx:id="btnPeliharaan" alignment="CENTER" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonService" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" styleClass="toMenuButton" stylesheets="@../styleButtonSecondary.css" text="Peliharaan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3">
                            <font>
                               <Font name="Franklin Gothic Medium" size="14.0" />
                            </font>
@@ -272,7 +272,7 @@
                                     </Label>
                                  </children>
                               </GridPane>
-                              <TextField fx:id="txtNama" prefWidth="165.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.rowIndex="1">
+                              <TextField fx:id="txtOrder" prefWidth="165.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="120.0" />
                                  </GridPane.margin>
@@ -280,7 +280,7 @@
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                                  </effect>
                               </TextField>
-                              <CheckBox mnemonicParsing="false" text="CheckBox" GridPane.rowIndex="2">
+                              <CheckBox fx:id="checkBoxIsFinished" mnemonicParsing="false" text="Selesai ?" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
@@ -294,7 +294,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </CheckBox>
-                              <ComboBox fx:id="txtPet" editable="true" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <ComboBox fx:id="comboPet" editable="true" onMouseClicked="#selectPet" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="120.0" />
                                  </GridPane.margin>
@@ -305,7 +305,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </ComboBox>
-                              <ComboBox fx:id="txtService" editable="true" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <ComboBox fx:id="comboService" editable="true" onMouseClicked="#selectService" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="120.0" />
                                  </GridPane.margin>
@@ -414,7 +414,7 @@
                               <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
                            </rowConstraints>
                            <children>
-                              <Button fx:id="btnBersih" mnemonicParsing="false" onMouseClicked="#clearFields" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Bersihkan Entri" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                              <Button fx:id="btnBersih" mnemonicParsing="false" onAction="#clearFields" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Bersihkan Entri" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                  <effect>
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
                                  </effect>
@@ -428,7 +428,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btnPesan" mnemonicParsing="false" onMouseClicked="#orderService" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Pesanan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                              <Button fx:id="btnPesan" mnemonicParsing="false" onAction="#orderService" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Pesanan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                                  <effect>
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
                                  </effect>
@@ -442,7 +442,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btnPerbarui" mnemonicParsing="false" onMouseClicked="#updateOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Perbarui" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                              <Button fx:id="btnPerbarui" mnemonicParsing="false" onAction="#updateOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Perbarui" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                                  <effect>
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
                                  </effect>
@@ -456,7 +456,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btnHapus" mnemonicParsing="false" onMouseClicked="#deleteOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Hapus" GridPane.columnIndex="3" GridPane.valignment="CENTER">
+                              <Button fx:id="btnHapus" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Hapus" GridPane.columnIndex="3" GridPane.valignment="CENTER">
                                  <effect>
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
                                  </effect>
@@ -470,7 +470,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btnTambah" mnemonicParsing="false" onMouseClicked="#deleteOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Layanan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.valignment="CENTER">
+                              <Button fx:id="btnTambah" mnemonicParsing="false" onAction="#addServiceOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Layanan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.valignment="CENTER">
                                  <effect>
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
                                  </effect>

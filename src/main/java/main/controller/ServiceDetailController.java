@@ -303,9 +303,9 @@ public class ServiceDetailController implements Initializable {
         }
 
         try {
-            int tipe = comboTipe.getValue().getId();
-            int ukr = comboUkuran.getValue().getId();
-            int serviceId = comboService.getValue().getId();
+            String tipe = comboTipe.getValue().getType();
+            String ukr = comboUkuran.getValue().getSize();
+            String serviceId = comboService.getValue().getServiceName();
             ;
 
             ServiceDetail serviceDetail = new ServiceDetail();
@@ -337,9 +337,9 @@ public class ServiceDetailController implements Initializable {
         }
 
         try {
-            int tipe = comboTipe.getValue().getId();
-            int ukr = comboUkuran.getValue().getId();
-            int serviceId = comboService.getValue().getId();
+            String tipe = comboTipe.getValue().getType();
+            String ukr = comboUkuran.getValue().getSize();
+            String serviceId = comboService.getValue().getServiceName();
 
             ServiceDetail serviceDetail = new ServiceDetail();
             serviceDetail.setPetSizeId(ukr);
@@ -493,19 +493,19 @@ public class ServiceDetailController implements Initializable {
             comboUkuran.getItems();
 
             for (PetType petType : comboTipe.getItems()) {
-                if (petType.getId() == serviceDetail.getPetTypeId()) {
+                if (petType.getType().equals(serviceDetail.getPetTypeId())) {
                     comboTipe.getSelectionModel().select(petType);
                 }
             }
 
             for (PetSize petSize : comboUkuran.getItems()) {
-                if (petSize.getId() == serviceDetail.getPetSizeId()) {
+                if (petSize.getSize().equals(serviceDetail.getPetSizeId())) {
                     comboUkuran.getSelectionModel().select(petSize);
                 }
             }
 
             for (Service service : comboService.getItems()) {
-                if (service.getId() == serviceDetail.getServiceId()) {
+                if (service.getServiceName().equals(serviceDetail.getServiceId())) {
                     comboService.getSelectionModel().select(service);
                 }
             }

@@ -2,6 +2,7 @@ package main.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.model.Pet;
 import main.model.ServiceDetail;
 import main.util.DBUtil;
 
@@ -43,19 +44,51 @@ public class ServiceDetailDAO {
         }
     }
 
+    //SELECT ServiceDetails
+    public static ObservableList<ServiceDetail> searchServiceDetails() throws SQLException, ClassNotFoundException {
+
+        //Declare a SELECT statement
+        String selectStmt = "SELECT sd.id AS serviceDetail_id, s.serviceName AS serviceName, pt.type AS type, ps.size AS size, sd.price AS price" +
+                " FROM Servicedetails AS sd" +
+                " JOIN Services AS s" +
+                " ON s.id = sd.Services_id" +
+                " LEFT JOIN Petsizes AS ps" +
+                " ON sd.PetSizes_id = ps.id" +
+                " LEFT JOIN Pettypes AS pt" +
+                " ON sd.PetTypes_id = pt.id" +
+                " ORDER BY s.serviceName, sd.id, pt.type ASC, ps.size DESC;";
+
+        //Execute SELECT Statement
+        try {
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsServiceDetails = DBUtil.dbExecuteQuery(selectStmt);
+
+            //Send ResultSet to the getPetList method and get pet object
+
+            //Return Pet Object
+            return getServiceDetailList(rsServiceDetails);
+        } catch (SQLException ex) {
+            System.out.println("SQL Select Operation has been failed: " + ex);
+
+            //Return exception
+            throw ex;
+        }
+    }
+
     public static ObservableList<ServiceDetail> getServiceDetailList(ResultSet rs) throws SQLException {
         ObservableList<ServiceDetail> serviceDetails = FXCollections.observableArrayList();
 
         while (rs.next()) {
             ServiceDetail serviceDetail = new ServiceDetail();
-            serviceDetail.setId(rs.getInt("id"));
-            serviceDetail.setCompleteName(rs.getString("completeName"));
+            serviceDetail.setId(rs.getInt("serviceDetail_id"));
             serviceDetail.setPrice(rs.getDouble("price"));
-            serviceDetail.setServiceId(rs.getInt("serviceId"));
-            serviceDetail.setPetTypeId(rs.getInt("petTypeId"));
-            serviceDetail.setPetSizeId(rs.getInt("petSizeId"));
+            serviceDetail.setServiceId(rs.getString("serviceName"));
+            serviceDetail.setPetTypeId(rs.getString("type"));
+            serviceDetail.setPetSizeId(rs.getString("size"));
             serviceDetails.add(serviceDetail);
 
+            //Add pet to the ObservableList
+            serviceDetails.add(serviceDetail);
         }
 
         return serviceDetails;

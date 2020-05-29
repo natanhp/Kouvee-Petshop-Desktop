@@ -2,121 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b21873d9-f428-4960-bc01-0fe0a5992836" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/controller/OrderProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/controller/ServiceOrderTableController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/model/ServiceTransactionDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/productOrder-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/productOrder-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/report-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/report-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/serviceOrder-black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/serviceOrder-white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/OrderProductView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/OrderServiceView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/PaymentProductView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/Report.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/main/ServiceOrderTableView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/reports/Laporan_Pendapatan_Tahunan.jrxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileContent/fileContent.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/dao/ServiceTransactionDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/dao/ServiceTransactionDetailDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/model/ServiceTransaction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/Main$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/AbstractController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerController$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/CustomerSecondaryController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/EmployeeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/MainMenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/MainMenuSecondaryController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSecondaryController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetSizeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/PetTypeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/ProductController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/ServiceController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/controller/SupplierController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/CustomerDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/EmployeeDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetSizeDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/PetTypeDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/ProductDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/ServiceDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/dao/SupplierDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/Customer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/Employee.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/Person.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/Pet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/PetSize.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/PetType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/Product.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/Service.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/model/Supplier.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/util/BCryptHash.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/util/DBUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/main/util/FxDatePickerConverter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/Dog-white.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/Dog.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/baseline_add_circle_black_18dp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/baseline_add_circle_white_18dp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/baseline_delete_black_18dp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/baseline_delete_white_18dp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/baseline_edit_black_18dp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/baseline_edit_white_18dp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/customer-white.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/icons/customer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/logo/kouveeLogo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/CustomerSecondaryView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/CustomerView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/EmployeeView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/Main.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/MainMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/MainMenuSecondary.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetSecondaryView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetSizeView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetTypeView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/PetView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/ProductView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/ServiceView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/main/SupplierView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/styleButton.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/styleImageButton.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/styleOpsLabels.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/styleTable.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main/MainMenuSecondary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/MainMenuSecondary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/styleImageButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styleImageButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/MainMenuSecondaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/MainMenuSecondaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/ServiceDetailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/ServiceDetailController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/controller/ServiceOrderTableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/controller/ServiceOrderTableController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/dao/ServiceDetailDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/dao/ServiceDetailDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/model/ServiceDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/model/ServiceDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/model/ServiceTransactionDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/model/ServiceTransactionDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/main/ServiceOrderTableView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main/ServiceOrderTableView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,33 +166,14 @@
     <property name="show.unlinked.gradle.project.popup" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\denni\Kouvee-Petshop-Desktop\src\main\resources\reports" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\denni\Kouvee-Petshop-Desktop\src\main\resources\icons" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\denni\Kouvee-Petshop-Desktop\src\main\resources\reports" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.Kouvee-Petshop-Desktop [test]">
-    <configuration name="Kouvee-Petshop-Desktop [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="assemble" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.Kouvee-Petshop-Desktop [run]">
     <configuration name="Kouvee-Petshop-Desktop [check]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -328,6 +205,25 @@
         <option name="taskNames">
           <list>
             <option value="init" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Kouvee-Petshop-Desktop [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -375,11 +271,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Kouvee-Petshop-Desktop [run]" />
         <item itemvalue="Gradle.Kouvee-Petshop-Desktop [test]" />
         <item itemvalue="Gradle.Kouvee-Petshop-Desktop [check]" />
         <item itemvalue="Gradle.Kouvee-Petshop-Desktop [wrapper]" />
         <item itemvalue="Gradle.Kouvee-Petshop-Desktop [init]" />
-        <item itemvalue="Gradle.Kouvee-Petshop-Desktop [assemble]" />
       </list>
     </recent_temporary>
   </component>
@@ -401,22 +297,30 @@
       <option name="project" value="LOCAL" />
       <updated>1588332914319</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="New Sprint 3">
+      <created>1590667434637</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1590667434637</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added LimitedTextField" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added LimitedTextField" />
+    <MESSAGE value="New Sprint 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="New Sprint 3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587954996809">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1587954996809" />
-    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser" timestamp="1590481271048">
+    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser" timestamp="1590717209110">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1590481271048" />
+    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1590717209110" />
     <state x="618" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1590382835682">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -429,10 +333,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1588332763835" />
-    <state x="371" y="6" key="CommitChangelistDialog2" timestamp="1590667418474">
+    <state x="371" y="6" key="CommitChangelistDialog2" timestamp="1590731897889">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="371" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590667418474" />
+    <state x="371" y="6" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590731897889" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1590300166630">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -441,34 +345,50 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="591" y="311" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1587957256586" />
-    <state width="1493" height="151" key="GridCell.Tab.0.bottom" timestamp="1590302139757">
+    <state width="1493" height="151" key="GridCell.Tab.0.bottom" timestamp="1590731343477">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590302139757" />
-    <state width="1493" height="151" key="GridCell.Tab.0.center" timestamp="1590302139757">
+    <state width="1493" height="151" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590731343477" />
+    <state width="1493" height="151" key="GridCell.Tab.0.center" timestamp="1590731343477">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590302139757" />
-    <state width="1493" height="151" key="GridCell.Tab.0.left" timestamp="1590302139757">
+    <state width="1493" height="151" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590731343477" />
+    <state width="1493" height="151" key="GridCell.Tab.0.left" timestamp="1590731343477">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590302139757" />
-    <state width="1493" height="151" key="GridCell.Tab.0.right" timestamp="1590302139757">
+    <state width="1493" height="151" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590731343477" />
+    <state width="1493" height="151" key="GridCell.Tab.0.right" timestamp="1590731343477">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590302139757" />
-    <state x="282" y="0" key="SettingsEditor" timestamp="1590539098086">
+    <state width="1493" height="151" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590731343477" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1590677655308">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="282" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1590539098086" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1590667390969">
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590677655308" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1590677655308">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1590667390969" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1590666259414">
+    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1590677655308" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1590677655308">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1590666259414" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1590677655308" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1590677655308">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1590677655308" />
+    <state x="282" y="0" key="SettingsEditor" timestamp="1590714691990">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="282" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1590714691990" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1590667441480">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1590667441480" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1590731816600">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1590731816600" />
     <state x="209" y="24" key="new project wizard" timestamp="1590300676200">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -477,5 +397,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1590300711049" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1590724899350">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1590724899350" />
   </component>
 </project>

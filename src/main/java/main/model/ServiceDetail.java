@@ -4,31 +4,19 @@ import javafx.beans.property.*;
 
 public class ServiceDetail extends Logs{
     private IntegerProperty id;
-    private IntegerProperty serviceId;
-    private IntegerProperty petTypeId;
-    private IntegerProperty petSizeId;
+    private StringProperty serviceName;
+    private StringProperty petTypeName;
+    private StringProperty petSizeName;
     private DoubleProperty price;
     private StringProperty completeName;
 
     public ServiceDetail() {
         this.id = new SimpleIntegerProperty();
-        this.serviceId = new SimpleIntegerProperty();
-        this.petTypeId = new SimpleIntegerProperty();
-        this.petSizeId = new SimpleIntegerProperty();
+        this.serviceName = new SimpleStringProperty();
+        this.petTypeName = new SimpleStringProperty();
+        this.petSizeName = new SimpleStringProperty();
         this.price = new SimpleDoubleProperty();
         this.completeName = new SimpleStringProperty();
-    }
-
-    public String getCompleteName() {
-        return completeName.get();
-    }
-
-    public StringProperty completeNameProperty() {
-        return completeName;
-    }
-
-    public void setCompleteName(String completeName) {
-        this.completeName.set(completeName);
     }
 
     public int getId() {
@@ -43,40 +31,40 @@ public class ServiceDetail extends Logs{
         this.id.set(id);
     }
 
-    public int getServiceId() {
-        return serviceId.get();
+    public String getServiceId() {
+        return serviceName.get();
     }
 
-    public IntegerProperty serviceIdProperty() {
-        return serviceId;
+    public StringProperty serviceIdProperty() {
+        return serviceName;
     }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId.set(serviceId);
+    public void setServiceId(String serviceId) {
+        this.serviceName.set(serviceId);
     }
 
-    public int getPetTypeId() {
-        return petTypeId.get();
+    public String getPetTypeId() {
+        return petTypeName.get();
     }
 
-    public IntegerProperty petTypeIdProperty() {
-        return petTypeId;
+    public StringProperty petTypeIdProperty() {
+        return petTypeName;
     }
 
-    public void setPetTypeId(int petTypeId) {
-        this.petTypeId.set(petTypeId);
+    public void setPetTypeId(String petTypeId) {
+        this.petTypeName.set(petTypeId);
     }
 
-    public int getPetSizeId() {
-        return petSizeId.get();
+    public String getPetSizeId() {
+        return petSizeName.get();
     }
 
-    public IntegerProperty petSizeIdProperty() {
-        return petSizeId;
+    public StringProperty petSizeIdProperty() {
+        return petSizeName;
     }
 
-    public void setPetSizeId(int petSizeId) {
-        this.petSizeId.set(petSizeId);
+    public void setPetSizeId(String petSizeId) {
+        this.petSizeName.set(petSizeId);
     }
 
     public double getPrice() {
@@ -89,5 +77,17 @@ public class ServiceDetail extends Logs{
 
     public void setPrice(double price) {
         this.price.set(price);
+    }
+
+    public String getCompleteName() {
+        return completeName.get();
+    }
+
+    public StringProperty completeNameProperty() {
+        return completeName;
+    }
+
+    public void setCompleteName(String completeName) {
+        this.completeName.set(completeName);
     }
 }
