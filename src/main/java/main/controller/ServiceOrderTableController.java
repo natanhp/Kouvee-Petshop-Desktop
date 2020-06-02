@@ -1,6 +1,7 @@
 package main.controller;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,8 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import main.dao.*;
@@ -91,7 +94,13 @@ public class ServiceOrderTableController implements Initializable {
     private ImageView addLogo;
 
     @FXML
+    private ImageView addLogoService;
+
+    @FXML
     private Label addLabel;
+
+    @FXML
+    private Label addLabelService;
 
     @FXML
     private ImageView editLogo;
@@ -137,7 +146,6 @@ public class ServiceOrderTableController implements Initializable {
 
     @FXML
     private Button btnTambah;
-
 
     public static void getUserLogin(String loginID) {
 
@@ -185,12 +193,113 @@ public class ServiceOrderTableController implements Initializable {
             stage.close();
 
             try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/OrderServiceView.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/ServiceOrderTableView.fxml")));
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    private void switchOperations(MouseEvent me) {
+        addLabel.setTextFill(Color.WHITE);
+        if(me.getSource() == addLabel) {
+            btnPesan.setDisable(false);
+            btnPerbarui.setDisable(true);
+            btnHapus.setDisable(true);
+            btnTambah.setDisable(true);
+            txtOrder.setDisable(false);
+            comboPet.setDisable(false);
+            comboService.setDisable(false);
+
+            addLabel.setTextFill(Color.WHITE);
+            addLabelService.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_white_18dp.png"));
+            addLogoService.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            addLogoService.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == addLabelService) {
+            btnPesan.setDisable(true);
+            btnPerbarui.setDisable(true);
+            btnHapus.setDisable(true);
+            btnTambah.setDisable(false);
+            txtOrder.setDisable(false);
+            comboPet.setDisable(true);
+            comboService.setDisable(false);
+
+            addLabel.setTextFill(Color.BLACK);
+            addLabelService.setTextFill(Color.WHITE);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            addLogoService.setImage(new Image("icons/baseline_add_circle_white_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            addLogoService.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == editLabel) {
+            btnPesan.setDisable(true);
+            btnPerbarui.setDisable(false);
+            btnHapus.setDisable(true);
+            btnTambah.setDisable(true);
+            txtOrder.setDisable(false);
+            comboPet.setDisable(false);
+            comboService.setDisable(false);
+
+            addLabel.setTextFill(Color.BLACK);
+            addLabelService.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.WHITE);
+            deleteLabel.setTextFill(Color.BLACK);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            addLogoService.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_white_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_black_18dp.png"));
+            addLogo.getImage();
+            addLogoService.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
+        }
+
+        if(me.getSource() == deleteLabel) {
+            btnPesan.setDisable(true);
+            btnPerbarui.setDisable(true);
+            btnHapus.setDisable(false);
+            btnTambah.setDisable(true);
+            txtOrder.setDisable(false);
+            comboPet.setDisable(true);
+            comboService.setDisable(true);
+
+            addLabel.setTextFill(Color.BLACK);
+            addLabelService.setTextFill(Color.BLACK);
+            editLabel.setTextFill(Color.BLACK);
+            deleteLabel.setTextFill(Color.WHITE);
+
+            addLogo.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            addLogoService.setImage(new Image("icons/baseline_add_circle_black_18dp.png"));
+            editLogo.setImage(new Image("icons/baseline_edit_black_18dp.png"));
+            deleteLogo.setImage(new Image("icons/baseline_delete_white_18dp.png"));
+            addLogo.getImage();
+            addLogoService.getImage();
+            editLogo.getImage();
+            deleteLogo.getImage();
         }
     }
 
@@ -234,50 +343,26 @@ public class ServiceOrderTableController implements Initializable {
         orderDate.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
         orderPet.setCellValueFactory(cellData -> cellData.getValue().pets_IdProperty());
         orderService.setCellValueFactory(cellData -> cellData.getValue().serviceIdProperty());
-        orderFinished.setCellValueFactory(cellData -> cellData.getValue().getIsFinished());
-//        orderFinished.setCellValueFactory(cellData -> {
-//            byte[] finished = cellData.getValue().getIsFinished();
-//            Boolean boolean1 = Boolean.valueOf(finished);
-//            boolean boolean2 = Boolean.parseBoolean(finished);
-//            System.out.println(boolean1);
-//            System.out.println(boolean2);
-//
-//            System.out.println(finished);
-//            String string;
-//            if(finished.equals(31))
-//            {
-//                string = "Yes";
-//            }
-//            else
-//            {
-//                string = "No";
-//            }
-//
-//            return new ReadOnlyStringWrapper(string);
-//        });
+        orderFinished.setCellValueFactory(cellData -> {
+            StringProperty finished = cellData.getValue().getIsFinished();
+            String string;
+            if(finished.getValue().matches("1"))
+            {
+                string = "Yes";
+            }
+            else
+            {
+                string = "No";
+            }
 
-//        orderPaid.setCellValueFactory(cellData -> {
-//            String paid = cellData.getValue().isIsPaid();
-//            String string;
-//            if(paid == "1")
-//            {
-//                string = "Yes";
-//            }
-//            else
-//            {
-//                string = "No";
-//            }
-//
-//            return new ReadOnlyStringWrapper(string);
-//        });
+            return new ReadOnlyStringWrapper(string);
+        });
 
         orderTotal.setCellValueFactory(cellData -> cellData.getValue().totalProperty().asObject());
 
         ObservableList typeList = FXCollections.observableArrayList();
         comboPet.getItems().clear();
         comboService.getItems().clear();
-        comboPet.getItems().clear();
-        comboService.setItems(typeList);
         comboPet.setItems(typeList);
         comboService.setItems(typeList);
         checkBoxIsFinished.setSelected(false);
@@ -321,10 +406,10 @@ public class ServiceOrderTableController implements Initializable {
             //Try getting all the PetTypes information
             ObservableList<Pet> petData = PetDAO.searchPets();
 
-            //Populate PetTypes on ComboBox
+            //Populate Pets on ComboBox
             populatePetComboBox(petData);
         } catch (SQLException e) {
-            System.out.println("Error occurred while getting all pettypes information from DB " + e);
+            System.out.println("Error occurred while getting all pets information from DB " + e);
             throw e;
         }
     }
@@ -427,12 +512,44 @@ public class ServiceOrderTableController implements Initializable {
 
     @FXML
     void deleteOrder(ActionEvent ae) {
+        try {
+            ServiceTransactionDAO.deleteServiceTransactionWithId(txtOrder.getText());
+            ServiceTransactionDetailDAO.deleteTranWithId(txtOrder.getText());
 
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Problem occurred while deleting Service Order");
+        }
     }
 
     @FXML
-    void orderService(MouseEvent event) {
+    void orderService(ActionEvent event) {
+        try {
 
+            String peliharaan = Integer.toString(comboPet.getValue().getId());
+            String layanan = Integer.toString(comboService.getValue().getId());
+
+            PetSize size = PetDAO.searchSize(comboPet.getValue().getPetSize_name());
+            PetType type = PetDAO.searchType(comboPet.getValue().getPetType_name());
+
+            String petSize = Integer.toString(size.getId());
+            String petType = Integer.toString(type.getId());
+
+            int isFinished = checkBoxIsFinished.isSelected() ? 1 : 0;
+
+            long millis=System.currentTimeMillis();
+            java.sql.Date date=new java.sql.Date(millis);
+
+            ServiceTransactionDAO.insertTransaction(returnID, txtOrder.getText(), date,
+                    peliharaan, returnID, 0);
+            ServiceDetail detailID = ServiceDetailDAO.searchServiceDetail(petSize, petType, layanan);
+            String ServiceDetail_Id = Integer.toString(detailID.getId());
+
+            ServiceTransactionDetailDAO.insertStd(returnID, isFinished, ServiceDetail_Id, txtOrder.getText());
+            ServiceTransactionDAO.updateEntries(returnID, txtOrder.getText(), date, ServiceDetail_Id, returnID, peliharaan, 0);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Problem occurred while inserting pettype");
+        }
     }
 
     @FXML
@@ -446,23 +563,157 @@ public class ServiceOrderTableController implements Initializable {
     }
 
     @FXML
-    void selectedRow(MouseEvent event) {
-
+    void selectedRowService(MouseEvent me) {
+//        if (me.getClickCount() > 1) {
+//            editWithSelectedRowService();
+//        }
     }
 
     @FXML
-    void switchOperations(MouseEvent event) {
-
+    void selectedRowOrder(MouseEvent me) throws SQLException, ClassNotFoundException {
+        if (me.getClickCount() > 1) {
+            editWithSelectedRowOrder();
+        }
     }
 
     @FXML
-    void updateOrder(MouseEvent event) {
+    void updateOrder(ActionEvent event) {
+        String orderID = txtOrder.getText().trim();
+        if (comboPet.getValue() == null || comboService.getValue() == null || orderID.equals("")) {
+            DialogShowInfo("Fields cannot be empty");
+            return;
+        }
 
+        try {
+            String peliharaan = Integer.toString(comboPet.getValue().getId());
+            String layanan = Integer.toString(comboService.getValue().getId());
+
+            PetSize size = PetDAO.searchSize(comboPet.getValue().getPetSize_name());
+            PetType type = PetDAO.searchType(comboPet.getValue().getPetType_name());
+
+            String petSize = Integer.toString(size.getId());
+            String petType = Integer.toString(type.getId());
+
+            int isFinished = checkBoxIsFinished.isSelected() ? 1 : 0;
+
+            long millis=System.currentTimeMillis();
+            java.sql.Date date=new java.sql.Date(millis);
+
+            ServiceDetail detailID = ServiceDetailDAO.searchServiceDetail(petSize, petType, layanan);
+            String ServiceDetail_Id = Integer.toString(detailID.getId());
+
+            ServiceTransactionDetail std = ServiceTransactionDetailDAO.searchID(ServiceDetail_Id, txtOrder.getText());
+
+            String stdID = Integer.toString(std.getId());
+
+            if(isFinished == 1) {
+                Alert info = new Alert(Alert.AlertType.CONFIRMATION);
+                info.setX(550);
+                info.setY(300);
+                info.setHeaderText("");
+                info.setContentText("Konfirmasi pesanan telah selesai ?");
+                info.showAndWait().ifPresent((btnType) -> {
+                    if (btnType == ButtonType.OK) {
+                        try {
+                            ServiceTransactionDetailDAO.updateEntries(returnID, stdID, isFinished, ServiceDetail_Id, txtOrder.getText());
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            System.out.println("An error occured updating transaction details");
+                            DialogShowInfo("Pesanan gagal dikonfirmasi");
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            ServiceTransactionDAO.updateEntries(returnID, txtOrder.getText(), date, ServiceDetail_Id, returnID, peliharaan, 0);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            System.out.println("An error occured updating transactions");
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        DialogShowInfo("Pesanan telah selesai dikonfirmasi");
+                    }
+                });
+            } else {
+                ServiceTransactionDetailDAO.updateEntries(returnID, stdID, isFinished, ServiceDetail_Id, txtOrder.getText());
+                ServiceTransactionDAO.updateEntries(returnID, txtOrder.getText(), date, ServiceDetail_Id, returnID, peliharaan, 0);
+            }
+
+            loadAllData();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Problem occurred while updating order");
+        }
+    }
+
+    private void editWithSelectedRowOrder() throws SQLException, ClassNotFoundException {
+        if (tableOrder.getSelectionModel().getSelectedItem() != null) {
+            ServiceTransactionDetail std = tableOrder.getSelectionModel().getSelectedItem();
+
+            ObservableList<Pet> petData = PetDAO.searchPets();
+            populatePetComboBox(petData);
+            ObservableList<Service> serviceData = ServiceDAO.searchServices();
+            populateServiceDetailComboBox(serviceData);
+
+            txtOrder.setText(std.getServiceTransaction_Id());
+            comboPet.getItems();
+            comboService.getItems();
+
+            StringProperty finished = std.getIsFinished();
+            boolean status;
+            if(finished.getValue().matches("1"))
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+
+            checkBoxIsFinished.setSelected(status);
+
+            for (Pet pet : comboPet.getItems()) {
+                if (pet.getName().equals(std.getPets_Id())) {
+                    comboPet.getSelectionModel().select(pet);
+                }
+            }
+
+            for (Service service : comboService.getItems()) {
+                if (service.getServiceName().equals(std.getServiceId())) {
+                    comboService.getSelectionModel().select(service);
+                }
+            }
+        }
     }
 
     @FXML
     void addServiceOrder(ActionEvent event) {
+        try {
+            String layanan = Integer.toString(comboService.getValue().getId());
 
+            PetSize size = PetDAO.searchSize(comboPet.getValue().getPetSize_name());
+            PetType type = PetDAO.searchType(comboPet.getValue().getPetType_name());
+
+            String petSize = Integer.toString(size.getId());
+            String petType = Integer.toString(type.getId());
+
+            int isFinished = checkBoxIsFinished.isSelected() ? 1 : 0;
+            ServiceDetail detailID = ServiceDetailDAO.searchServiceDetail(petSize, petType, layanan);
+            String ServiceDetail_Id = Integer.toString(detailID.getId());
+
+            ServiceTransactionDetailDAO.insertStd(returnID, isFinished, ServiceDetail_Id, txtOrder.getText());
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Problem occurred while inserting pettype");
+        }
+    }
+
+    private void DialogShowInfo(String text) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setX(550);
+        info.setY(300);
+        info.setHeaderText("");
+        info.setContentText(text);
+        info.showAndWait();
     }
 
 }

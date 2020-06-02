@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #E1D42B;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.OrderProductController">
+<VBox maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #E1D42B;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.OrderProductController">
     <children>
         <VBox maxHeight="1080.0" maxWidth="1920.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #8B8979; -fx-background-radius: 25; -fx-border-radius: 25;" VBox.vgrow="ALWAYS">
             <children>
-                <HBox alignment="TOP_CENTER" maxHeight="1080.0" maxWidth="1920.0" prefHeight="135.0" prefWidth="1280.0">
+                <HBox alignment="TOP_CENTER" maxHeight="1080.0" maxWidth="1920.0" prefHeight="100.0" prefWidth="1280.0">
                     <children>
                         <GridPane alignment="CENTER_LEFT" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1920.0" prefWidth="1280.0" HBox.hgrow="ALWAYS">
                             <columnConstraints>
-                                <ColumnConstraints fillWidth="false" maxWidth="1.7976931348623157E308" minWidth="52.53340377807615" prefWidth="852.33330078125" />
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="65.79996337890623" prefWidth="149.66669921875007" />
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="65.79996337890623" prefWidth="145.99991455078134" />
+                                <ColumnConstraints fillWidth="false" maxWidth="1.7976931348623157E308" minWidth="52.53340377807615" prefWidth="734.8" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="65.79996337890623" prefWidth="160.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="65.79996337890623" prefWidth="160.0" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="65.79996337890623" prefWidth="160.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
@@ -35,18 +47,18 @@
                                         <DropShadow color="#00000033" height="1.0" offsetY="3.0" radius="0.0" width="0.0" />
                                     </effect>
                                 </ImageView>
-                                <Label maxHeight="0.0" prefWidth="431.0" text="Menu Pesan Produk" textFill="WHITE" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                <Label maxHeight="70.0" prefHeight="70.0" prefWidth="578.0" text="Menu Pemesanan Produk" textFill="WHITE" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                     <font>
                                         <Font size="48.0" />
                                     </font>
                                     <GridPane.margin>
-                                        <Insets left="150.0" />
+                                        <Insets left="120.0" />
                                     </GridPane.margin>
                                     <effect>
                                         <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
                                     </effect>
                                 </Label>
-                                <Button fx:id="btnHewanKeluar" alignment="CENTER" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonPet" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" styleClass="exitButton" stylesheets="@../styleButtonSecondary.css" text="Keluar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                <Button fx:id="btnProdukKeluar" alignment="CENTER" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonProduct" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" styleClass="exitButton" stylesheets="@../styleButtonSecondary.css" text="Keluar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                     <GridPane.margin>
                                         <Insets />
                                     </GridPane.margin>
@@ -60,7 +72,7 @@
                                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                                     </effect>
                                 </Button>
-                                <Button fx:id="btnMenuUtama" alignment="CENTER" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonPet" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" styleClass="toMenuButton" stylesheets="@../styleButtonSecondary.css" text="Menu Utama" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                <Button fx:id="btnMenuUtama" alignment="CENTER" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonProduct" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" styleClass="toMenuButton" stylesheets="@../styleButtonSecondary.css" text="Menu Utama" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="18.0" />
                                     </font>
@@ -74,6 +86,17 @@
                                         <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                                     </effect>
                                 </Button>
+                        <Button fx:id="btnPeliharaan" alignment="CENTER" maxHeight="50.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleButtonProduct" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" styleClass="toMenuButton" stylesheets="@../styleButtonSecondary.css" text="Peliharaan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3">
+                           <font>
+                              <Font name="Franklin Gothic Medium" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                           </effect>
+                        </Button>
                             </children>
                             <HBox.margin>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -84,45 +107,46 @@
                         <Insets />
                     </VBox.margin>
                 </HBox>
-                <HBox prefHeight="409.0" prefWidth="1280.0">
+                <HBox prefHeight="350.0" prefWidth="1280.0">
                     <children>
-                  <HBox prefHeight="369.0" prefWidth="1230.0" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
+                        <HBox prefWidth="1230.0" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                            <children>
+                                <TableView fx:id="tableAll" editable="true" onMouseClicked="#selectedRowService" prefWidth="1280.0" stylesheets="@../styleTable.css" tableMenuButtonVisible="true">
+                                    <columns>
+                                        <TableColumn fx:id="productId" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" text="ID PRODUK" />
+                                        <TableColumn fx:id="productName" minWidth="150.0" prefWidth="275.0" text="PRODUK" />
+                                        <TableColumn fx:id="productType" minWidth="100.0" prefWidth="275.0" text="SATUAN" />
+                                        <TableColumn fx:id="productPrice" minWidth="150.0" prefWidth="275.0" text="HARGA" />
+                                    </columns>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <effect>
+                                        <InnerShadow color="#00000080" height="10.5" offsetY="2.0" radius="2.125" width="0.0" />
+                                    </effect>
+                                </TableView>
+                            </children>
+                        </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefWidth="1230.0">
                      <children>
-                              <TableView fx:id="tableAll" editable="true" onMouseClicked="#selectedRow" prefWidth="1280.0" stylesheets="@../styleTable.css" tableMenuButtonVisible="true">
-                                  <columns>
-                                      <TableColumn fx:id="petId" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" text="ID PRODUK" />
-                                      <TableColumn fx:id="petName" minWidth="150.0" prefWidth="275.0" text="NAMA" />
-                                      <TableColumn fx:id="petDateBirth" minWidth="100.0" prefWidth="275.0" text="JUMLAH" />
-                                      <TableColumn fx:id="petOwner" minWidth="150.0" prefWidth="275.0" text="SATUAN" />
-                                      <TableColumn fx:id="petType" minWidth="150.0" prefWidth="275.0" text="HARGA" />
-                                  </columns>
-                                  <cursor>
-                                      <Cursor fx:constant="HAND" />
-                                  </cursor>
-                                  <effect>
-                                      <InnerShadow color="#00000080" height="10.5" offsetY="2.0" radius="2.125" width="0.0" />
-                                  </effect>
-                              </TableView>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="369.0" prefWidth="922.0">
-                     <children>
-                        <VBox alignment="CENTER">
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="KERANJANG" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </Label>
-                              <ListView prefHeight="351.0" prefWidth="451.0" />
-                           </children>
-                        </VBox>
+                        <TableView fx:id="tableOrder" editable="true" onMouseClicked="#selectedRowOrder" prefWidth="1280.0" stylesheets="@../styleTable.css" tableMenuButtonVisible="true">
+                           <columns>
+                              <TableColumn fx:id="orderId" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" text="ID PESANAN" />
+                              <TableColumn fx:id="orderEmployee" minWidth="100.0" prefWidth="166.40001678466797" text="PEGAWAI" />
+                              <TableColumn fx:id="orderCustomer" prefWidth="184.79998779296875" text="PELANGGAN" />
+                              <TableColumn fx:id="orderProduk" minWidth="150.0" prefWidth="275.0" text="PRODUK" />
+                              <TableColumn fx:id="orderTotal" minWidth="150.0" prefWidth="275.0" text="TOTAL" />
+                           </columns>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <InnerShadow color="#00000080" height="10.5" offsetY="2.0" radius="2.125" width="0.0" />
+                           </effect>
+                        </TableView>
                      </children>
                   </HBox>
                     </children>
@@ -130,210 +154,335 @@
                         <Insets />
                     </VBox.margin>
                 </HBox>
-                <HBox prefHeight="231.0" prefWidth="1280.0">
+                <HBox alignment="CENTER" prefWidth="1211.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <GridPane hgap="10.0" prefHeight="209.0" prefWidth="1280.0" vgap="10.0" HBox.hgrow="ALWAYS">
+                        <GridPane hgap="10.0" prefHeight="157.0" prefWidth="1182.0" vgap="10.0" HBox.hgrow="ALWAYS">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="310.0" minWidth="10.0" prefWidth="280.0" />
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="432.7332763671875" minWidth="10.0" prefWidth="255.0" />
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="576.5333251953125" minWidth="10.0" prefWidth="255.0" />
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="576.5333251953125" minWidth="10.0" prefWidth="255.0" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="240.0000579833984" prefWidth="356.7999755859375" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="373.79998779296875" prefWidth="815.2000244140625" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="131.80003204345704" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="44.59996795654297" vgrow="ALWAYS" />
                             </rowConstraints>
                             <children>
-                                <Label text="Cari Peliharaan" textFill="WHITE">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="18.0" />
-                                    </font>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </Label>
-                                <TextField fx:id="txtCari" maxHeight="26.0" maxWidth="326.0" prefHeight="26.0" prefWidth="326.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets right="70.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font name="Franklin Gothic Book" size="14.0" />
-                                    </font>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </TextField>
-                                <Button fx:id="btnCari" mnemonicParsing="false" onAction="#searchPet" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Cari" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="50.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </Button>
-                                <Button fx:id="btnLihat" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#searchPets" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Lihat Semua" GridPane.rowIndex="2">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </Button>
-                                <Button fx:id="btnBersih" mnemonicParsing="false" onAction="#clearFields" prefHeight="39.0" prefWidth="146.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Bersihkan Entri" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                    <GridPane.margin>
-                                        <Insets left="70.0" />
-                                    </GridPane.margin>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </Button>
-                                <Button fx:id="btnTambah" mnemonicParsing="false" onAction="#insertPet" prefHeight="39.0" prefWidth="146.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Pesanan" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                    <GridPane.margin>
-                                        <Insets left="25.0" right="280.0" />
-                                    </GridPane.margin>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </Button>
-                                <Button fx:id="btnPerbarui" disable="true" mnemonicParsing="false" onAction="#updatePet" prefHeight="39.0" prefWidth="146.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Hapus Pemesanan" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                    <GridPane.margin>
-                                        <Insets left="30.0" />
-                                    </GridPane.margin>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </Button>
-                                <Button fx:id="btnHapus" disable="true" mnemonicParsing="false" onAction="#deletePet" prefHeight="39.0" prefWidth="146.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Checkout" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="14.0" />
-                                    </font>
-                                    <GridPane.margin>
-                                        <Insets left="30.0" />
-                                    </GridPane.margin>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </Button>
-                                <TextField fx:id="txtID" disable="true" style="-fx-background-radius: 7; -fx-border-radius: 7;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="120.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font name="Franklin Gothic Book" size="14.0" />
-                                    </font>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                </TextField>
-                                <Label text="ID Produk" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="18.0" />
-                                    </font>
-                                    <GridPane.margin>
-                                        <Insets left="28.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <ImageView fx:id="addLogo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                                    <image>
-                                        <Image url="@../icons/baseline_add_circle_white_18dp.png" />
-                                    </image>
-                                    <GridPane.margin>
-                                        <Insets right="155.0" />
-                                    </GridPane.margin>
-                                </ImageView>
-                                <Label fx:id="addLabel" onMouseClicked="#switchOperations" text="Tambah Order" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="18.0" />
-                                    </font>
-                                    <padding>
-                                        <Insets left="30.0" />
-                                    </padding>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                    <effect>
-                                        <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
-                                    </effect>
-                                </Label>
-                                <ImageView fx:id="deleteLogo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
-                                    <image>
-                                        <Image url="@../icons/baseline_delete_black_18dp.png" />
-                                    </image>
-                                    <GridPane.margin>
-                                        <Insets left="5.0" />
-                                    </GridPane.margin>
-                                </ImageView>
-                                <Label fx:id="deleteLabel" layoutX="379.0" layoutY="12.0" onMouseClicked="#switchOperations" stylesheets="@../styleOpsLabels.css" text="Hapus Order" GridPane.columnIndex="3">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="18.0" />
-                                    </font>
-                                    <padding>
-                                        <Insets left="30.0" />
-                                    </padding>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                    <effect>
-                                        <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
-                                    </effect>
-                                </Label>
-                        <Spinner minWidth="50.0" prefWidth="180.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-                        <Label text="Jumlah" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="Franklin Gothic Medium" size="18.0" />
-                           </font>
+                        <GridPane hgap="15.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="44.600042724609374" minHeight="10.0" prefHeight="21.400030517578124" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="85.39996948242188" minHeight="10.0" prefHeight="62.00002822875977" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="85.39996948242188" minHeight="10.0" prefHeight="33.19997177124023" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <GridPane GridPane.columnSpan="3">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <ImageView fx:id="addLogo" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/baseline_add_circle_white_18dp.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="addLabel" onMouseClicked="#switchOperations" text="Tambah Pesanan" textFill="WHITE">
+                                       <font>
+                                          <Font name="Franklin Gothic Medium" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="30.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <effect>
+                                          <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
+                                       </effect>
+                                    </Label>
+                                    <ImageView fx:id="editLogo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                       <image>
+                                          <Image url="@../icons/baseline_edit_black_18dp.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="editLabel" onMouseClicked="#switchOperations" stylesheets="@../styleOpsLabels.css" text="Edit Produk" GridPane.columnIndex="2">
+                                       <font>
+                                          <Font name="Franklin Gothic Medium" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="30.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <effect>
+                                          <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
+                                       </effect>
+                                    </Label>
+                                    <ImageView fx:id="deleteLogo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+                                       <image>
+                                          <Image url="@../icons/baseline_delete_black_18dp.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="addLogoService" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                                       <image>
+                                          <Image url="@../icons/baseline_add_circle_black_18dp.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="deleteLabel" onMouseClicked="#switchOperations" stylesheets="@../styleOpsLabels.css" text="Hapus Produk" GridPane.columnIndex="3">
+                                       <font>
+                                          <Font name="Franklin Gothic Medium" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="30.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <effect>
+                                          <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
+                                       </effect>
+                                    </Label>
+                                    <Label fx:id="addLabelService" layoutX="10.0" layoutY="12.0" onMouseClicked="#switchOperations" text="Tambah Produk" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font name="Franklin Gothic Medium" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="30.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <effect>
+                                          <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
+                                       </effect>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                              <TextField fx:id="txtOrder" prefWidth="165.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="120.0" />
+                                 </GridPane.margin>
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                 </effect>
+                              </TextField>
+                              <ComboBox fx:id="comboCustomer" onMouseClicked="#selectPet" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="120.0" />
+                                 </GridPane.margin>
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ComboBox>
+                              <ComboBox fx:id="comboProduct" onMouseClicked="#selectService" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="120.0" />
+                                 </GridPane.margin>
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ComboBox>
+                              <Label text="ID Pesanan" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="61.0" text="Pelanggan" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="25.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="61.0" text="Produk" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="45.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="txtJumlah" layoutX="130.0" layoutY="57.0" prefWidth="165.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                 </effect>
+                                 <GridPane.margin>
+                                    <Insets left="120.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Label layoutX="30.0" layoutY="56.0" text="Jumlah" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </GridPane>
+                        <GridPane hgap="5.0" prefHeight="83.0" prefWidth="370.0" vgap="15.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="726.0000366210937" minWidth="10.0" prefWidth="329.20001754760744" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.2000122070314" minWidth="10.0" prefWidth="257.9999824523926" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="48.8000244140625" minHeight="12.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="96.79993190765381" minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="96.79993190765381" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                                      <Label text="Cari Layanan" textFill="WHITE">
+                                          <font>
+                                              <Font name="Franklin Gothic Medium" size="18.0" />
+                                          </font>
+                                          <effect>
+                                              <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                          </effect>
+                                 <GridPane.margin>
+                                    <Insets left="15.0" />
+                                 </GridPane.margin>
+                                      </Label>
+                                      <TextField fx:id="txtCari" maxHeight="26.0" maxWidth="326.0" prefHeight="26.0" prefWidth="326.0" style="-fx-background-radius: 7; -fx-border-radius: 7; -fx-background-color: WHITE;" GridPane.rowIndex="1">
+                                          <font>
+                                              <Font name="Franklin Gothic Book" size="14.0" />
+                                          </font>
+                                          <effect>
+                                              <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                          </effect>
+                                      </TextField>
+                                      <Button fx:id="btnCari" maxWidth="50.0" mnemonicParsing="false" onAction="#searchProduct" prefHeight="30.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Cari" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <font>
+                                              <Font name="Franklin Gothic Medium" size="14.0" />
+                                          </font>
+                                          <cursor>
+                                              <Cursor fx:constant="HAND" />
+                                          </cursor>
+                                          <effect>
+                                              <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                          </effect>
+                                      </Button>
+                                      <Button fx:id="btnLihat" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#searchProducts" prefHeight="30.0" prefWidth="200.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Lihat Semua" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                          <font>
+                                              <Font name="Franklin Gothic Medium" size="14.0" />
+                                          </font>
+                                          <cursor>
+                                              <Cursor fx:constant="HAND" />
+                                          </cursor>
+                                          <effect>
+                                              <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                          </effect>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                      </Button>
+                           </children>
                            <GridPane.margin>
-                              <Insets />
+                              <Insets bottom="5.0" top="5.0" />
                            </GridPane.margin>
-                        </Label>
-                        <Label text="Nama" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="Franklin Gothic Medium" size="18.0" />
-                           </font>
+                        </GridPane>
+                        <GridPane alignment="TOP_RIGHT" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+                           </rowConstraints>
+                           <children>
+                              <Button fx:id="btnBersih" mnemonicParsing="false" onAction="#clearFields" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Bersihkan Entri" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
+                                 </effect>
+                                 <font>
+                                    <Font name="Franklin Gothic Medium" size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="btnPesan" mnemonicParsing="false" onAction="#orderProduct" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Pesanan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
+                                 </effect>
+                                 <font>
+                                    <Font name="Franklin Gothic Medium" size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="btnPerbarui" disable="true" mnemonicParsing="false" onAction="#updateOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Perbarui" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
+                                 </effect>
+                                 <font>
+                                    <Font name="Franklin Gothic Medium" size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="btnHapus" disable="true" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Hapus" GridPane.columnIndex="3" GridPane.valignment="CENTER">
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
+                                 </effect>
+                                 <font>
+                                    <Font name="Franklin Gothic Medium" size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="btnTambah" disable="true" mnemonicParsing="false" onAction="#addProductOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Produk" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.valignment="CENTER">
+                                 <effect>
+                                    <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
+                                 </effect>
+                                 <font>
+                                    <Font name="Franklin Gothic Medium" size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
                            <GridPane.margin>
-                              <Insets />
+                              <Insets bottom="10.0" />
                            </GridPane.margin>
-                        </Label>
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                        </TextField>
+                        </GridPane>
                             </children>
                             <HBox.margin>
-                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                <Insets left="15.0" right="15.0" top="15.0" />
                             </HBox.margin>
                         </GridPane>
                     </children>

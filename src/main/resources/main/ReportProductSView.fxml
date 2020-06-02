@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -14,11 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1080.0" maxWidth="1920.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.ReportController">
+<VBox maxHeight="1080.0" maxWidth="1920.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.ReportProductSController">
     <children>
         <HBox maxHeight="1080.0" maxWidth="1920.0" prefHeight="800.0" prefWidth="1920.0" VBox.vgrow="ALWAYS">
             <children>
-                <VBox prefHeight="384.0" prefWidth="1042.0" HBox.hgrow="ALWAYS">
+                <VBox prefHeight="384.0" prefWidth="1366.0" HBox.hgrow="ALWAYS">
                     <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="115.0" prefWidth="200.0" style="-fx-background-color: #8B8979;">
                             <children>
@@ -41,7 +42,7 @@
                                                 <Insets />
                                             </GridPane.margin>
                                         </ImageView>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="46.0" maxWidth="395.0" prefHeight="46.0" prefWidth="395.0" text="Menu Laporan Pendapatan" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="46.0" maxWidth="438.0" prefHeight="46.0" prefWidth="438.0" text="Menu Laporan Produk Terlaris" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                             <font>
                                                 <Font name="Franklin Gothic Heavy" size="30.0" />
                                             </font>
@@ -52,7 +53,7 @@
                                                 <Insets left="130.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <Button fx:id="btnMenuUtama" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#handleButtonEmployee" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="mainButton" stylesheets="@../styleButton.css" text="Menu Utama" textFill="WHITE" GridPane.columnIndex="2">
+                                        <Button fx:id="btnMenuUtama" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#handleButtonReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="mainButton" stylesheets="@../styleButton.css" text="Menu Utama" textFill="WHITE" GridPane.columnIndex="2">
                                             <font>
                                                 <Font name="Franklin Gothic Medium" size="16.0" />
                                             </font>
@@ -66,7 +67,7 @@
                                                 <Insets />
                                             </GridPane.margin>
                                         </Button>
-                                        <Button fx:id="btnPegawaiKeluar" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#handleButtonEmployee" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="mainButton" stylesheets="@../styleButton.css" text="Keluar" textFill="WHITE" GridPane.columnIndex="3">
+                                        <Button fx:id="btnLaporanKeluar" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#handleButtonReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="mainButton" stylesheets="@../styleButton.css" text="Keluar" textFill="WHITE" GridPane.columnIndex="3">
                                             <font>
                                                 <Font name="Franklin Gothic Medium" size="16.0" />
                                             </font>
@@ -97,7 +98,7 @@
                 </VBox>
             </children>
         </HBox>
-        <HBox maxHeight="1080.0" maxWidth="1920.0" prefHeight="225.0" prefWidth="1920.0" style="-fx-background-color: #E1D42B;">
+        <HBox maxHeight="1080.0" maxWidth="1920.0" prefHeight="400.0" prefWidth="1366.0" style="-fx-background-color: #E1D42B;">
             <children>
                 <GridPane alignment="CENTER" prefHeight="225.0" prefWidth="1266.0" HBox.hgrow="ALWAYS">
                     <columnConstraints>
@@ -116,13 +117,16 @@
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="btnPendapatan" mnemonicParsing="false" onAction="#clearFields" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Laporan Pendapatan" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.halignment="CENTER">
+                                <Button fx:id="btnPendapatanT" mnemonicParsing="false" onMouseClicked="#handleButtonShowReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Pendapatan Tahunan" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="16.0" />
                                     </font>
@@ -133,7 +137,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="btnPengadaanProduk" disable="true" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Pengadaan Produk" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                                <Button fx:id="btnProdukT" mnemonicParsing="false" onMouseClicked="#handleButtonShowReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Produk Terlaris" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="16.0" />
                                     </font>
@@ -143,22 +147,11 @@
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
+                                    <GridPane.margin>
+                                        <Insets />
+                                    </GridPane.margin>
                                 </Button>
-                                <Button fx:id="btnPengolahanProduk" disable="true" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Pengolahan Produk" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                                    <font>
-                                        <Font name="Franklin Gothic Medium" size="16.0" />
-                                    </font>
-                                    <effect>
-                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                                    </effect>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                                <Button fx:id="btnPengolahanLayanan" layoutX="10.0" layoutY="15.0" mnemonicParsing="false" onAction="#insertEmployee" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Pengolahan Layanan" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                <Button fx:id="btnLayananT" mnemonicParsing="false" onMouseClicked="#handleButtonShowReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Layanan Terlaris" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                     <font>
                                         <Font name="Franklin Gothic Medium" size="16.0" />
                                     </font>
@@ -169,21 +162,86 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                        <Button fx:id="btnPengadaanProduk1" disable="true" layoutX="894.0" layoutY="33.0" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Cetak Laporan" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="CENTER">
-                           <font>
-                              <Font name="Franklin Gothic Medium" size="16.0" />
-                           </font>
-                           <effect>
-                              <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
+                                <Button fx:id="btnPendapatanB" layoutX="10.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#handleButtonShowReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Pendapatan Bulanan" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font name="Franklin Gothic Medium" size="16.0" />
+                                    </font>
+                                    <effect>
+                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                    </effect>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <Button fx:id="btnPengadaanT" layoutX="894.0" layoutY="33.0" mnemonicParsing="false" onMouseClicked="#handleButtonShowReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Pengadaan Tahunan" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font name="Franklin Gothic Medium" size="16.0" />
+                                    </font>
+                                    <effect>
+                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                    </effect>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <Button fx:id="btnPengadaanB" layoutX="277.0" layoutY="33.0" mnemonicParsing="false" onMouseClicked="#handleButtonShowReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Pengadaan Bulanan" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font name="Franklin Gothic Medium" size="16.0" />
+                                    </font>
+                                    <effect>
+                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                    </effect>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <Button fx:id="btnCetakLaporan" layoutX="990.0" layoutY="33.0" mnemonicParsing="false" onAction="#printReport" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButton.css" text="Cetak Laporan" textAlignment="CENTER" textFill="#ffea00" wrapText="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font name="Franklin Gothic Medium" size="16.0" />
+                                    </font>
+                                    <effect>
+                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                    </effect>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                                <ComboBox fx:id="comboMonth" prefWidth="150.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10;" GridPane.columnIndex="2">
+                                    <GridPane.margin>
+                                        <Insets left="25.0" />
+                                    </GridPane.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <effect>
+                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                    </effect>
+                                </ComboBox>
+                                <Label text="Bulan" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                                    <font>
+                                        <Font name="Franklin Gothic Heavy" size="18.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox fx:id="comboYear" prefWidth="150.0" style="-fx-background-color: WHITE; -fx-background-radius: 10; -fx-border-radius: 10;" GridPane.columnIndex="4">
+                                    <GridPane.margin>
+                                        <Insets left="25.0" />
+                                    </GridPane.margin>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <effect>
+                                        <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+                                    </effect>
+                                </ComboBox>
+                                <Label layoutX="402.0" layoutY="20.0" text="Tahun" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
+                                    <font>
+                                        <Font name="Franklin Gothic Heavy" size="18.0" />
+                                    </font>
+                                </Label>
                             </children>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
+                            <GridPane.margin>
+                                <Insets />
+                            </GridPane.margin>
                         </GridPane>
                     </children>
                 </GridPane>

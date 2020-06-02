@@ -115,12 +115,12 @@
                                 <Insets />
                             </HBox.margin>
                             <children>
-                                <TableView fx:id="tableAll" editable="true" onMouseClicked="#selectedRow" prefWidth="1280.0" stylesheets="@../styleTable.css" tableMenuButtonVisible="true">
+                                <TableView fx:id="tableAll" editable="true" onMouseClicked="#selectedRowService" prefWidth="1280.0" stylesheets="@../styleTable.css" tableMenuButtonVisible="true">
                                     <columns>
                                         <TableColumn fx:id="serviceId" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" text="ID LAYANAN" />
                                         <TableColumn fx:id="serviceName" minWidth="150.0" prefWidth="275.0" text="LAYANAN" />
-                                        <TableColumn fx:id="serviceType" minWidth="100.0" prefWidth="275.0" text="JENIS PELIHARAAN" />
-                                        <TableColumn fx:id="serviceSize" minWidth="150.0" prefWidth="275.0" text="UKURAN PELIHARAAN" />
+                                        <TableColumn fx:id="serviceType" minWidth="100.0" prefWidth="275.0" text="TIPE" />
+                              <TableColumn fx:id="serviceSize" prefWidth="75.0" text="UKURAN" />
                                         <TableColumn fx:id="servicePrice" minWidth="150.0" prefWidth="275.0" text="HARGA" />
                                     </columns>
                                     <cursor>
@@ -134,15 +134,14 @@
                         </HBox>
                   <HBox layoutX="10.0" layoutY="10.0" prefWidth="1230.0">
                      <children>
-                        <TableView fx:id="tableOrder" editable="true" onMouseClicked="#selectedRow" prefWidth="1280.0" stylesheets="@../styleTable.css" tableMenuButtonVisible="true">
+                        <TableView fx:id="tableOrder" editable="true" onMouseClicked="#selectedRowOrder" prefWidth="1280.0" stylesheets="@../styleTable.css" tableMenuButtonVisible="true">
                            <columns>
                               <TableColumn fx:id="orderId" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" text="ID PESANAN" />
-                              <TableColumn fx:id="orderEmployee" minWidth="100.0" prefWidth="275.0" text="PEGAWAI" />
+                              <TableColumn fx:id="orderEmployee" minWidth="100.0" prefWidth="166.40001678466797" text="PEGAWAI" />
                               <TableColumn fx:id="orderDate" prefWidth="75.0" text="TANGGAL" />
                               <TableColumn fx:id="orderPet" prefWidth="75.0" text="PELIHARAAN" />
                               <TableColumn fx:id="orderService" minWidth="150.0" prefWidth="275.0" text="LAYANAN" />
-                              <TableColumn fx:id="orderFinished" prefWidth="75.0" text="SELESAI" />
-                              <TableColumn fx:id="orderPaid" minWidth="150.0" prefWidth="275.0" text="LUNAS" />
+                              <TableColumn fx:id="orderFinished" prefWidth="184.79998779296875" text="SELESAI" />
                               <TableColumn fx:id="orderTotal" minWidth="150.0" prefWidth="275.0" text="TOTAL" />
                            </columns>
                            <cursor>
@@ -218,7 +217,7 @@
                                           <Image url="@../icons/baseline_edit_black_18dp.png" />
                                        </image>
                                     </ImageView>
-                                    <Label fx:id="editLabel" onMouseClicked="#switchOperations" stylesheets="@../styleOpsLabels.css" text="Edit Pesanan" GridPane.columnIndex="2">
+                                    <Label fx:id="editLabel" onMouseClicked="#switchOperations" stylesheets="@../styleOpsLabels.css" text="Edit Produk" GridPane.columnIndex="2">
                                        <font>
                                           <Font name="Franklin Gothic Medium" size="18.0" />
                                        </font>
@@ -237,7 +236,12 @@
                                           <Image url="@../icons/baseline_delete_black_18dp.png" />
                                        </image>
                                     </ImageView>
-                                    <Label fx:id="deleteLabel" onMouseClicked="#switchOperations" stylesheets="@../styleOpsLabels.css" text="Hapus Pesanan" GridPane.columnIndex="3">
+                                    <ImageView fx:id="addLogoService" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                                       <image>
+                                          <Image url="@../icons/baseline_add_circle_black_18dp.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="deleteLabel" onMouseClicked="#switchOperations" stylesheets="@../styleOpsLabels.css" text="Hapus  Layanan" GridPane.columnIndex="3">
                                        <font>
                                           <Font name="Franklin Gothic Medium" size="18.0" />
                                        </font>
@@ -251,12 +255,7 @@
                                           <DropShadow color="#00000033" offsetY="2.0" radius="4.75" width="0.0" />
                                        </effect>
                                     </Label>
-                                    <ImageView fx:id="addLogo1" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                                       <image>
-                                          <Image url="@../icons/baseline_add_circle_white_18dp.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label fx:id="addLabel1" layoutX="10.0" layoutY="12.0" onMouseClicked="#switchOperations" text="Tambah Layanan" textFill="WHITE" GridPane.columnIndex="1">
+                                    <Label fx:id="addLabelService" layoutX="10.0" layoutY="12.0" onMouseClicked="#switchOperations" text="Tambah Layanan" GridPane.columnIndex="1">
                                        <font>
                                           <Font name="Franklin Gothic Medium" size="18.0" />
                                        </font>
@@ -280,21 +279,7 @@
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
                                  </effect>
                               </TextField>
-                              <CheckBox fx:id="checkBoxIsFinished" mnemonicParsing="false" text="Selesai ?" GridPane.rowIndex="2">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </CheckBox>
-                              <ComboBox fx:id="comboPet" editable="true" onMouseClicked="#selectPet" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <ComboBox fx:id="comboPet" onMouseClicked="#selectPet" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="120.0" />
                                  </GridPane.margin>
@@ -305,7 +290,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </ComboBox>
-                              <ComboBox fx:id="comboService" editable="true" onMouseClicked="#selectService" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <ComboBox fx:id="comboService" onMouseClicked="#selectService" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: WHITE;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="120.0" />
                                  </GridPane.margin>
@@ -340,6 +325,11 @@
                                     <Insets left="45.0" />
                                  </GridPane.margin>
                               </Label>
+                              <CheckBox fx:id="checkBoxIsFinished" mnemonicParsing="false" text="Selesai" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </CheckBox>
                            </children>
                         </GridPane>
                         <GridPane hgap="5.0" prefHeight="83.0" prefWidth="370.0" vgap="15.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -442,7 +432,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btnPerbarui" mnemonicParsing="false" onAction="#updateOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Perbarui" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                              <Button fx:id="btnPerbarui" disable="true" mnemonicParsing="false" onAction="#updateOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Perbarui" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                                  <effect>
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
                                  </effect>
@@ -456,7 +446,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btnHapus" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Hapus" GridPane.columnIndex="3" GridPane.valignment="CENTER">
+                              <Button fx:id="btnHapus" disable="true" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Hapus" GridPane.columnIndex="3" GridPane.valignment="CENTER">
                                  <effect>
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
                                  </effect>
@@ -470,7 +460,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btnTambah" mnemonicParsing="false" onAction="#addServiceOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Layanan" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.valignment="CENTER">
+                              <Button fx:id="btnTambah" disable="true" mnemonicParsing="false" onAction="#addServiceOrder" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 10;" styleClass="opsButton" stylesheets="@../styleButtonSecondary.css" text="Tambah Produk" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.valignment="CENTER">
                                  <effect>
                                     <DropShadow color="#00000033" height="1.0" offsetY="2.0" radius="5.0" />
                                  </effect>

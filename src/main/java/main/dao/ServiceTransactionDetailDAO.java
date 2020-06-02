@@ -2,10 +2,7 @@ package main.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.model.Customer;
-import main.model.Pet;
-import main.model.ServiceTransaction;
-import main.model.ServiceTransactionDetail;
+import main.model.*;
 import main.util.DBUtil;
 
 import java.sql.ResultSet;
@@ -18,7 +15,7 @@ public class ServiceTransactionDetailDAO {
         //Declare a SELECT Statement
         String selectStmt = "SELECT  std.ID AS std_Id," +
                 " st.id AS st_Id," +
-                " temp.name AS emp_Name," +
+                " emp.name AS emp_Name," +
                 " st.date AS st_Date," +
                 " p.name AS p_Name," +
                 " s.serviceName AS s_Name," +
@@ -31,7 +28,7 @@ public class ServiceTransactionDetailDAO {
                 " JOIN pets AS p ON st.Pets_id = p.id" +
                 " JOIN employees AS emp ON st.Employees_id = emp.id" +
                 " JOIN services AS s ON sd.Services_id = s.id" +
-                " WHERE std.id = '" + transactionDetailName + "'";
+                " WHERE std.id = '" + transactionDetailName + "' AND (std.deletedAt IS NULL AND st.deletedAt IS NULL)";
 
         //Execute SELECT Statement
         try {
@@ -88,7 +85,8 @@ public class ServiceTransactionDetailDAO {
                 " JOIN servicedetails AS sd ON std.ServiceDetails_id = sd.id" +
                 " JOIN pets AS p ON st.Pets_id = p.id" +
                 " JOIN employees AS emp ON st.Employees_id = emp.id" +
-                " JOIN services AS s ON sd.Services_id = s.id";
+                " JOIN services AS s ON sd.Services_id = s.id " +
+                " WHERE std.deletedAt IS NULL AND st.deletedAt IS NULL AND std.isFinished = '0'";
 
         //Execute SELECT Statement
         try {
@@ -107,10 +105,49 @@ public class ServiceTransactionDetailDAO {
         }
     }
 
-    //SELECT * FROM pets operation
+    //SELECT ServiceTransactionDetails
+    public static ObservableList<ServiceTransactionDetail> searchTransactions() throws SQLException, ClassNotFoundException {
+
+        //Declare a SELECT statement
+        String selectStmt = "SELECT std.ID AS std_Id," +
+                " st.id AS st_Id," +
+                " emp.name AS emp_Name," +
+                " st.date AS st_Date," +
+                " p.name AS p_Name," +
+                " s.serviceName AS s_Name," +
+                " std.isFinished AS isFinished," +
+                " st.isPaid AS isPaid," +
+                " sd.price AS sd_Price," +
+                " st.total AS st_Total " +
+                " FROM servicetransactiondetail AS std" +
+                " JOIN servicetransaction AS st ON st.id = std.ServiceTransaction_id" +
+                " JOIN servicedetails AS sd ON std.ServiceDetails_id = sd.id" +
+                " JOIN pets AS p ON st.Pets_id = p.id" +
+                " JOIN employees AS emp ON st.Employees_id = emp.id" +
+                " JOIN services AS s ON sd.Services_id = s.id " +
+                " WHERE std.deletedAt IS NULL AND st.deletedAt IS NULL AND st.isPaid = '0'";
+
+        //Execute SELECT Statement
+        try {
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsStds = DBUtil.dbExecuteQuery(selectStmt);
+
+            //Send ResultSet to the getServiceTransactionDetailList method and get std object
+
+            //Return Std Object
+            return getServiceTransactionsList(rsStds);
+        } catch (SQLException ex) {
+            System.out.println("SQL Select Operation has been failed: " + ex);
+
+            //Return exception
+            throw ex;
+        }
+    }
+
+    //SELECT * FROM Stds operation
     public static ObservableList<ServiceTransactionDetail> getServiceTransactionDetailList(ResultSet rs) throws SQLException, ClassNotFoundException {
 
-        //Declare a observable List which comprises of Pet Objects
+        //Declare a observable List which comprises of Std Objects
         ObservableList<ServiceTransactionDetail> stdList = FXCollections.observableArrayList();
 
         while (rs.next()) {
@@ -134,31 +171,101 @@ public class ServiceTransactionDetailDAO {
 
             String string = new String(target);
             std.setIsFinished(string);
-            System.out.println("TARGET : " + string);
             //Add pet to the ObservableList
             stdList.add(std);
 
         }
 
-        //Return petList (ObservableList of Pets
+        //Return stdList (ObservableList of Stds
         return stdList;
     }
 
-    //Update an pet's entries
-    public static void updateEntries(String Logged, String Id, String name, String dateBirth, String Customers_id,
-                                     String PetTypes_id, String PetSizes_id)
+    //SELECT * FROM Stds operation
+    public static ObservableList<ServiceTransactionDetail> getServiceTransactionsList(ResultSet rs) throws SQLException, ClassNotFoundException {
+
+        //Declare a observable List which comprises of Std Objects
+        ObservableList<ServiceTransactionDetail> stdList = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+
+            ServiceTransactionDetail std = new ServiceTransactionDetail(null);
+            std = new ServiceTransactionDetail(null);
+            std.setId(rs.getInt("std_Id"));
+            std.setServiceTransaction_Id(rs.getString("st_Id"));
+            std.setEmployees_Id(rs.getString("emp_Name"));
+            std.setDate(rs.getDate("st_Date"));
+            std.setPets_Id(rs.getString("p_Name"));
+            std.setServiceId(rs.getString("s_Name"));
+            byte[] target = rs.getBytes("isFinished");
+            std.setIsPaid(rs.getBytes("isPaid"));
+            std.setSubTotal(rs.getDouble("sd_Price"));
+            std.setTotal(rs.getDouble("st_Total"));
+//            std.setCreatedAt(rs.getTimestamp("createdAt"));
+//            std.setUpdatedAt(rs.getTimestamp("updatedAt"));
+//            std.setDeletedAt(rs.getTimestamp("deletedAt"));
+//            std.setCreatedBy(rs.getString("Name Created"));
+//            std.setUpdatedBy(rs.getString("Name Updated"));
+
+            String string = new String(target);
+            std.setIsFinished(string);
+            //Add pet to the ObservableList
+            stdList.add(std);
+
+        }
+
+        //Return stdList (ObservableList of Stds
+        return stdList;
+    }
+
+    //Search the ID of the STD
+    public static ServiceTransactionDetail searchID(String sdID, String stID) throws SQLException, ClassNotFoundException {
+
+        //Declare SELECT statement
+        String searchStmt = "SELECT id FROM Servicetransactiondetail " +
+                "WHERE ServiceDetails_id = '" + sdID + "' AND ServiceTransaction_id = '" + stID +"'";
+
+        //Execute query
+        try {
+
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsSearch = DBUtil.dbExecuteQuery(searchStmt);
+
+            ServiceTransactionDetail std = getIDFromResultSet(rsSearch);
+
+            return std;
+
+        } catch (SQLException ex) {
+            System.out.println("Error occurred while SELECT operation: " + ex);
+
+            //throws exceptions
+            throw ex;
+        }
+    }
+
+    private static ServiceTransactionDetail getIDFromResultSet(ResultSet rs) throws SQLException {
+        ServiceTransactionDetail std = null;
+
+        if (rs.next()) {
+            std = new ServiceTransactionDetail(null);
+            std.setId(rs.getInt("id"));
+        }
+        return std;
+    }
+
+    //Update an Std's entries
+    public static void updateEntries(String Logged, String Id, int isFinished, String ServiceDetails_Id,
+                                     String ServiceTransaction_Id)
             throws SQLException, ClassNotFoundException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE Pets " +
-                        "SET name = '" + name + "' " +
-                        ", dateBirth = '" + dateBirth + "' " +
-                        ", Customers_id = '" + Customers_id + "' " +
-                        ", PetTypes_id = '" + PetTypes_id + "' " +
-                        ", PetSizes_id = '" + PetSizes_id + "' " +
-                        ", updatedAt = NOW()" +
-                        ", updatedBy = '" + Logged + "' " +
-                        "WHERE id = '" + Id + "';";
+                "UPDATE Servicetransactiondetail " +
+                        " SET " +
+                        "     isFinished = '" + isFinished + "' " +
+                        "     , ServiceDetails_id = '" + ServiceDetails_Id + "' " +
+                        "     , ServiceTransaction_id = '" + ServiceTransaction_Id + "' " +
+                        "     , updatedAt = NOW() " +
+                        "     , updatedBy = '" + Logged + "' " +
+                        "    WHERE id = '"+ Id + "'";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -169,13 +276,13 @@ public class ServiceTransactionDetailDAO {
         }
     }
 
-    //DELETE an pet
-    public static void deletePetWithId(String Id) throws SQLException, ClassNotFoundException {
+    //DELETE a servicetransactiondetail
+    public static void deleteTranWithId(String Id) throws SQLException, ClassNotFoundException {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM Pets " +
-                        "WHERE id = " + Id + ";";
+                "DELETE FROM Servicetransactiondetail " +
+                        "WHERE ServiceTransaction_id = '" + Id + "' AND isFinished = 0;";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
@@ -186,12 +293,12 @@ public class ServiceTransactionDetailDAO {
         }
     }
 
-    //SOFT DELETE an pet
-    public static void softDeletePetWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
+    //SOFT DELETE a Servicetransactiondetail
+    public static void softDeleteTranWithId(String Logged, String Id) throws SQLException, ClassNotFoundException {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE Pets " +
+                "UPDATE Servicetransactiondetail " +
                         "SET " +
                         "deletedAt = NOW()" +
                         ", deletedBy = " + Logged + " " +
@@ -206,52 +313,15 @@ public class ServiceTransactionDetailDAO {
         }
     }
 
-    //Search the Owner of the pet
-    public static Customer searchOwner(String Customers_name) throws SQLException, ClassNotFoundException {
-
-        //Declare INSERT statement
-        String searchStmt = "SELECT id FROM Customers WHERE name = '" + Customers_name + "'";
-
-        //Execute query
-        try {
-
-            //Get ResultSet from dbExecuteQuery method
-            ResultSet rsSearch = DBUtil.dbExecuteQuery(searchStmt);
-
-            Customer customer = getOwnerFromResultSet(rsSearch);
-
-            return customer;
-
-        } catch (SQLException ex) {
-            System.out.println("Error occurred while SELECT operation: " + ex);
-
-            //throws exceptions
-            throw ex;
-        }
-    }
-
-    private static Customer getOwnerFromResultSet(ResultSet rs) throws SQLException {
-        Customer cs = null;
-
-        if (rs.next()) {
-            cs = new Customer();
-            cs.setId(rs.getInt("id"));
-        }
-        return cs;
-    }
-
-    //INSERT a Pet
-    public static void insertPet(String Logged, String name, String dateBirth, String Customers_id,
-                                 String PetTypes_id, String PetSizes_id)
+    //INSERT a Std
+    public static void insertStd(String Logged, int isFinished, String ServiceDetails_Id, String ServiceTransaction_id)
             throws SQLException {
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO Pets " +
-                        "(name, dateBirth, createdAt, Customers_id, PetTypes_id, PetSizes_id, createdBy)" +
-                        "VALUES " +
-                        "('" + name + "','" + dateBirth +
-                        "', NOW()," +
-                        "'" + Customers_id + "','" + PetTypes_id + "','" + PetSizes_id + "','" + Logged + "')";
+                "INSERT INTO Servicetransactiondetail " +
+                        " (isFinished, ServiceDetails_id, ServiceTransaction_id, createdAt, createdBy) " +
+                        "    VALUES " +
+                        "    ('"+ isFinished + "', '"+ ServiceDetails_Id +"', '" + ServiceTransaction_id +"', NOW(), '" + Logged + "')";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);

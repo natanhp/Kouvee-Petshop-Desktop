@@ -2,9 +2,8 @@ package main.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.model.Customer;
-import main.model.Pet;
-import main.model.PetSize;
+import main.model.Product;
+import main.model.ProductTransaction;
 import main.model.ServiceTransaction;
 import main.util.DBUtil;
 
@@ -12,24 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class ServiceTransactionDAO {
-    //SELECT a Service transaction
-    public static ObservableList<ServiceTransaction> searchTransaction(String transactionName) throws SQLException {
+public class ProductTransactionDAO {
+    //SELECT a Product transaction
+    public static ObservableList<ProductTransaction> searchTransaction(String transactionName) throws SQLException {
 
         //Declare a SELECT Statement
-        String selectStmt = "SELECT st.id, st.date, st.total, p.name AS 'Pets_name', emp.name AS 'Employees_name', st.isPaid" +
-                " FROM Servicetransaction AS st" +
-                " JOIN Pets AS p ON p.id = st.Pets_id" +
-                " JOIN Employees AS emp ON emp.id = st.Employees_id" +
-                " WHERE st.id = '" + transactionName + "'" +
-                " AND st.deletedAt IS NULL";
+        String selectStmt = "SELECT pt.id, pt.total AS total, c.name AS 'Customers_name', emp.name AS 'Employees_name', pt.isPaid AS isPaid" +
+                "                 FROM Producttransaction AS pt " +
+                "                 JOIN Customers AS c ON c.id = pt.Customers_id "+
+                "                 JOIN Employees AS emp ON emp.id = pt.Employees_id " +
+                "                 WHERE pt.id = '" + transactionName + "'" +
+                "                AND pt.deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
 
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsTran = DBUtil.dbExecuteQuery(selectStmt);
-            ObservableList<ServiceTransaction> tran = FXCollections.observableArrayList();
+            ObservableList<ProductTransaction> tran = FXCollections.observableArrayList();
             try {
                 tran = getTranList(rsTran);
             } catch (ClassNotFoundException e) {
@@ -38,36 +37,35 @@ public class ServiceTransactionDAO {
 
             return tran;
         } catch (SQLException ex) {
-            System.out.println("While searching a service transaction with Id : " + transactionName + ", an error occurred: " + ex);
+            System.out.println("While searching a product transaction with Id : " + transactionName + ", an error occurred: " + ex);
             //Return Exception
             throw ex;
         }
     }
 
-    private static ServiceTransaction getTransactionFromResultSet(ResultSet rs) throws SQLException {
-        ServiceTransaction st = null;
+    private static ProductTransaction getTransactionFromResultSet(ResultSet rs) throws SQLException {
+        ProductTransaction pt = null;
 
         if (rs.next()) {
-            st = new ServiceTransaction();
-            st.setId(rs.getString("id"));
-            st.setDate(rs.getDate("date"));
-            st.setTotal(rs.getDouble("total"));
-            st.setPets_Id(rs.getString("Pets_name"));
-            st.setEmployees_Id(rs.getString("Employees_name"));
-            st.setIsPaid(rs.getString("isPaid"));
+            pt = new ProductTransaction();
+            pt.setId(rs.getString("id"));
+            pt.setTotal(rs.getDouble("total"));
+            pt.setCustomers_id(rs.getString("Customers_name"));
+            pt.setEmployees_Id(rs.getString("Employees_name"));
+            pt.setIsPaid(rs.getString("isPaid"));
         }
-        return st;
+        return pt;
     }
 
     //SELECT ServiceTransactions
-    public static ObservableList<ServiceTransaction> searchServiceTransactions() throws SQLException, ClassNotFoundException {
+    public static ObservableList<ProductTransaction> searchProductTransactions() throws SQLException, ClassNotFoundException {
 
         //Declare a SELECT statement
-        String selectStmt = "SELECT st.id, st.date, st.total, p.name AS 'Pets_name', emp.name AS 'Employees_name', st.isPaid" +
-                " FROM Servicetransaction AS st" +
-                " JOIN Pets AS p ON p.id = st.Pets_id" +
-                " JOIN Employees AS emp ON emp.id = st.Employees_id" +
-                " AND st.deletedAt IS NULL";
+        String selectStmt = "SELECT pt.id, pt.total AS total, c.name AS 'Customers_name', emp.name AS 'Employees_name', pt.isPaid AS isPaid" +
+                "                 FROM Producttransaction AS pt " +
+                "                 JOIN Customers AS c ON c.id = pt.Customers_id "+
+                "                 JOIN Employees AS emp ON emp.id = pt.Employees_id " +
+                "                WHERE pt.deletedAt IS NULL";
 
         //Execute SELECT Statement
         try {
@@ -86,24 +84,23 @@ public class ServiceTransactionDAO {
         }
     }
 
-    //SELECT * FROM Servicetransactions operation
-    public static ObservableList<ServiceTransaction> getTranList(ResultSet rs) throws SQLException, ClassNotFoundException {
+    //SELECT * FROM Producttransaction operation
+    public static ObservableList<ProductTransaction> getTranList(ResultSet rs) throws SQLException, ClassNotFoundException {
 
         //Declare a observable List which comprises of ServiceTransaction Objects
-        ObservableList<ServiceTransaction> tranList = FXCollections.observableArrayList();
+        ObservableList<ProductTransaction> tranList = FXCollections.observableArrayList();
 
         while (rs.next()) {
 
-            ServiceTransaction st = new ServiceTransaction();
-            st = new ServiceTransaction();
-            st.setId(rs.getString("id"));
-            st.setDate(rs.getDate("date"));
-            st.setTotal(rs.getDouble("total"));
-            st.setPets_Id(rs.getString("Pets_name"));
-            st.setEmployees_Id(rs.getString("Employees_name"));
+            ProductTransaction pt = new ProductTransaction();
+            pt = new ProductTransaction();
+            pt.setId(rs.getString("id"));
+            pt.setTotal(rs.getDouble("total"));
+            pt.setCustomers_id(rs.getString("Customers_name"));
+            pt.setEmployees_Id(rs.getString("Employees_name"));
             byte[] target = rs.getBytes("isPaid");
             String string = new String(target);
-            st.setIsPaid(string);
+            pt.setIsPaid(string);
 //            st.setCreatedAt(rs.getTimestamp("createdAt"));
 //            st.setUpdatedAt(rs.getTimestamp("updatedAt"));
 //            st.setDeletedAt(rs.getTimestamp("deletedAt"));
@@ -112,7 +109,7 @@ public class ServiceTransactionDAO {
 //            st.setDeletedBy(rs.getString("Name Deleted"));
 
             //Add pet to the ObservableList
-            tranList.add(st);
+            tranList.add(pt);
 
         }
 
@@ -120,16 +117,15 @@ public class ServiceTransactionDAO {
         return tranList;
     }
 
-    //Update a servicetransaction's entries
-    public static void updateEntries(String Logged, String Id, Date date, String Servicedetails_Id, String Employees_id,
-                                     String Pets_id, int isPaid)
+    //Update a producttransaction's entries
+    public static void updateEntries(String Logged, String Id, String Products_Id, String Employees_id,
+                                     String Customers_id, int isPaid)
             throws SQLException, ClassNotFoundException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE Servicetransaction" +
-                        " SET date = '" + date + "' " +
-                        "    , total = total + (SELECT price FROM Servicedetails WHERE id = '" + Servicedetails_Id + "')" +
-                        "    , Pets_id = '" + Pets_id + "' " +
+                "UPDATE Producttransaction" +
+                        "    , total = total + (SELECT productPrice FROM products WHERE id = '" + Products_Id + "')" +
+                        "    , Customers_id = '" + Customers_id + "' " +
                         "    , Employees_id = '" + Employees_id + "' " +
                         "    , updatedBy = '" + Logged + "' " +
                         "    , updatedAt = NOW() " +
@@ -145,12 +141,12 @@ public class ServiceTransactionDAO {
         }
     }
 
-    //Update a servicetransaction's entries
+    //Update a producttransaction's entries
     public static void updatePayment(String Logged, String Id, double total, int isPaid)
             throws SQLException, ClassNotFoundException {
         //Declare an UPDATE Statement
         String updateStmt =
-                "UPDATE Servicetransaction" +
+                "UPDATE Producttransaction" +
                         " SET" +
                         " total = '" + total + "' "+
                         ", updatedBy = '" + Logged + "' " +
@@ -168,11 +164,11 @@ public class ServiceTransactionDAO {
     }
 
     //DELETE a servicetransaction
-    public static void deleteServiceTransactionWithId(String Id) throws SQLException, ClassNotFoundException {
+    public static void deleteTransactionWithId(String Id) throws SQLException, ClassNotFoundException {
 
         //Declare a DELETE Statement
         String updateStmt =
-                "DELETE FROM servicetransaction " +
+                "DELETE FROM Producttransaction " +
                         "WHERE id = '" + Id + "' AND isPaid = '0';";
 
         try {
@@ -189,7 +185,7 @@ public class ServiceTransactionDAO {
 
         //Declare an UPDATE Statement
         String deleteStmt =
-                "UPDATE Servicetransaction " +
+                "UPDATE Producttransaction " +
                         "SET " +
                         "deletedAt = NOW()" +
                         ", deletedBy = " + Logged + " " +
@@ -205,17 +201,17 @@ public class ServiceTransactionDAO {
     }
 
     //INSERT a Service Transaction
-    public static void insertTransaction(String Logged, String Id, Date date, String Pets_id,
-                                         String Employees_id, int isPaid)
+    public static void insertTransaction(String Logged, String Id, String Customers_id,
+                                         String Employees_id, int itemQty,int isPaid)
             throws SQLException {
         //Declare an INSERT Statement
         String updateStmt =
-                "INSERT INTO Servicetransaction " +
-                        " (id, date, total , Pets_id, Employees_id " +
+                "INSERT INTO Producttransaction " +
+                        " (id, total , Employees_id, Customers_id, itemQty" +
                         "    , createdBy, createdAt " +
                         "    , isPaid) " +
                         "    VALUES  " +
-                        "    ('" + Id + "', '" + date + "', NULL,'"+ Pets_id + "', '" + Employees_id + "', '" + Logged + "', NOW(), '" + isPaid + "')";
+                        "    ('" + Id + "', NULL,'" + Employees_id + "','" + Customers_id + "', '" + itemQty + "', '" + Logged + "', NOW(), '" + isPaid + "')";
 
         try {
             DBUtil.dbExecuteUpdate(updateStmt);

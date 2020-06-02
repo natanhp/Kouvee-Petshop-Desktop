@@ -3,6 +3,7 @@ package main.dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.model.Pet;
+import main.model.PetSize;
 import main.model.ServiceDetail;
 import main.util.DBUtil;
 
@@ -73,6 +74,42 @@ public class ServiceDetailDAO {
             //Return exception
             throw ex;
         }
+    }
+
+    //SELECT a ServiceDetail
+    public static ServiceDetail searchServiceDetail(String PetTypes_ID, String PetSizes_ID,
+                                                    String serviceID) throws SQLException, ClassNotFoundException {
+
+        //Declare a SELECT statement
+        String selectStmt = "SELECT id FROM Servicedetails WHERE PetTypes_id = '"+ PetTypes_ID + "' " +
+                "AND (PetSizes_id = '" + PetSizes_ID + "' AND Services_id = '" + serviceID + "')";
+
+        //Execute query
+        try {
+
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsSearch = DBUtil.dbExecuteQuery(selectStmt);
+
+            ServiceDetail sd = getDetailIdFromResultSet(rsSearch);
+
+            return sd;
+
+        } catch (SQLException ex) {
+            System.out.println("Error occurred while SELECT operation: " + ex);
+
+            //throws exceptions
+            throw ex;
+        }
+    }
+
+    private static ServiceDetail getDetailIdFromResultSet(ResultSet rs) throws SQLException {
+        ServiceDetail sd = null;
+
+        if (rs.next()) {
+            sd = new ServiceDetail();
+            sd.setId(rs.getInt("id"));
+        }
+        return sd;
     }
 
     public static ObservableList<ServiceDetail> getServiceDetailList(ResultSet rs) throws SQLException {

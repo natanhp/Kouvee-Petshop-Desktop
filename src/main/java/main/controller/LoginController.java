@@ -98,7 +98,20 @@ public class LoginController implements Initializable {
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
                 }
-            } else if(loginAction().equals("Empty")) {
+            } else if(loginAction().equals("Cashier") || loginAction().equals("Kasir")) {
+                Node node = (Node) me.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+
+                try {
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/main/MainMenuTertiary.fxml")));
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+            else if(loginAction().equals("Empty")) {
                 info.setHeaderText("");
                 info.setContentText("Empty Credentials");
                 info.showAndWait();
@@ -175,6 +188,7 @@ public class LoginController implements Initializable {
 
         MainMenuController.getUnameLogin(getUsername());
         MainMenuSecondaryController.getUnameLogin(getUsername());
+        MainMenuTertiaryController.getUnameLogin(getUsername());
 
         EmployeeController.getUserLogin(getUserLogin());
         EmployeeController.getRoleLogin(getUserRole());
@@ -202,5 +216,14 @@ public class LoginController implements Initializable {
 
         ServiceDetailController.getUserLogin(getUserLogin());
         ServiceDetailController.getRoleLogin(getUserRole());
+
+        ServiceOrderTableController.getUserLogin(getUserLogin());
+        ServiceOrderTableController.getRoleLogin(getUserRole());
+
+        OrderProductController.getUserLogin(getUserLogin());
+        OrderProductController.getRoleLogin(getUserRole());
+
+        PaymentServiceController.getUserLogin(getUserLogin());
+        PaymentServiceController.getRoleLogin(getUserRole());
     }
 }

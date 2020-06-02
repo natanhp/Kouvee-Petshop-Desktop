@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.model.Customer;
 import main.model.Pet;
+import main.model.PetSize;
+import main.model.PetType;
 import main.util.DBUtil;
 
 import java.sql.ResultSet;
@@ -229,6 +231,74 @@ public class PetDAO {
             cs.setId(rs.getInt("id"));
         }
         return cs;
+    }
+
+    //Search the Size of the pet
+    public static PetSize searchSize(String Sizes_name) throws SQLException, ClassNotFoundException {
+
+        //Declare SELECT statement
+        String searchStmt = "SELECT id FROM Petsizes WHERE size = '" + Sizes_name + "'";
+
+        //Execute query
+        try {
+
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsSearch = DBUtil.dbExecuteQuery(searchStmt);
+
+            PetSize ps = getSizeFromResultSet(rsSearch);
+
+            return ps;
+
+        } catch (SQLException ex) {
+            System.out.println("Error occurred while SELECT operation: " + ex);
+
+            //throws exceptions
+            throw ex;
+        }
+    }
+
+    private static PetSize getSizeFromResultSet(ResultSet rs) throws SQLException {
+        PetSize ps = null;
+
+        if (rs.next()) {
+            ps = new PetSize();
+            ps.setId(rs.getInt("id"));
+        }
+        return ps;
+    }
+
+    //Search the Type of the pet
+    public static PetType searchType(String Types_name) throws SQLException, ClassNotFoundException {
+
+        //Declare INSERT statement
+        String searchStmt = "SELECT id FROM Pettypes WHERE type = '" + Types_name + "'";
+
+        //Execute query
+        try {
+
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsSearch = DBUtil.dbExecuteQuery(searchStmt);
+
+            PetType pt = getTypeFromResultSet(rsSearch);
+
+            return pt;
+
+        } catch (SQLException ex) {
+            System.out.println("Error occurred while SELECT operation: " + ex);
+
+            //throws exceptions
+            throw ex;
+        }
+    }
+
+    private static PetType getTypeFromResultSet(ResultSet rs) throws SQLException {
+        PetType pt = null;
+
+        if (rs.next()) {
+            pt = new PetType();
+            pt.setId(rs.getInt("id"));
+        }
+        return pt;
     }
 
     //INSERT a Pet

@@ -11,11 +11,24 @@ public class ServiceTransactionDetail extends Logs{
     private IntegerProperty serviceDetails_Id;
     private StringProperty serviceTransaction_Id;
     private SimpleObjectProperty<Date> date;
+    private DoubleProperty subTotal;
     private DoubleProperty Total;
     private StringProperty Pets_Id;
     private StringProperty Employees_Id;
     private StringProperty serviceName;
     private byte[] isPaid;
+
+    public double getSubTotal() {
+        return subTotal.get();
+    }
+
+    public DoubleProperty subTotalProperty() {
+        return subTotal;
+    }
+
+    public void setSubTotal(double subTotal) {
+        this.subTotal.set(subTotal);
+    }
 
     public ServiceTransactionDetail(byte[] isPaid) {
         this.id = new SimpleIntegerProperty();
@@ -23,6 +36,7 @@ public class ServiceTransactionDetail extends Logs{
         this.serviceDetails_Id = new SimpleIntegerProperty();
         this.serviceTransaction_Id = new SimpleStringProperty();
         this.date = new SimpleObjectProperty();
+        this.subTotal = new SimpleDoubleProperty();
         this.Total = new SimpleDoubleProperty();
         this.Pets_Id = new SimpleStringProperty();
         this.Employees_Id = new SimpleStringProperty();
