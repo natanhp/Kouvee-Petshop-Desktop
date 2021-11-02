@@ -1,7 +1,7 @@
 # Kouvee Pet Shop Desktop Application
 
 ![Preview](screenshot/Screenshot.png)
-This is the desktop version of Kouvee Petshop for P3L's final submission.
+This is the desktop version of Kouvee Petshop for P3L's final submission. The person in charge of this project is [Larry](https://github.com/L4rryToru4n).
 ## Developer Guide
 ### Requirement
 1. Open JDK 13 or newer
