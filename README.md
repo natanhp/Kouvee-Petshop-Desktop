@@ -14,6 +14,7 @@ This is the desktop version of Kouvee Petshop for P3L's final submission. The pe
 1. OpenJFX documentation
 2. Lombok documentation
 3. How to integrate Scene Builder with Intellij IDEA
+4. Read the project's Javadoc in [here](https://natanhp.github.io/Kouvee-Petshop-Desktop-Doc/)
 
 ## Contributors
 1. [Natan Hari Pamungkas](https://github.com/natanhp)
